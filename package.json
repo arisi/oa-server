@@ -1,0 +1,23 @@
+{
+  "name": "oa-server",
+  "version": "1.0.0",
+  "description": "Open Arm Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arisi/oa-server.git"
+  },
+  "keywords": [
+    "arm",
+    "development"
+  ],
+  "author": "Ari Siitonen",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/arisi/oa-server/issues"
+  },
+  "homepage": "https://github.com/arisi/oa-server#readme"
+}
