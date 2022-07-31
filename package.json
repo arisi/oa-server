@@ -4,7 +4,8 @@
   "description": "Open Arm Server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "postinstall.js"
   },
   "bin": {
     "oa-server": "oa-server.js"
@@ -19,6 +20,23 @@
   ],
   "author": "Ari Siitonen",
   "license": "UNLICENSED",
+  "dependencies": {
+    "aedes": "^0.46.3",
+    "aedes-persistence-redis": "^9.0.1",
+    "cors": "^2.8.5",
+    "crc": "^4.1.0",
+    "express": "^4.17.3",
+    "express-http-proxy": "^1.6.3",
+    "express-session": "^1.17.3",
+    "json5": "^2.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "mime-types": "^2.1.35",
+    "rt0s_js": "git+https://github.com/arisi/rt0s_js.git",
+    "serialport": "^10.4.0",
+    "sprintf": "^0.1.5",
+    "websocket-stream": "^5.5.2",
+    "yargs": "^17.5.1"
+  },
   "bugs": {
     "url": "https://github.com/arisi/oa-server/issues"
   },
