@@ -1,0 +1,2 @@
+
+echo postinstall ok
