@@ -78,14 +78,18 @@ logger = s => {
 
 const home_dir = os.homedir();
 
-const state_fn = `${home_dir}/.rt0s/state.json`
+const state_fn = `${home_dir}/.oa/state.json`
 
 const argv = yargs
   .command('mq11_broker.js', 'MQ11 MQTT Broker', {})
   .option('conf', {
     description: 'Config file to use',
     type: 'string',
-    default: `${home_dir}/.rt0s/config.json`
+    default: `${home_dir}/.oa/config.json`
+  })
+  .option('init_conf', {
+    description: 'Create Template Config file to  ~/.oa/config.json',
+    type: 'boolean'
   })
   .option('log_dir', {
     description: 'Logging directory, ""=> no logging',
@@ -94,6 +98,44 @@ const argv = yargs
   })
   .help()
   .alias('help', 'h').argv
+
+if (argv.init_conf) {
+  var p = path.join(home_dir, ".oa")
+  var key_p = path.join(home_dir, ".oa/keys")
+  var src = path.join(__dirname, "../config.json")
+  var key_src = path.join(__dirname, "../keys")
+  var target = path.join(p, "config.json")
+
+  console.log("\nCreating template configuration");
+  if (!fs.existsSync(p)) {
+    fs.mkdirSync(p)
+    console.log("Created Path", p);
+  } else {
+    if (fs.existsSync(target)) {
+      console.error("Error: Config file Already Exists,\nwill not overwrite:", target, "\n");
+      process.exit(-1)
+    }
+  }
+  if (!fs.existsSync(key_p)) {
+    fs.mkdirSync(key_p)
+    console.log("Created Path", key_p);
+  }
+  console.log("Copying Template Config", src, "=>", target);
+  fs.copyFileSync(src, target)
+  for (var dom of fs.readdirSync(key_src)) {
+    var pp = path.join(key_src, dom)
+    if (!fs.existsSync(pp)) {
+      fs.mkdirSync(pp)
+      console.log("Created Path", pp);
+    }
+    console.log("Copying Keyfiles from domain", dom);
+    for (var f of fs.readdirSync(pp)) {
+      var ff = path.join(pp, f)
+      var tt = path.join(key_p, dom, f)
+      console.log("Copying Template Config", ff, "=>", tt);
+    }
+  }
+}
 
 save_state = () => {
   fs.writeFileSync(state_fn, JSON.stringify(users, null, 2))
@@ -164,7 +206,6 @@ var start_time = stamp()
 //   cb(null)
 // }
 
-var cert = fs.readFileSync('keys/dummy_pub.key')
 var cons = {}
 var users = {}
 var user_stats = {}
@@ -203,7 +244,7 @@ aedes.on('clientDisconnect', function(client) {
 })
 
 var registerAPI = (path, descr, args, cb) => {
-  apis[path] = { f: cb, descr, args}
+  apis[path] = { f: cb, descr, args }
 }
 
 onMessageReply = (packet, cb) => {
@@ -240,7 +281,7 @@ onMessage = (packet, cb) => {
     try {
       msg = JSON.parse(m)
     } catch (error) {
-      console.log("Bad payload",m);
+      console.log("Bad payload", m);
       return;
     }
     topic = packet.topic
@@ -392,10 +433,10 @@ const options = {
     key_fn = `${conf.acme_home}/${servername}/${servername}.key`
     cer_fn = `${conf.acme_home}/${servername}/fullchain.cer`
     if (!fs.existsSync(key_fn)) {
-      console.error(`*** no tls file for ${servername} ${key_fn} at ${ __dirname }`)
+      console.error(`*** no tls file for ${servername} ${key_fn} at ${__dirname}`)
     }
     if (!fs.existsSync(cer_fn)) {
-      console.error(`*** no tls files for ${servername} ${cer_fn} at ${ __dirname }`)
+      console.error(`*** no tls files for ${servername} ${cer_fn} at ${__dirname}`)
     }
     if (!(servername in certs)) {
       try {
@@ -459,7 +500,7 @@ var start_services = () => {
             dns.reverse(ip, function(err, result) {
               logger(`rd;;${s.protocol};${req.hostname};${req.path};${ip};0;${result || ''}`)
             })
-            res.redirect('https://' + req.hostname +req.path + req.url+ ":" + s.https_port)
+            res.redirect('https://' + req.hostname + req.path + req.url + ":" + s.https_port)
           })
           app.listen(s.port, () => {
             if (s.urls)
@@ -509,7 +550,7 @@ var start_services = () => {
               res.end()
               return
             }
-          var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+            var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
             if (ip.slice(0, 7) == '::ffff:') ip = ip.slice(7)
             hit = false
             for (i = 0; i < s.sites.length && !hit; i++) {
@@ -743,7 +784,7 @@ registerAPI('ping', "Ping", [], msg => {
 })
 
 registerAPI("api", "Get API", [], (msg) => {
-  var ret=[]
+  var ret = []
   for (var c of Object.keys(apis)) {
     ret.push({
       cmd: c,
