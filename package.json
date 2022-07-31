@@ -1,6 +1,6 @@
 {
   "name": "oa-server",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Open Arm Server",
   "main": "index.js",
   "scripts": {
