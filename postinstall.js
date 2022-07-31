@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-console.log("postinstall ok");
+console.log("postinstall ok!");
