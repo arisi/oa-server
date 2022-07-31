@@ -1,3 +1,7 @@
 #!/usr/bin/env node
 
-console.log("Server OK");
+console.log("OK oa-server");
+
+setInterval(() => {
+  console.log("ping");
+},1000)

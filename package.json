@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "oas": "oa-server.js"
+    "oas": "src/oa-server.js",
+    "oa": "src/oa-cli.js"
   },
   "repository": {
     "type": "git",

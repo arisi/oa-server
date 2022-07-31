@@ -1,0 +1,174 @@
+{
+  "client": {
+    "username": "demo",
+    "password": "demo",
+    "mqttx": "mqtt://localhost:1000"
+  },
+  "web": {
+    "username": "demo",
+    "password": "demo",
+    "mqtt": "wss://localhost:1003"
+  },
+  "server": {
+    "jwt_secret": "demo123",
+    "acme_home": "keys",
+    "urls": [
+      "localhost"
+    ],
+    "users": [
+      {
+        "username": "anon",
+        "password": "anon",
+        "acl": "anon",
+        "rate": 10,
+        "max_sessions": 6,
+        "remoteAddresses": [
+          "*"
+        ]
+      },
+      {
+        "username": "demo",
+        "password": "demo",
+        "acl": "default",
+        "rate": 100,
+        "max_sessions": 6,
+        "remoteAddresses": [
+          "*"
+        ]
+      }
+    ],
+    "acls": {
+      "default": [
+        {
+          "name": "broadcast",
+          "subs": [
+            "/bc/+/+"
+          ],
+          "pubs": [
+            "/bc/_id_/+"
+          ]
+        },
+        {
+          "name": "send_req",
+          "subs": [
+            "/up/_id_/+"
+          ],
+          "pubs": [
+            "/dn/+/+"
+          ]
+        },
+        {
+          "name": "receive_req",
+          "subs": [
+            "/dn/_id_/+"
+          ],
+          "pubs": [
+            "/up/+/+"
+          ]
+        },
+        {
+          "name": "send_tests",
+          "subs": [
+            "/test/#"
+          ],
+          "pubs": [
+            "/test/#"
+          ]
+        }
+      ],
+      "anon": [
+        {
+          "name": "send_req_anon",
+          "subs": [
+            "/up/_id_/+",
+            "/dn/_id_/+",
+            "/bc/broker/+",
+            "/test/#"
+          ],
+          "pubs": [
+            "/dn/mq11/+",
+            "/dn/manager/+",
+            "/dn/broker/+",
+            "/test/#"
+          ]
+        }
+      ]
+    },
+    "sockets": [
+      {
+        "name": "http",
+        "port": 81,
+        "protocol": "http",
+        "https_port": 444
+      },
+      {
+        "name": "https",
+        "port": 444,
+        "protocol": "https",
+        "sites": [
+          {
+            "name": "localhost",
+            "static": "web/localhost",
+            "urls": [
+              "localhost"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "mqtt",
+        "port": 1000,
+        "protocol": "mqtt",
+        "max_connected": 200,
+        "url": "localhost",
+        "users": [
+          "*"
+        ],
+        "remoteAddresses": [
+          "*"
+        ]
+      },
+      {
+        "name": "mqtts",
+        "port": 1001,
+        "protocol": "mqtts",
+        "max_connected": 200,
+        "url": "localhost",
+        "users": [
+          "*"
+        ],
+        "remoteAddresses": [
+          "*"
+        ]
+      },
+      {
+        "name": "ws",
+        "port": 1002,
+        "protocol": "ws",
+        "max_connected": 200,
+        "url": "localhost",
+        "users": [
+          "demo",
+          "anon"
+        ],
+        "remoteAddresses": [
+          "*"
+        ]
+      },
+      {
+        "name": "wss",
+        "port": 1003,
+        "protocol": "wss",
+        "max_connected": 200,
+        "url": "localhost",
+        "users": [
+          "demo",
+          "anon"
+        ],
+        "remoteAddresses": [
+          "*"
+        ]
+      }
+    ]
+  }
+}
