@@ -1,15 +1,13 @@
 {
   "name": "oa-server",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Open Arm Server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node postinstall.js",
-    "install": "sh/install.sh"
   },
   "bin": {
-    "oa-server": "oa-server.js"
+    "oas": "oa-server.js"
   },
   "repository": {
     "type": "git",
