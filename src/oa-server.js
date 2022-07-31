@@ -433,8 +433,8 @@ const options = {
       cb(null)
       return;
     }
-    key_fn = `${conf.acme_home}/${servername}/${servername}.key`
-    cer_fn = `${conf.acme_home}/${servername}/fullchain.cer`
+    key_fn = `${conf.acme_home}/${servername}/${servername}.key`.replace('~', home_dir)
+    cer_fn = `${conf.acme_home}/${servername}/fullchain.cer`.replace('~', home_dir)
     if (!fs.existsSync(key_fn)) {
       console.error(`*** no tls file for ${servername} ${key_fn} at ${__dirname}`)
     }

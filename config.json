@@ -11,7 +11,7 @@
   },
   "server": {
     "jwt_secret": "demo123",
-    "acme_home": "keys",
+    "acme_home": "~/keys",
     "urls": [
       "localhost"
     ],
