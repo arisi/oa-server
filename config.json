@@ -97,13 +97,13 @@
     "sockets": [
       {
         "name": "http",
-        "port": 81,
+        "port": 80,
         "protocol": "http",
-        "https_port": 444
+        "https_port": 443
       },
       {
         "name": "https",
-        "port": 444,
+        "port": 443,
         "protocol": "https",
         "sites": [
           {

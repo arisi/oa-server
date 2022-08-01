@@ -17,10 +17,6 @@ const sprintf = require('sprintf')
 const path = require('path')
 const dns = require('dns')
 
-//var mysql = require('mysql');
-
-//var mysql_con = undefined
-
 apis = {}
 reqs = {};
 
@@ -691,8 +687,8 @@ start_services()
 check_certs = () => {
   for (k in conf.urls) {
     var url = conf.urls[k]
-    var key_fn = `${conf.acme_home}/${url}/${url}.key`
-    var cer_fn = `${conf.acme_home}/${url}/fullchain.cer`
+    var key_fn = `${conf.acme_home}/${url}/${url}.key`.replace('~', home_dir)
+    var cer_fn = `${conf.acme_home}/${url}/fullchain.cer`.replace('~', home_dir)
     if (!fs.existsSync(key_fn) || !fs.existsSync(cer_fn)) {
       //cmd = `/home/arisi/.acme.sh/acme.sh --standalone --issue -d ${url} --server letsencrypt`
       console.error(`no tls files for ${url} ${key_fn} ${cer_fn}`)
