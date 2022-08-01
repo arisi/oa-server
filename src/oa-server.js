@@ -17,8 +17,9 @@ const sprintf = require('sprintf')
 const path = require('path')
 const dns = require('dns')
 
-apis = {}
-reqs = {};
+var apis = {}
+var reqs = {}
+var _id = "broker"
 
 uuidv4 = () => {
   var result, i, j
@@ -31,39 +32,6 @@ uuidv4 = () => {
   return result
 }
 
-var _id = "broker"
-
-var req = (target, msg, options, cb) => {
-  var obj = {
-    mid: uuidv4(),
-    src: _id,
-    target: target,
-    req: { args: msg },
-  };
-  reqs[obj['mid']] = {
-    obj: obj,
-    cb: (err, ret) => {
-      if (err)
-        console.log("req cb wrapper ERR:", err);
-      else if ("error" in ret) {
-        console.log('wrapper got error from mysql', ret.error)
-      }
-      cb(err, ret);
-    },
-    done: false,
-    created: stamp(),
-    sent: stamp(),
-    tries: 1,
-    retries: 'retries' in options ? options.tries : 1,
-    timeout: 'timeout' in options ? options.timeout : 3000,
-  };
-  //publish(`/dn/${target}/${obj['mid']}`, obj);
-  aedes.publish({
-    topic: `/dn/${target}/${obj['mid']}`,
-    payload: JSON.stringify(obj, null, 2)
-  })
-};
-
 logger = s => {
   dd = new Date(stamp()).toISOString()
   var fn = `${argv.log_dir}/${dd.slice(0, 10)}.log`
@@ -73,6 +41,7 @@ logger = s => {
 }
 
 const home_dir = os.homedir();
+const pwd = process.cwd()
 
 const state_fn = `${home_dir}/.oa/state.json`
 
@@ -117,7 +86,11 @@ if (argv.init_conf) {
     console.log("Created Path", key_p);
   }
   console.log("Copying Template Config", src, "=>", target);
-  fs.copyFileSync(src, target)
+  console.log("Open Arm Directory:", pwd);
+
+  var c = JSON.parse(fs.readFileSync(src).toString())
+  c.server.web_home = pwd
+  fs.writeFileSync(target,JSON.stringify(c,null,2))
   for (var dom of fs.readdirSync(key_src)) {
     var ps = path.join(key_src, dom)
     var pp = path.join(key_p, dom)
@@ -529,7 +502,7 @@ var start_services = () => {
               saveUninitialized: true,
               genid: function(req) {
                 var id = uuidv4()
-                return id // use UUIDs for session IDs
+                return id
               },
               cookie: { secure: true, maxAge: 600000 }
             })
@@ -573,6 +546,7 @@ var start_services = () => {
             if (hit) {
               var p = req.path == '/' ? '/index.html' : req.path
               var fn = `${hit.static}/${p}`
+              var full_fn = path.join(conf.web_home,fn)
               res.header('sid', req.sessionID)
               if (p == '/conf.json') {
                 obj = {
@@ -587,15 +561,15 @@ var start_services = () => {
                   }
                 }
                 res.send(JSON.stringify(obj, null, 2))
-              } else if (fs.existsSync(fn)) {
-                var size = fs.statSync(fn).size
+              } else if (fs.existsSync(full_fn)) {
+                var size = fs.statSync(full_fn).size
                 dns.reverse(ip, function(err, result) {
                   logger(
                     `ok;${req.sessionID};${hit.name};${s.protocol};${req.hostname};${req.path};${ip};${size};${result ||
                     ''}`
                   )
                 })
-                res.sendFile(fn, { root: '.' })
+                res.sendFile(fn, { root: conf.web_home })
               } else {
                 res.sendStatus(404)
                 dns.reverse(ip, function(err, result) {
