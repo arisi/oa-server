@@ -1,0 +1,3 @@
+[submodule "web/oa-web-localhost"]
+	path = web/oa-web-localhost
+	url = https://github.com/arisi/oa-web-localhost.git
