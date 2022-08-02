@@ -108,7 +108,7 @@
         "sites": [
           {
             "name": "localhost",
-            "static": "web/localhost",
+            "static": "web/oa-web-localhost",
             "urls": [
               "localhost"
             ]
