@@ -1,0 +1,35 @@
+{
+  ICU: {
+    base: 0x40006300,
+    name: "Interrupt Controller Unit",
+    n: [0],
+    //n: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+    nm: 4,
+    pages: [183, 210],
+    regs: {
+      IELSR: {
+        n: "ICU Event Link Setting Register",
+        o: 0x000,
+        s: 4,
+        page: 192,
+        d: {
+          IELS: {
+            n: "ICU Event Link Select",
+            bits: [0, 1, 2, 3, 4],
+            rw: "rw",
+          },
+          IR: {
+            n: "Interrupt Status Flag",
+            bits: [16],
+            rw: "rw",
+          },
+          DTCE: {
+            n: "DTC Activation Enable",
+            bits: [24],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

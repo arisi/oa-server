@@ -1,0 +1,47 @@
+{
+  IWDT: {
+    base: 0x40044400,
+    name: "Independent Watchdog",
+    n: [0],
+    nm: 0,
+    pages: [494, 503],
+    regs: {
+      IWDTRR: {
+        n: "IWDT Refresh Register",
+        o: 0x00,
+        s: 1,
+        page: 495,
+        d: {
+          D: {
+            n: "The down-counter",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            rw: "rw",
+          },
+        },
+      },
+      IWDTSR: {
+        n: "IWDT Status Register",
+        o: 0x04,
+        s: 2,
+        page: 496,
+        d: {
+          CNTVAL: {
+            n: "Down-counter Value",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+            rw: "r",
+          },
+          UNDFF: {
+            n: "Underflow Flag",
+            bits: [14],
+            rw: "rw",
+          },
+          REFEF: {
+            n: "Refresh Error Flag",
+            bits: [15],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

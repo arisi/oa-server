@@ -1,0 +1,34 @@
+{
+  ELSR: {
+    base: 0x40006000,
+    name: "ICU Event Link Setting Registers",
+    n: [0],
+    nm: 4,
+    pages: [274, 277],
+    regs: {
+      IELSR: {
+        n: "ICU Event Link Setting Register",
+        o: 0x000,
+        s: 4,
+        page: 274,
+        d: {
+          IELS: {
+            n: "ICU Event Link Select",
+            bits: [0, 1, 2, 3, 4],
+            rw: "rw",
+          },
+          IR: {
+            n: "Interrupt Status Flag",
+            bits: [16],
+            rw: "rw",
+          },
+          DTCE: {
+            n: "DTC Activation Enable",
+            bits: [24],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

@@ -1,0 +1,333 @@
+{
+  FLASH: {
+    base: 0x407ec000,
+    name: "Flash Memory",
+    n: [0],
+    nm: 0,
+    pages: [909, 957],
+    regs: {
+      DFLCTL: {
+        n: "Data Flash Control Register",
+        o: 0x90,
+        s: 1,
+        page: 912,
+        d: {
+          DFLEN: {
+            n: "Data Flash Access Enable",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },
+      FENTRYR: {
+        n: "Flash P/E Mode Entry Register",
+        o: 0x3fb0,
+        s: 2,
+        page: 913,
+        d: {
+          FENTRY0: {
+            n: "Code Flash P/E Mode Entry 0",
+            bits: [0],
+            rw: "rw",
+          },
+          FENTRYD: {
+            n: "Data Flash P/E Mode Entry",
+            bits: [7],
+            rw: "rw",
+          },
+          FEKEY: {
+            n: "Key Code",
+            bits: [8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "w",
+          },
+        },
+      },
+      FPR: {
+        n: "Protection Unlock Register",
+        o: 0x0180,
+        s: 1,
+        page: 914,
+        d: {
+          D: {
+            n: "Protection Unlock",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            rw: "rw",
+          },
+        },
+      },
+      FPSR: {
+        n: "Protection Unlock Status Register",
+        o: 0x0184,
+        s: 1,
+        page: 914,
+        d: {
+          PERR: {
+            n: "Protect Error Flag",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },
+      FPMCR: {
+        n: "Flash P/E Mode Control Register",
+        o: 0x0100,
+        s: 1,
+        page: 915,
+        d: {
+          FMS0: {
+            n: "Flash Operating Mode Select 0",
+            bits: [1],
+            rw: "rw",
+          },
+          RPDIS: {
+            n: "Code Flash P/E Disable",
+            bits: [3],
+            rw: "rw",
+          },
+          FMS1: {
+            n: "Flash Operating Mode Select 1",
+            bits: [4],
+            rw: "rw",
+          },
+        },
+      },
+      FISR: {
+        n: "Flash Initial Setting Register",
+        o: 0x01d8,
+        s: 1,
+        page: 915,
+        d: {
+          PCKA: {
+            n: "Flash-IF Clock Notification",
+            bits: [0, 1, 2, 3, 4, 5],
+            rw: "rw",
+          },
+          SAS: {
+            n: "Startup Area Select",
+            bits: [6, 7],
+            rw: "rw",
+          },
+        },
+      },
+      FRESETR: {
+        n: "Flash Reset Register",
+        o: 0x0124,
+        s: 1,
+        page: 917,
+        d: {
+          FRESET: {
+            n: "Software reset of the registers",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },
+      FASR: {
+        n: "Flash Reset Register",
+        o: 0x0104,
+        s: 1,
+        page: 917,
+        d: {
+          EXS: {
+            n: "Extra Area Select",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },
+      FCR: {
+        n: "Flash Control Register",
+        o: 0x0114,
+        s: 1,
+        page: 917,
+        d: {
+          CMD: {
+            n: "Software Command Setting",
+            bits: [0, 1, 2, 3],
+            rw: "rw",
+          },
+          DRC: {
+            n: "Data Read Completion",
+            bits: [4],
+            rw: "rw",
+          },
+          DTOP: {
+            n: "Forced Processing Stop",
+            bits: [6],
+            rw: "rw",
+          },
+          OPST: {
+            n: "Processing Start",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+      FSARH: {
+        n: "Flash Processing Start Address Register H",
+        o: 0x0110,
+        s: 2,
+        page: 921,
+        d: {
+          D: {
+            n: "Flash Processing Start Address H",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+      FSARL: {
+        n: "Flash Processing Start Address Register L",
+        o: 0x0108,
+        s: 2,
+        page: 922,
+        d: {
+          D: {
+            n: "Flash Processing Start Address L",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+      FEARH: {
+        n: "Flash Processing End Address Register H",
+        o: 0x0120,
+        s: 2,
+        page: 921,
+        d: {
+          D: {
+            n: "Flash Processing End Address H",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+      FEARL: {
+        n: "Flash Processing End Address Register L",
+        o: 0x0118,
+        s: 2,
+        page: 922,
+        d: {
+          D: {
+            n: "Flash Processing End Address L",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+      FWBL0: {
+        n: "Flash Write Buffer Register L0",
+        o: 0x0130,
+        s: 2,
+        page: 923,
+        d: {
+          D: {
+            n: "Flash Write Buffer L0",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+      FWBH0: {
+        n: "Flash Write Buffer Register H0",
+        o: 0x0138,
+        s: 2,
+        page: 923,
+        d: {
+          D: {
+            n: "Flash Write Buffer L0",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+      FSTATR1: {
+        n: "Flash Status Register 1",
+        o: 0x012c,
+        s: 1,
+        page: 924,
+        d: {
+          DRRDY: {
+            n: "Data Read Ready Flag",
+            bits: [1],
+            rw: "r",
+          },
+          FRDY: {
+            n: "Flash Ready Flag",
+            bits: [6],
+            rw: "r",
+          },
+          EXRDY: {
+            n: "Extra Area Read Ready Flag",
+            bits: [7],
+            rw: "r",
+          },
+        },
+      },
+      FSTATR2: {
+        n: "Flash Status Register 2",
+        o: 0x01f0,
+        s: 2,
+        page: 925,
+        d: {
+          ERERR: {
+            n: "Erase Error Flag",
+            bits: [0],
+            rw: "r",
+          },
+          PRGERR: {
+            n: "Program Error Flag",
+            bits: [1],
+            rw: "r",
+          },
+          PRGERR01: {
+            n: "Program Error Flag 01",
+            bits: [2],
+            rw: "r",
+          },
+          BCERR: {
+            n: "Blank Check Error Flag",
+            bits: [3],
+            rw: "r",
+          },
+          ILGERR: {
+            n: "Illegal Command Error Flag",
+            bits: [4],
+            rw: "r",
+          },
+          EILGLERR: {
+            n: "Extra Area Illegal Command Error Flag",
+            bits: [5],
+            rw: "r",
+          },
+        },
+      },
+      FEAML: {
+        n: "Flash Error Address Monitor Register L",
+        o: 0x01e0,
+        s: 2,
+        page: 926,
+        d: {
+          D: {
+            n: "Flash Error Address Monitor Register L",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+      FEAMH: {
+        n: "Flash Error Address Monitor Register H",
+        o: 0x01e8,
+        s: 2,
+        page: 926,
+        d: {
+          D: {
+            n: "Flash Error Address Monitor Register H",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

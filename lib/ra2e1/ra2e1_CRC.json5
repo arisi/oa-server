@@ -1,0 +1,58 @@
+{
+  CRC: {
+    base: 0x40074000,
+    name: "Cyclic Redundancy Check (CRC) Calculator",
+    n: [0],
+    nm: 0,
+    pages: [772, 780],
+    regs: {
+      CRCCR0: {
+        n: "CRC Control Register 0",
+        o: 0x00,
+        s: 1,
+        page: 773,
+        d: {
+          CPS: {
+            n: "CRC Generating Polynomial Switching",
+            bits: [0, 1, 2],
+            rw: "rw",
+          },
+          LMS: {
+            n: "CRC Calculation Switching",
+            bits: [6],
+            rw: "rw",
+          },
+          DORCLR: {
+            n: "CRCDOR/CRCDOR_HA/CRCDOR_BY Register Clear",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+      CRCDIR: {
+        n: "CRC Data Input Register",
+        o: 0x04,
+        s: 1,
+        page: 774,
+        d: {
+          D: {
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            rw: "rw",
+          },
+        },
+      },
+      CRCDOR: {
+        n: "CRC Data Output Register",
+        o: 0x08,
+        s: 2,
+        page: 775,
+        d: {
+          D: {
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

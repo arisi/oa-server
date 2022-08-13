@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+  <link rel="stylesheet" href="rt0s.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sprintf/1.1.2/sprintf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/json5/2.2.1/index.min.js"></script>
+  <link rel="preload" href="conf.json" as="fetch" type="application/json" crossorigin="anonymous">
+  <link rel="preload" href="syms.json" as="fetch" type="application/json" crossorigin="anonymous">
+  <link rel="preload" href="gen.json5" as="fetch" type="application/json" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/oa-server/cdn/rt0s_web.js"></script>
+  <script type="module" src="rt0sx.js"></script>
+</head>
+<html>
+<div id="regs">OK</div>
+<div id="status">OK</div>
+
+</html>
+<script type="text/x-handlebars" id="hb_status">
+  <table>
+    <thead>
+      <tr colspan=4>
+        <th>Connections:
+        </th>
+      </tr>
+    </thead>
+    {{#each cons}}
+    <tr>
+        <td>{{@key}}</td>
+        <td>{{this.remoteAddress}}</td>
+        <td>{{this.pings}}</td>
+        <td>{{this.username}}</td>
+    </tr>
+    {{/each}}
+  </table>
+</script>
+<script type="text/x-handlebars" id="hb_regs">
+  <table>
+    <tr>
+      <td>
+        <table>
+          {{#each regs}}
+          {{#if this.show}}
+          <tr>
+            <td>
+              <table class="regtable" id="{{this.id}}_regtable" style="background-color: #fee;">
+                <tr>
+                  <td width="10%" onclick="bshow('{{this.id}}')" style="cursor: default;">{{@key}}</td>
+                  <td width="10%" onclick="bshow('{{this.id}}')" style="cursor: default;">{{hex this.a}}</td>
+                  <td width="5%" onclick="bshow('{{this.id}}')" style="cursor: default;">{{this.s}}</td>
+                  <td width="50%" onclick="bshow('{{this.id}}')" style="cursor: default;">{{this.n}}</td>
+                  <td width="30%">
+                    <button id="{{this.id}}_show" onclick="show('{{@key}}')">Show</button>
+                    <select id="{{this.id}}_poll" onchange="change('{{@key}}')" value="{{this.poll}}">
+                      {{#select this.poll}}
+                      <option value="">none</option>
+                      <option value="p:1">poll 1s</option>
+                      <option value="p:10">poll 10s</option>
+                      <option value="w:1">watch 1s</option>
+                      <option value="w:10">watch 10s</option>
+                      {{/select}}
+                    </select>
+                    <button id="{{this.id}}_update" onclick="poll_once('{{@key}}')">Refresh</button>
+                    <span id="{{this.id}}_polltime"></span>
+
+                  </td>
+                  <td  width="10%" id="{{this.id}}" onclick="bshow('{{this.id}}')" style="cursor: default;">{{hex this.val}}</td>
+                </tr>
+                <tr id="{{this.id}}_b" style="display: none;">
+                  <td colspan=6>
+                    <table width="100%" class="datatable">
+                      {{#each this.rows}}
+                        <tr class="yel">
+                          {{#each this.bits}}
+                          <td id="{{../../id}}_{{this}}">{{this}}</td>
+                          {{/each}}
+                        </tr>
+                        <tr>
+                          {{#each this.flds}}
+                          <td colspan="{{this.size}}" class="{{this.class}}" >
+                            {{{this.name}}}<span id="{{../../id}}_{{this.name}}"></span>
+                          </td>
+                          {{/each}}
+                        </tr>
+                      {{/each}}
+                    </table>
+                  </td>
+                </tr>
+                <tr id="{{this.id}}_tr" style="display: none;">
+                  <td colspan=6>
+                    <table width="100%" class="datatabled">
+                      <tr>
+                        <th width="20px">Bit</th>
+                        <th width="200px">Field</th>
+                        <th width="20px">Type</th>
+                        <th width="200px">Description</th>
+                        <th width="80px">Value</th>
+                        <th width="80px">
+                          <button id="{{@key}}_copy" onclick="copy('{{@key}}')">Copy</button>
+                          <button id="{{@key}}_update" onclick="update('{{@key}}','all')">Update</button>
+                        </th>
+                      </tr>
+                      {{#each this.d}}
+                      <tr>
+                        <td class="white" width="20px">{{this.p}}:{{this.s}}</td>
+                        <td class="white" width="200px">{{@key}}</td>
+                        <td class="white" width="20px">{{this.rw}}</td>
+                        <td class="white" width="200px">{{this.n}}</td>
+                        <td class="white"  width="80px" id="{{../id}}_{{@key}}_s"></td>
+                        <td class="white" width="40px">
+                          <input value="{{this.val}}" maxlength="8" size="8" id="{{../id}}_{{@key}}_input">
+                          <button id="{{@key}}_update" onclick="update('{{@../key}}','{{@key}}')">Set</button>
+
+                        </td>
+                      </tr>
+                    {{/each}}
+                    </table>
+                  </td>
+                </tr>
+            </table>
+          </td>
+          </tr>
+          {{/if}}
+          {{/each}}
+        </table>
+      </td>
+      <!-- <td>
+        <table>
+          {{#each syms}}
+          {{#if this.poll}}
+          <tr>
+              <td>{{@key}}</td>
+              <td>{{hex this.a}}</td>
+              <td>{{hex this.s 2}}</td>
+              <td id="{{@key}}">{{hex this.val}}</td>
+          </tr>
+          {{/if}}
+          {{/each}}
+        </table>
+      </td> -->
+    </tr>
+  </table>
+</script>

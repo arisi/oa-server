@@ -1,0 +1,91 @@
+{
+  GPIO: {
+    base: 0x40040000,
+    name: "General Purpose I/O",
+    n: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    nm: 0x20,
+    pages: [280, 297],
+    regs: {
+      PCNTR1: {
+        n: "Port Control Register 1",
+        o: 0x00,
+        s: 4,
+        page: 282,
+        d: {
+          PDR: {
+            n: "Output Data Register",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+          PODRT: {
+            n: "Direction Register",
+            bits: [
+              16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      PCNTR2: {
+        n: "Port Control Register 2",
+        o: 0x04,
+        s: 4,
+        page: 283,
+        d: {
+          PIDR: {
+            n: "Input Data Register",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "r",
+          },
+          EIDR: {
+            n: "Event Input Register",
+            bits: [
+              16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "r",
+          },
+        },
+      },
+      PCNTR3: {
+        n: "Port Control Register 3",
+        o: 0x08,
+        s: 4,
+        page: 284,
+        d: {
+          POSR: {
+            n: "Output Set",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "w",
+          },
+          PORR: {
+            n: "Output Reset",
+            bits: [
+              16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "w",
+          },
+        },
+      },
+      PCNTR4: {
+        n: "Port Control Register 4",
+        o: 0x0c,
+        s: 4,
+        page: 285,
+        d: {
+          EOSR: {
+            n: "Event Output Set",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+          EORR: {
+            n: "Event Output Reset",
+            bits: [
+              16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

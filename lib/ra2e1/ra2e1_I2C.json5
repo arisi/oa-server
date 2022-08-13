@@ -1,0 +1,769 @@
+{
+  I2C: {
+    base: 0x40053000,
+    name: "I2C Device",
+    n: [0],
+    nm: 0,
+    pages: [634, 709],
+    regs: {
+      ICCR1: {
+        n: "I2C Bus Control Register 1",
+        o: 0x00,
+        s: 1,
+        page: 636,
+        d: {
+          SDAI: {
+            n: "SDA Line Monitor",
+            bits: [0],
+            boot: 1,
+            rw: "r",
+            v: [
+              { v: 0, key: "LOW" },
+              { v: 1, key: "HIGH" },
+            ],
+          },
+          SCLI: {
+            n: "SCL Line Monitor",
+            bits: [1],
+            boot: 1,
+            rw: "r",
+            v: [
+              { v: 0, key: "LOW" },
+              { v: 1, key: "HIGH" },
+            ],
+          },
+          SDAO: {
+            n: "SDA Output Control/Monitor",
+            bits: [2],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DRIVES_LOW" },
+              { v: 1, key: "RELEASES" },
+            ],
+          },
+          SCLO: {
+            n: "SCL Output Control/Monitor",
+            bits: [3],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DRIVES_LOW" },
+              { v: 1, key: "RELEASES" },
+            ],
+          },
+          SOWP: {
+            n: "SCLO/SDAO Write Protect",
+            bits: [4],
+            boot: 1,
+            rw: "w",
+            v: [
+              { v: 0, key: "WRITE_ENABLED" },
+              { v: 1, key: "WRITE_PROTECTED" },
+            ],
+          },
+          CLO: {
+            n: "Extra SCL Clock Cycle Output",
+            bits: [5],
+            rw: "rw",
+          },
+          IICRST: {
+            n: "I2C Bus Interface Internal Reset",
+            bits: [6],
+            rw: "rw",
+            v: [
+              { v: 0, key: "RELEASE_RESET" },
+              { v: 1, key: "INITIATE_RESET" },
+            ],
+          },
+          ICE: {
+            n: "I2C Bus Interface Enable",
+            bits: [7],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+        },
+      },
+      ICCR2: {
+        n: "I2C Bus Control Register 2",
+        o: 0x01,
+        s: 1,
+        page: 638,
+        d: {
+          ST: {
+            n: "Start Condition Issuance Request",
+            bits: [1],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NONE" },
+              { v: 1, key: "ISSUE_START" },
+            ],
+          },
+          RS: {
+            n: "Restart Condition Issuance Request",
+            bits: [2],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NONE" },
+              { v: 1, key: "ISSUE_RESTART" },
+            ],
+          },
+          SP: {
+            n: "Stop Condition Issuance Request",
+            bits: [3],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NONE" },
+              { v: 1, key: "ISSUE_STOP" },
+            ],
+          },
+          TRS: {
+            n: "Transmit/Receive Mode",
+            bits: [5],
+            rw: "rw",
+            v: [
+              { v: 0, key: "RECEIVE" },
+              { v: 1, key: "TRANSMIT" },
+            ],
+          },
+          MST: {
+            n: "Master/Slave Mode",
+            bits: [6],
+            rw: "rw",
+            v: [
+              { v: 0, key: "SLAVE" },
+              { v: 1, key: "MASTER" },
+            ],
+          },
+          BBSY: {
+            n: "Bus Busy Detection Flag",
+            bits: [7],
+            rw: "r",
+            v: [
+              { v: 0, key: "RELEASED" },
+              { v: 1, key: "OCCUPIED" },
+            ],
+          },
+        },
+      },
+      ICMR1: {
+        n: "I2C Bus Mode Register 1",
+        o: 0x02,
+        s: 1,
+        page: 641,
+        d: {
+          BC: {
+            n: "Bit Counter",
+            bits: [0, 1, 2],
+            rw: "rw",
+          },
+          BCWP: {
+            n: "BC Write Protect",
+            bits: [3],
+            boot: 1,
+            rw: "w",
+          },
+          CKS: {
+            n: "Internal Reference Clock Select",
+            bits: [4, 5, 6],
+            rw: "rw",
+          },
+          MTWP: {
+            n: "MST/TRS Write Protect",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+      ICMR2: {
+        n: "I2C Bus Mode Register 2",
+        o: 0x03,
+        s: 1,
+        page: 642,
+        d: {
+          TMOS: {
+            n: "Timeout Detection Time Select",
+            bits: [0],
+            rw: "rw",
+            v: [
+              { v: 0, key: "LONG_MODE" },
+              { v: 1, key: "SHORT_MODE" },
+            ],
+          },
+          TMOL: {
+            n: "Timeout L Count Control",
+            bits: [1],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE_WHEN_LOW" },
+              { v: 1, key: "ENABLE_WHEN_LOW" },
+            ],
+          },
+          TMOH: {
+            n: "Timeout H Count Control",
+            bits: [2],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE_WHEN_LOW" },
+              { v: 1, key: "ENABLE_WHEN_LOW" },
+            ],
+          },
+          SDDL: {
+            n: "SDA Output Delay Counter",
+            bits: [4, 5, 6],
+            rw: "rw",
+          },
+          DLCS: {
+            n: "SDA Output Delay Clock Source Select ",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+      ICMR3: {
+        n: "I2C Bus Mode Register 3",
+        o: 0x04,
+        s: 1,
+        page: 643,
+        d: {
+          NF: {
+            n: "Noise Filter Stage Select",
+            bits: [0, 1],
+            rw: "rw",
+          },
+          ACKBR: {
+            n: "Receive Acknowledge",
+            bits: [2],
+            rw: "r",
+            v: [
+              { v: 0, key: "RECEIVED_ACK" },
+              { v: 1, key: "RECEIVED_NACK" },
+            ],
+          },
+          ACKBT: {
+            n: "Transmit Acknowledge",
+            bits: [3],
+            rw: "rw",
+            v: [
+              { v: 0, key: "SEND_ACK" },
+              { v: 1, key: "SEND_NACK" },
+            ],
+          },
+          ACKWP: {
+            n: "ACKBT Write Protect",
+            bits: [4],
+            rw: "rw",
+            v: [
+              { v: 0, key: "WRITE_PROTECTED" },
+              { v: 1, key: "WRITE_ENABLED" },
+            ],
+          },
+          RDRFS: {
+            n: "RDRF Flag Set Timing Select",
+            bits: [5],
+            rw: "rw",
+          },
+          WAIT: {
+            n: "Low-hold is released by reading ICDRR",
+            bits: [6],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NO_WAIT" },
+              { v: 1, key: "WAIT" },
+            ],
+          },
+          SMBS: {
+            n: "SMBus/I2C Bus Select",
+            bits: [7],
+            rw: "rw",
+            v: [
+              { v: 0, key: "I2C" },
+              { v: 1, key: "SMBUS" },
+            ],
+          },
+        },
+      },
+      ICFER: {
+        n: "I2C Bus Function Enable Register",
+        o: 0x05,
+        s: 1,
+        page: 645,
+        d: {
+          TMOE: {
+            n: "Timeout Function Enable",
+            bits: [0],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          MALE: {
+            n: "Master Arbitration-Lost Detection Enable",
+            bits: [1],
+            boot: 1,
+            rw: "rw",
+          },
+          NALE: {
+            n: "NACK Transmission Arbitration-Lost Detection Enable",
+            bits: [2],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          SALE: {
+            n: "Slave Arbitration-Lost Detection Enable",
+            bits: [3],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          NACKE: {
+            n: "NACK Reception Transfer Suspension Enable",
+            bits: [4],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          NFE: {
+            n: "Digital Noise Filter Circuit Enable",
+            bits: [5],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          SCLE: {
+            n: "SCL Synchronous Circuit Enable",
+            bits: [6],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+        },
+      },
+      ICSER: {
+        n: "I2C Bus Status Enable Register",
+        o: 0x06,
+        s: 1,
+        page: 646,
+        d: {
+          SAR0E: {
+            n: "Slave Address Register 0 Enable",
+            bits: [0],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          SAR1E: {
+            n: "Slave Address Register 1 Enable",
+            bits: [1],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          SAR2E: {
+            n: "Slave Address Register 2 Enable",
+            bits: [2],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          GCAE: {
+            n: "General Call Address Enable",
+            bits: [3],
+            boot: 1,
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          DIDE: {
+            n: "Device-ID Address Detection Enable",
+            bits: [5],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          HOAE: {
+            n: "Host Address Enable",
+            bits: [7],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+        },
+      },
+      ICIER: {
+        n: "I2C Bus Interrupt Enable Register",
+        o: 0x07,
+        s: 1,
+        page: 647,
+        d: {
+          TMOIE: {
+            n: "Timeout Interrupt Request Enable",
+            bits: [0],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          ALIE: {
+            n: "Arbitration-Lost Interrupt Request Enable",
+            bits: [1],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          STIE: {
+            n: "Start Condition Detection Interrupt Request Enable",
+            bits: [2],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          SPIE: {
+            n: "Stop Condition Detection Interrupt Request Enable",
+            bits: [3],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          NAKIE: {
+            n: "NACK Reception Interrupt Request Enable",
+            bits: [4],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          RIE: {
+            n: "Receive Data Full Interrupt Request Enable",
+            bits: [5],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          TEIE: {
+            n: "Transmit End Interrupt Request Enable ",
+            bits: [6],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          TIE: {
+            n: "Transmit Data Empty Interrupt Request Enable",
+            bits: [7],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+        },
+      },
+      ICSR1: {
+        n: "I2C Bus Status Register 1",
+        o: 0x08,
+        s: 1,
+        page: 649,
+        d: {
+          AAS0: {
+            n: "Slave Address 0 Detection Flag",
+            bits: [0],
+            rw: "rw",
+          },
+          AAS1: {
+            n: "Slave Address 1 Detection Flag",
+            bits: [1],
+            rw: "rw",
+          },
+          AAS2: {
+            n: "Slave Address 2 Detection Flag",
+            bits: [2],
+            rw: "rw",
+          },
+          GCA: {
+            n: "General Call Address Detection Flag",
+            bits: [3],
+            rw: "rw",
+          },
+          DID: {
+            n: "Device-ID Address Detection Flag",
+            bits: [5],
+            rw: "rw",
+          },
+          HOA: {
+            n: "Host Address Detection Flag",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+      ICSR2: {
+        n: "I2C Bus Status Register 2",
+        o: 0x09,
+        s: 1,
+        page: 651,
+        d: {
+          TMOF: {
+            n: "Timeout Detection Flag",
+            bits: [0],
+            rw: "rw",
+          },
+          AL: {
+            n: "Arbitration-Lost Flag",
+            bits: [1],
+            rw: "rw",
+          },
+          START: {
+            n: "Start Condition Detection Flag",
+            bits: [2],
+            rw: "rw",
+          },
+          STOP: {
+            n: "Stop Condition Detection Flag",
+            bits: [3],
+            rw: "rw",
+          },
+          NACKF: {
+            n: "NACK Detection Flag",
+            bits: [4],
+            rw: "rw",
+          },
+          RDRF: {
+            n: "Receive Data Full Flag",
+            bits: [5],
+            rw: "rw",
+          },
+          TEND: {
+            n: "Transmit End Flag ",
+            bits: [6],
+            rw: "rw",
+          },
+          TDRE: {
+            n: "Transmit Data Empty Flag ",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+      /*ICWUR: {
+        n: 'I2C Bus Wakeup Unit Register',
+        o: 0x16,
+        s: 1,
+        page: 654,
+        d: {
+          WUAFA: {
+            n: 'Wakeup Analog Filter Additional Selection',
+            bits:[0],
+            rw: 'rw',
+          },
+          WUACK: {
+            n: 'ACK Bit for Wakeup Mode',
+            bits:[4],
+            boot: 1,
+            rw: 'rw',
+          },
+          WUF: {
+            n: 'Wakeup Event Occurrence Flag',
+            bits:[5],
+            rw: 'rw',
+          },
+          WUIE: {
+            n: 'Wakeup Interrupt Request Enable ',
+            bits:[6],
+            rw: 'rw',
+          },
+          WUE: {
+            n: 'Wakeup Function Enable',
+            bits:[7],
+            rw: 'rw',
+          },
+        },
+      },
+      ICWUR2: {
+        n: 'I2C Bus Wakeup Unit Register 2',
+        o: 0x17,
+        s: 1,
+        page: 655,
+        d: {
+          WUSEN: {
+            n: 'Wakeup Analog Filter Additional Selection',
+            bits:[0],
+            boot: 1,
+            rw: 'r',
+          },
+          WUASYF: {
+            n: 'ACK Bit for Wakeup Mode',
+            bits:[1],
+            boot: 1,
+            rw: 'r',
+          },
+          WUSYF: {
+            n: 'Wakeup Event Occurrence Flag',
+            bits:[2],
+            boot: 1,
+            rw: 'r',
+          },
+          dummy: {
+            n: 'Write 1',
+            bits:[3,4,5,6,7],
+            boot: 0x1f,
+            rw: 'rw',
+          },
+        },
+      },*/
+      SARU0: {
+        n: "Slave Address Register 0",
+        o: 0x0a,
+        s: 1,
+        page: 656,
+        d: {
+          SVA0_0: {
+            n: "10-bit Address LSB",
+            bits: [0],
+            rw: "rw",
+          },
+          SVA0: {
+            n: "Address",
+            bits: [1, 2, 3, 4, 5, 6, 7],
+            rw: "rw",
+          },
+        },
+      },
+      SARU1: {
+        n: "Slave Address Register 1",
+        o: 0x0c,
+        s: 1,
+        page: 656,
+        d: {
+          SVA1_0: {
+            n: "10-bit Address LSB",
+            bits: [0],
+            rw: "rw",
+          },
+          SVA1: {
+            n: "Address",
+            bits: [1, 2, 3, 4, 5, 6, 7],
+            rw: "rw",
+          },
+        },
+      },
+      SARU2: {
+        n: "Slave Address Register 2",
+        o: 0x0e,
+        s: 1,
+        page: 656,
+        d: {
+          SVA2_0: {
+            n: "10-bit Address LSB",
+            bits: [0],
+            rw: "rw",
+          },
+          SVA2: {
+            n: "Address",
+            bits: [1, 2, 3, 4, 5, 6, 7],
+            rw: "rw",
+          },
+        },
+      },
+      ICBRL: {
+        n: "I2C Bus Bit Rate Low-Level Register",
+        o: 0x10,
+        s: 1,
+        page: 657,
+        d: {
+          BRL: {
+            n: "Bit Rate Low-Level Period",
+            bits: [0, 1, 2, 3, 4],
+            boot: 0x1f,
+            rw: "rw",
+          },
+        },
+      },
+      ICBRH: {
+        n: "I2C Bus Bit Rate High-Level Register",
+        o: 0x11,
+        s: 1,
+        page: 658,
+        d: {
+          BRH: {
+            n: "Bit Rate High-Level Period",
+            bits: [0, 1, 2, 3, 4],
+            boot: 0x1f,
+            rw: "rw",
+          },
+        },
+      },
+      ICDRT: {
+        n: "I2C Bus Transmit Data Register",
+        o: 0x12,
+        s: 1,
+        page: 659,
+        d: {
+          ICDRT: {
+            n: "I2C Bus Transmit Data Register",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            boot: 0xff,
+            rw: "rw",
+          },
+        },
+      },
+      ICDRR: {
+        n: "I2C Bus Receive Data Register",
+        o: 0x13,
+        s: 1,
+        page: 659,
+        d: {
+          ICDRR: {
+            n: "I2C Bus Receive Data Register",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

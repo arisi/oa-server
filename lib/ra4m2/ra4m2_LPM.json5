@@ -1,0 +1,42 @@
+{
+  LPM: {
+    base: 0x4001e000,
+    name: "Low Power Modes",
+    n: [0],
+    nm: 0,
+    pages: [192, 193],
+    regs: {
+      SBYCR: {
+        n: "Standby Control Register",
+        o: 0x00c,
+        s: 2,
+        page: 192,
+        d: {
+          SSBY: {
+            n: "Software Standby Mode Select",
+            bits: [15],
+            rw: "rw",
+          },
+        },
+      },
+      OPCCR: {
+        n: "Operating Power Control Register",
+        o: 0xa0,
+        s: 1,
+        page: 199,
+        d: {
+          OPCM: {
+            n: "Operating Power Control Mode Select",
+            bits: [0, 1],
+            rw: "rw",
+          },
+          OPCMTSF: {
+            n: "Operating Power Control Mode Transition Status Flag",
+            bits: [4],
+            rw: "r",
+          },
+        },
+      },
+    },
+  },
+}

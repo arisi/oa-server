@@ -1,0 +1,213 @@
+{
+  IOC: {
+    base: 0x40081000,
+    name: "I/O Controller",
+    n: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+    nm: 4,
+    pages: [1119, 1125],
+    regs: {
+      IOCFG: {
+        n:"Configuration for DIO",
+        o: 0x00,
+        s: 4,
+        page: 1121,
+        d: {
+          PORT_ID: {
+            n: "PORT_ID",
+            bits: [0,1,2,3,4,5],
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "GPIO",
+              },
+              {
+                v: 0x08,
+                key: "AUX_IO",
+              },
+              {
+                v: 0x0F,
+                key: "UART0_RX",
+              },
+              {
+                v: 0x10,
+                key: "UART0_TX",
+              },
+            ],
+
+          },
+          IOEV_MCU_WU_EN: {
+            n: "Assert MCU_WU Event",
+            bits: [6],
+            rw: "rw",
+          },
+          IOEV_RTC_EN: {
+            n: "Assert RTC_EN Event",
+            bits: [7],
+            rw: "rw",
+          },
+          IOSTR: {
+            n: "IO Strength",
+            bits: [8,9],
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "AUTO",
+                n: "Automatic",
+              },
+              {
+                v: 0x01,
+                key: "MIN",
+                n: "Minimum",
+              },
+              {
+                v: 0x02,
+                key: "MED",
+                n: "Medium",
+              },
+              {
+                v: 0x03,
+                key: "MAX",
+                n: "Maximum",
+              },
+            ],
+          },
+          IOCURR: {
+            n: "IO Current",
+            bits: [10,11],
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "2MA",
+                n: "Low Current (2mA)",
+              },
+              {
+                v: 0x01,
+                key: "4MA",
+                n: "High Current (4mA)",
+              },
+              {
+                v: 0x02,
+                key: "4_8MA",
+                n: "Extended Current (4/8mA)",
+              },
+            ],
+          },
+          SLEW_RED: {
+            n: "Slew Rate Reduction",
+            bits: [12],
+            rw: "rw",
+          },
+          PULL_CTL: {
+            n: "Pull Control",
+            bits: [13,14],
+            rw: "rw",
+            v: [
+              {
+                v: 0x01,
+                key: "DWN",
+                n: "Pull Down",
+              },
+              {
+                v: 0x02,
+                key: "UP",
+                n: "Pull Up",
+              },
+              {
+                v: 0x03,
+                key: "DIS",
+                n: "No Pull",
+              },
+            ],
+          },
+          EDGE_DET: {
+            n: "Edge Detection",
+            bits: [16,17],
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "NONE",
+                n: "No edge detection",
+              },
+              {
+                v: 0x01,
+                key: "NEGATIVE",
+                n: "Negative edge detection",
+              },
+              {
+                v: 0x02,
+                key: "POSITIVE",
+                n: "Positive edge detection",
+              },
+              {
+                v: 0x03,
+                key: "BOTH",
+                n: "Positive and Negative edge detection",
+              },
+            ],
+          },
+          EDGE_IRQ_EN: {
+            n: "Enable IRQ for Event",
+            bits: [18],
+            rw: "rw",
+          },
+          IOEV_AON_PROG0_EN: {
+            n: "Enable PROG0 Event for Detected Edge",
+            bits: [21],
+            rw: "rw",
+          },
+          IOEV_AON_PROG1_EN: {
+            n: "Enable PROG1 Event for Detected Edge",
+            bits: [22],
+            rw: "rw",
+          },
+          IOEV_AON_PROG2_EN: {
+            n: "Enable PROG2 Event for Detected Edge",
+            bits: [23],
+            rw: "rw",
+          },
+          IOMODE: {
+            n: "IO Mode",
+            bits: [24,25,26],
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "NORMAL",
+                n: "Normal IO",
+              },
+              {
+                v: 0x01,
+                key: "INV",
+                n: "Inverted IO",
+              },
+              {
+                v: 0x04,
+                key: "OPENDR",
+                n: "Open Drain",
+              },
+              {
+                v: 0x05,
+                key: "OPENDR_INV",
+                n: "Inverted Open Drain",
+              },
+              {
+                v: 0x06,
+                key: "OPENSRC",
+                n: "Open Source",
+              },
+              {
+                v: 0x07,
+                key: "OPENSRC_INV",
+                n: "Inverted Open Source",
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
+}

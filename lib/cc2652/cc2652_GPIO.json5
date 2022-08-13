@@ -1,0 +1,520 @@
+{
+  GPIO: {
+    base: 0x40022000,
+    name: "General Purpose I/O",
+    n: [0],
+    nm: 0,
+    pages: [1096, 1118],
+    regs: {
+
+      DOUT31_0: {
+        n: "Data Output Register",
+        o: 0x80,
+        s: 4,
+        page: 1105,
+        d: {
+          DOUT0: {
+            n: "DOUT0",
+            bits: [0],
+            rw: "rw",
+          },
+          DOUT1: {
+            n: "DOUT1",
+            bits: [1],
+            rw: "rw",
+          },
+          DOUT2: {
+            n: "DOUT2",
+            bits: [2],
+            rw: "rw",
+          },
+          DOUT3: {
+            n: "DOUT3",
+            bits: [3],
+            rw: "rw",
+          },
+          DOUT4: {
+            n: "DOUT4",
+            bits: [4],
+            rw: "rw",
+          },
+          DOUT5: {
+            n: "DOUT5",
+            bits: [5],
+            rw: "rw",
+          },
+          DOUT6: {
+            n: "DOUT6",
+            bits: [6],
+            rw: "rw",
+          },
+          DOUT7: {
+            n: "DOUT7",
+            bits: [7],
+            rw: "rw",
+          },
+          DOUT8: {
+            n: "DOUT8",
+            bits: [8],
+            rw: "rw",
+          },
+          DOUT9: {
+            n: "DOUT9",
+            bits: [9],
+            rw: "rw",
+          },
+          DOUT10: {
+            n: "DOUT10",
+            bits: [10],
+            rw: "rw",
+          },
+          DOUT11: {
+            n: "DOUT11",
+            bits: [11],
+            rw: "rw",
+          },
+          DOUT12: {
+            n: "DOUT12",
+            bits: [12],
+            rw: "rw",
+          },
+          DOUT13: {
+            n: "DOUT13",
+            bits: [13],
+            rw: "rw",
+          },
+          DOUT14: {
+            n: "DOUT14",
+            bits: [14],
+            rw: "rw",
+          },
+          DOUT15: {
+            n: "DOUT15",
+            bits: [15],
+            rw: "rw",
+          },
+          DOUT16: {
+            n: "DOUT16",
+            bits: [16],
+            rw: "rw",
+          },
+          DOUT17: {
+            n: "DOUT17",
+            bits: [17],
+            rw: "rw",
+          },
+          DOUT18: {
+            n: "DOUT18",
+            bits: [18],
+            rw: "rw",
+          },
+          DOUT19: {
+            n: "DOUT19",
+            bits: [19],
+            rw: "rw",
+          },
+          DOUT20: {
+            n: "DOUT20",
+            bits: [20],
+            rw: "rw",
+          },
+          DOUT21: {
+            n: "DOUT21",
+            bits: [21],
+            rw: "rw",
+          },
+          DOUT22: {
+            n: "DOUT22",
+            bits: [22],
+            rw: "rw",
+          },
+          DOUT23: {
+            n: "DOUT23",
+            bits: [23],
+            rw: "rw",
+          },
+          DOUT24: {
+            n: "DOUT24",
+            bits: [24],
+            rw: "rw",
+          },
+          DOUT25: {
+            n: "DOUT25",
+            bits: [25],
+            rw: "rw",
+          },
+          DOUT26: {
+            n: "DOUT26",
+            bits: [26],
+            rw: "rw",
+          },
+          DOUT27: {
+            n: "DOUT27",
+            bits: [27],
+            rw: "rw",
+          },
+          DOUT28: {
+            n: "DOUT28",
+            bits: [28],
+            rw: "rw",
+          },
+          DOUT29: {
+            n: "DOUT29",
+            bits: [29],
+            rw: "rw",
+          },
+          DOUT30: {
+            n: "DOUT30",
+            bits: [30],
+            rw: "rw",
+          },
+          DOUT31: {
+            n: "DOUT31",
+            bits: [31],
+            rw: "rw",
+          },
+        },
+      },
+
+      DIN31_0: {
+        n: "Data In Register",
+        o: 0xC0,
+        s: 4,
+        page: 1113,
+        d: {
+          DIO0: {
+            n: "DIO0",
+            bits: [0],
+            rw: "r",
+          },
+          DIO1: {
+            n: "DIO1",
+            bits: [1],
+            rw: "r",
+          },
+          DIO2: {
+            n: "DIO2",
+            bits: [2],
+            rw: "r",
+          },
+          DIO3: {
+            n: "DIO3",
+            bits: [3],
+            rw: "r",
+          },
+          DIO4: {
+            n: "DIO4",
+            bits: [4],
+            rw: "r",
+          },
+          DIO5: {
+            n: "DIO5",
+            bits: [5],
+            rw: "r",
+          },
+          DIO6: {
+            n: "DIO6",
+            bits: [6],
+            rw: "r",
+          },
+          DIO7: {
+            n: "DIO7",
+            bits: [7],
+            rw: "r",
+          },
+          DIO8: {
+            n: "DIO8",
+            bits: [8],
+            rw: "r",
+          },
+          DIO9: {
+            n: "DIO9",
+            bits: [9],
+            rw: "r",
+          },
+          DIO10: {
+            n: "DIO10",
+            bits: [10],
+            rw: "r",
+          },
+          DIO11: {
+            n: "DIO11",
+            bits: [11],
+            rw: "r",
+          },
+          DIO12: {
+            n: "DIO12",
+            bits: [12],
+            rw: "r",
+          },
+          DIO13: {
+            n: "DIO13",
+            bits: [13],
+            rw: "r",
+          },
+          DIO14: {
+            n: "DIO14",
+            bits: [14],
+            rw: "r",
+          },
+          DIO15: {
+            n: "DIO15",
+            bits: [15],
+            rw: "r",
+          },
+          DIO16: {
+            n: "DIO16",
+            bits: [16],
+            rw: "r",
+          },
+          DIO17: {
+            n: "DIO17",
+            bits: [17],
+            rw: "r",
+          },
+          DIO18: {
+            n: "DIO18",
+            bits: [18],
+            rw: "r",
+          },
+          DIO19: {
+            n: "DIO19",
+            bits: [19],
+            rw: "r",
+          },
+          DIO20: {
+            n: "DIO20",
+            bits: [20],
+            rw: "r",
+          },
+          DIO21: {
+            n: "DIO21",
+            bits: [21],
+            rw: "r",
+          },
+          DIO22: {
+            n: "DIO22",
+            bits: [22],
+            rw: "r",
+          },
+          DIO23: {
+            n: "DIO23",
+            bits: [23],
+            rw: "r",
+          },
+          DIO24: {
+            n: "DIO24",
+            bits: [24],
+            rw: "r",
+          },
+          DIO25: {
+            n: "DIO25",
+            bits: [25],
+            rw: "r",
+          },
+          DIO26: {
+            n: "DIO26",
+            bits: [26],
+            rw: "r",
+          },
+          DIO27: {
+            n: "DIO27",
+            bits: [27],
+            rw: "r",
+          },
+          DIO28: {
+            n: "DIO28",
+            bits: [28],
+            rw: "r",
+          },
+          DIO29: {
+            n: "DIO29",
+            bits: [29],
+            rw: "r",
+          },
+          DIO30: {
+            n: "DIO30",
+            bits: [30],
+            rw: "r",
+          },
+          DIO31: {
+            n: "DIO31",
+            bits: [31],
+            rw: "r",
+          },
+        },
+      },
+      DOE31_0: {
+        n: "Data Output Enable Register",
+        o: 0xD0,
+        s: 4,
+        page: 1115,
+        d: {
+          DOE0: {
+            n: "DOE0",
+            bits: [0],
+            rw: "rw",
+          },
+          DOE1: {
+            n: "DOE1",
+            bits: [1],
+            rw: "rw",
+          },
+          DOE2: {
+            n: "DOE2",
+            bits: [2],
+            rw: "rw",
+          },
+          DOE3: {
+            n: "DOE3",
+            bits: [3],
+            rw: "rw",
+          },
+          DOE4: {
+            n: "DOE4",
+            bits: [4],
+            rw: "rw",
+          },
+          DOE5: {
+            n: "DOE5",
+            bits: [5],
+            rw: "rw",
+          },
+          DOE6: {
+            n: "DOE6",
+            bits: [6],
+            rw: "rw",
+          },
+          DOE7: {
+            n: "DOE7",
+            bits: [7],
+            rw: "rw",
+          },
+          DOE8: {
+            n: "DOE8",
+            bits: [8],
+            rw: "rw",
+          },
+          DOE9: {
+            n: "DOE9",
+            bits: [9],
+            rw: "rw",
+          },
+          DOE10: {
+            n: "DOE10",
+            bits: [10],
+            rw: "rw",
+          },
+          DOE11: {
+            n: "DOE11",
+            bits: [11],
+            rw: "rw",
+          },
+          DOE12: {
+            n: "DOE12",
+            bits: [12],
+            rw: "rw",
+          },
+          DOE13: {
+            n: "DOE13",
+            bits: [13],
+            rw: "rw",
+          },
+          DOE14: {
+            n: "DOE14",
+            bits: [14],
+            rw: "rw",
+          },
+          DOE15: {
+            n: "DOE15",
+            bits: [15],
+            rw: "rw",
+          },
+          DOE16: {
+            n: "DOE16",
+            bits: [16],
+            rw: "rw",
+          },
+          DOE17: {
+            n: "DOE17",
+            bits: [17],
+            rw: "rw",
+          },
+          DOE18: {
+            n: "DOE18",
+            bits: [18],
+            rw: "rw",
+          },
+          DOE19: {
+            n: "DOE19",
+            bits: [19],
+            rw: "rw",
+          },
+          DOE20: {
+            n: "DOE20",
+            bits: [20],
+            rw: "rw",
+          },
+          DOE21: {
+            n: "DOE21",
+            bits: [21],
+            rw: "rw",
+          },
+          DOE22: {
+            n: "DOE22",
+            bits: [22],
+            rw: "rw",
+          },
+          DOE23: {
+            n: "DOE23",
+            bits: [23],
+            rw: "rw",
+          },
+          DOE24: {
+            n: "DOE24",
+            bits: [24],
+            rw: "rw",
+          },
+          DOE25: {
+            n: "DOE25",
+            bits: [25],
+            rw: "rw",
+          },
+          DOE26: {
+            n: "DOE26",
+            bits: [26],
+            rw: "rw",
+          },
+          DOE27: {
+            n: "DOE27",
+            bits: [27],
+            rw: "rw",
+          },
+          DOE28: {
+            n: "DOE28",
+            bits: [28],
+            rw: "rw",
+          },
+          DOE29: {
+            n: "DOE29",
+            bits: [29],
+            rw: "rw",
+          },
+          DOE30: {
+            n: "DOE30",
+            bits: [30],
+            rw: "rw",
+          },
+          DOE31: {
+            n: "DOE31",
+            bits: [31],
+            rw: "rw",
+          },
+
+
+        },
+      },
+
+    },
+  },
+}

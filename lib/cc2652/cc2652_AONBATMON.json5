@@ -1,0 +1,43 @@
+{
+  AONBATMON: {
+    base: 0x40095000,
+    name: "AON Battery Monitor and Temperature Sensor",
+    n: [0],
+    nm: 0,
+    pages: [616, 1863],
+    regs: {
+      BAT: {
+        n:"Last Measured Battery Voltage",
+        o: 0x28,
+        s: 4,
+        page: 1821,
+        d: {
+          INT: {
+            bits: [8,9,10],
+            n: "Integer part.",
+            rw: "r",
+          },
+          FRAC: {
+            bits: [0,1,2,3,4,5,6,7],
+            n: "Fractional part.",
+            rw: "r",
+          },
+        },
+      },
+      TEMP: {
+        n:"Last Measured Temperature in Degrees Celsius",
+        o: 0x30,
+        s: 4,
+        page: 1823,
+        d: {
+          INT: {
+            bits: [8,9,10,11,12,13,14,15,16],
+            n: "Integer part (signed) of temperature value.",
+            rw: "r",
+          },
+        },
+      },
+
+    },
+  },
+}

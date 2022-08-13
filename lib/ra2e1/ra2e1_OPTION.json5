@@ -1,0 +1,89 @@
+{
+  OPTION: {
+    base: 0x00000400,
+    name: "Option-Setting Memory",
+    n: [0],
+    nm: 0,
+    pages: [87, 96],
+    regs: {
+      OFS0: {
+        n: "Option Function Select Register 0",
+        o: 0x00,
+        s: 4,
+        page: 87,
+        d: {
+          IWDTSTRT: {
+            n: "WDT Start Mode Select",
+            bits: [1],
+            rw: "r",
+          },
+          IWDTTOPS: {
+            n: "IWDT Timeout Period Select",
+            bits: [2, 3],
+            rw: "r",
+          },
+          IWDTCKS: {
+            n: "IWDT-Dedicated Clock Frequency Division Ratio Select",
+            bits: [4, 5, 6, 7],
+            rw: "r",
+          },
+          IWDTRPES: {
+            n: "IWDT Window End Position Select",
+            bits: [8, 9],
+            rw: "r",
+          },
+          IWDTRPSS: {
+            n: "IWDT Window Start Position Select",
+            bits: [10, 11],
+            rw: "r",
+          },
+          IWDTRSTIRQS: {
+            n: "IWDT Reset Interrupt Request Select",
+            bits: [12],
+            rw: "r",
+          },
+          IWDTSTPCTL: {
+            n: "IWDT Stop Control",
+            bits: [14],
+            rw: "r",
+          },
+          WDTSTRT: {
+            n: "WDT Start Mode Select",
+            bits: [17],
+            rw: "r",
+          },
+          WDTTOPS: {
+            n: "WDT Timeout Period Select",
+            bits: [18, 19],
+            rw: "r",
+          },
+          WDTCKS: {
+            n: "WDT Clock Frequency Division Ratio Select",
+            bits: [20, 21, 22, 23],
+            rw: "r",
+          },
+          WDTRPES: {
+            n: "WDT Window End Position Select",
+            bits: [24, 25],
+            rw: "r",
+          },
+          WDTRPSS: {
+            n: "WDT Window Start Position Select",
+            bits: [26, 27],
+            rw: "r",
+          },
+          WDTRSTIRQS: {
+            n: "WDT Reset Interrupt Request Select",
+            bits: [28],
+            rw: "r",
+          },
+          WDTSTPCTL: {
+            n: "WDT Stop Control",
+            bits: [30],
+            rw: "r",
+          },
+        },
+      },
+    },
+  },
+}

@@ -1,0 +1,68 @@
+html *
+{
+   font-size: 8pt !important;
+   color: #000 !important;
+   font-family: 'B612 Mono', monospace;
+}
+
+.done
+{
+  background-color: bisque;
+  transition: background-color 1s;
+}
+
+.datatable
+{
+  border-collapse: collapse;
+}
+
+.datatabled
+{
+  border-collapse: collapse;
+}
+.yel
+{
+background-color:lemonchiffon ;
+}
+.gray
+{
+background-color:lightgray ;
+}
+.white
+{
+background-color:white ;
+}
+
+.datatable td, th {
+  border:solid black 1px;
+  text-align: center;
+  width: 69px;
+}
+
+.datatabled td, th {
+  border:solid black 1px;
+  text-align: left;
+}
+
+.datatabled th {
+  background-color: lightgray;
+}
+
+table.regtable {
+  border-collapse:separate;
+  border:solid black 1.5px;
+  border-radius:6px;
+  min-width: 1200px;
+  max-width: 1200px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.on {
+   background-color:honeydew !important;
+   font-weight: 900;
+}
+
+.off {
+
+}

@@ -1,0 +1,151 @@
+{
+  FCFG: {
+    base: 0x50001000,
+    name: "Factory Configuration",
+    n: [0],
+    nm: 0,
+    pages: [835, 1863],
+    regs: {
+      MAC_BLE_0: {
+        n:"MAC BLE Address 0",
+        o: 0x2e8,
+        s: 4,
+        page: 880,
+        d: {
+          ADDR: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            n: "MAC BLE address",
+            rw: "r",
+          },
+
+        },
+      },
+      MAC_BLE_1: {
+        n:"MAC BLE Address 1",
+        o: 0x2ec,
+        s: 4,
+        page: 881,
+        d: {
+          ADDR: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            n: "MAC BLE address",
+            rw: "r",
+          },
+
+        },
+      },
+      SHDW_DIE_ID_0: {
+        n:"Shadow of DIE_ID_0 register in eFuse",
+        o: 0x3d0,
+        s: 4,
+        page: 907,
+        d: {
+          ID_31_0: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "r",
+          },
+
+        },
+      },
+      SHDW_DIE_ID_1: {
+        n:"Shadow of DIE_ID_1 register in eFuse",
+        o: 0x3d4,
+        s: 4,
+        page: 908,
+        d: {
+          ID_63_32: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "r",
+          },
+
+        },
+      },
+      SHDW_DIE_ID_2: {
+        n:"Shadow of DIE_ID_2 register in eFuse",
+        o: 0x3d8,
+        s: 4,
+        page: 909,
+        d: {
+          ID_95_64: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "r",
+          },
+
+        },
+      },
+      SHDW_DIE_ID_3: {
+        n:"Shadow of DIE_ID_3 register in eFuse",
+        o: 0x3dc,
+        s: 4,
+        page: 910,
+        d: {
+          ID_127_96: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "r",
+          },
+
+        },
+      },
+      DEVICE_ID: {
+        n:"Device Identification",
+        o: 0x318,
+        s: 4,
+        page: 888,
+        d: {
+          PG_REV: {
+            bits: [28,29,30,31],
+            n: "Field used to distinguish revisions of the device.",
+            rw: "r",
+          },
+          WAFER_ID: {
+            bits: [12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27],
+            n: "Field used to identify silicon die",
+            rw: "r",
+          },
+          MANUFACTURER_ID: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11],
+            n: "Manufacturer code. 0x02F: Texas Instruments",
+            rw: "r",
+          },
+
+        },
+      },
+
+      USER_ID: {
+        n:"User Identification.",
+        o: 0x294,
+        s: 4,
+        page: 875,
+        d: {
+          PG_REV: {
+            bits: [28,29,30,31],
+            n: "Revision of the device",
+            rw: "r",
+          },
+          VER: {
+            bits: [26,27],
+            n: "Version Number",
+            rw: "r",
+          },
+          PA: {
+            bits: [25],
+            n: "Suopports 20dBm PA",
+            rw: "r",
+          },
+          CC13: {
+            bits: [23],
+            n: "CC13xx",
+            rw: "r",
+          },
+          PROTOCOL: {
+            bits: [15,14,13,12],
+            n: "Protocols supported.",
+            rw: "r",
+          },
+
+        },
+      },
+
+    },
+  },
+}

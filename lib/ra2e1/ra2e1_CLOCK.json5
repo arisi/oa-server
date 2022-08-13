@@ -1,0 +1,136 @@
+{
+  CLOCK: {
+    base: 0x4001e000,
+    name: "Clock Generation and Write Protection",
+    n: [0],
+    nm: 0,
+    pages: [111, 139],
+    regs: {
+      PRCR: {
+        n: "Protect Register",
+        o: 0x3fe,
+        s: 2,
+        page: 182,
+        d: {
+          PRC0: {
+            n: "Enable writing to the registers related to the clock generation circuit",
+            bits: [0],
+            rw: "rw",
+          },
+          PRC1: {
+            n: "Enable writing to the registers related to the low power modes",
+            bits: [1],
+            rw: "rw",
+          },
+          PRC3: {
+            n: "Enable writing to the registers related to the LVD",
+            bits: [3],
+            rw: "rw",
+          },
+          PRKEY: {
+            n: "PRC Key Code 0xA5",
+            bits: [8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "w",
+          },
+        },
+      },
+      SCKDIVCR: {
+        n: "System Clock Division Control Register",
+        o: 0x020,
+        s: 4,
+        page: 114,
+        d: {
+          PCKD: {
+            n: "Peripheral Module Clock D (PCLKD) Select",
+            bits: [0, 1, 2],
+            rw: "rw",
+          },
+          PCKB: {
+            n: "Peripheral Module Clock B (PCLKB) Select",
+            bits: [8, 9, 10],
+            rw: "rw",
+          },
+          ICK: {
+            n: "System Clock (ICLK) Select",
+            bits: [24, 25, 26],
+            rw: "rw",
+          },
+        },
+      },
+      SCKSCR: {
+        n: "System Clock Source Control Register",
+        o: 0x026,
+        s: 1,
+        page: 115,
+        d: {
+          CLKSEL: {
+            n: "Clock Source Select",
+            bits: [0, 1, 2],
+            rw: "rw",
+            v: [
+              { v: 0x0, key: "HOCO" },
+              { v: 0x1, key: "MOCO" },
+              { v: 0x2, key: "LOCO" },
+              { v: 0x3, key: "MOSC" },
+              { v: 0x4, key: "SOSC" },
+            ],
+          },
+        },
+      },
+      MOSCCR: {
+        n: "Main Clock Oscillator Control Register",
+        o: 0x032,
+        s: 1,
+        page: 119,
+        d: {
+          MOSTP: {
+            n: "Main Clock Oscillator Stop",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },
+      MOMCR: {
+        n: "Main Clock Oscillator Mode Oscillation Control Register",
+        o: 0x413,
+        s: 1,
+        page: 127,
+        d: {
+          MODRV1: {
+            n: "Main Clock Oscillator Drive Capability 1 Switching",
+            bits: [3],
+            rw: "rw",
+          },
+          MOSEL: {
+            n: "Main Clock Oscillator Switching",
+            bits: [6],
+            rw: "rw",
+          },
+        },
+      },
+      CKOCR: {
+        n: "Clock Out Control Register",
+        o: 0x03e,
+        s: 1,
+        page: 289,
+        d: {
+          CKOSEL: {
+            n: "Clock Out Source Select",
+            bits: [0, 1, 2],
+            rw: "rw",
+          },
+          CKODIV: {
+            n: "Clock Output Frequency Division Ratio",
+            bits: [4, 5, 6],
+            rw: "rw",
+          },
+          CKOEN: {
+            n: "Clock Out Enable",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

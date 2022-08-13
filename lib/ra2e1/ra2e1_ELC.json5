@@ -1,0 +1,24 @@
+{
+  ELC: {
+    base: 0x40041000,
+    name: "Event Link Controller",
+    n: [0],
+    nm: 4,
+    pages: [272, 279],
+    regs: {
+      ELCR: {
+        n: "Event Link Controller Register",
+        o: 0x000,
+        s: 1,
+        page: 273,
+        d: {
+          ELCON: {
+            n: "All Event Link Enable",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

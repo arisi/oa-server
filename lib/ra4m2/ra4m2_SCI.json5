@@ -1,0 +1,315 @@
+{
+  SCI: {
+    base: 0x40118000,
+    name: "General Serial Devices",
+    n: [0, 1, 2, 9],
+    nm: 0x100,
+    pages: [780, 781],
+    regs: {
+      RDR: {
+        n: "Receive Data Register",
+        o: 0x05,
+        s: 1,
+        page: 783,
+        d: {
+          D: {
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            rw: "r",
+          },
+        },
+      },
+      TDR: {
+        n: "Transmit Data Register",
+        o: 0x03,
+        s: 1,
+        page: 784,
+        d: {
+          D: {
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            rw: "w",
+            boot: 0xff,
+          },
+        },
+      },
+      SMR: {
+        n: "Serial Mode Register",
+        o: 0x00,
+        s: 1,
+        page: 787,
+        d: {
+          CKS: {
+            n: "Clock Select",
+            bits: [0, 1],
+            rw: "rw",
+            v: [
+              { v: 0x00, key: "PCLKD_1" },
+              { v: 0x01, key: "PCLKD_4" },
+              { v: 0x02, key: "PCLKD_16" },
+              { v: 0x03, key: "PCLKD_64" },
+            ],
+          },
+          MP: {
+            n: "Multi-Processor Mode",
+            bits: [2],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+          STOP: {
+            n: "Stop Bit Length",
+            bits: [3],
+            rw: "rw",
+            v: [
+              { v: 0, key: "1BIT" },
+              { v: 1, key: "2BITS" },
+            ],
+          },
+          PM: {
+            n: "Parity Mode",
+            bits: [4],
+            rw: "rw",
+            v: [
+              { v: 0, key: "EVEN" },
+              { v: 1, key: "ODD" },
+            ],
+          },
+          PE: {
+            n: "Parity Enable",
+            bits: [5],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+          CHR: {
+            n: "Character Length",
+            bits: [6],
+            rw: "rw",
+            v: [
+              { v: 0, key: "8BITS" },
+              { v: 1, key: "9BITS" },
+            ],
+          },
+          CM: {
+            n: "Communication Mode",
+            bits: [7],
+            rw: "rw",
+            v: [
+              { v: 0, key: "ASYNC", n: "Asynchronous mode or simple IIC mode" },
+              {
+                v: 1,
+                key: "SYNC",
+                n: "Clock synchronous mode or simple SPI mode",
+              },
+            ],
+          },
+        },
+      },
+      SCR: {
+        n: "Serial Control Register",
+        o: 0x02,
+        s: 1,
+        page: 790,
+        d: {
+          CKE: {
+            n: "Clock Enable",
+            bits: [0, 1],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NO_CLK" },
+              { v: 1, key: "BIT_CLK_OUT" },
+              { v: 2, key: "BUT_CLK_IN" },
+            ],
+          },
+          TEIE: {
+            n: "Transmit End Interrupt Enable",
+            bits: [2],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+          MPIE: {
+            n: "Multi-Processor Interrupt Enable",
+            bits: [3],
+            rw: "rw",
+          },
+          RE: {
+            n: "Receive Enable",
+            bits: [4],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+          TE: {
+            n: "Transmit Enable",
+            bits: [5],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+          RIE: {
+            n: "Receive Interrupt Enable",
+            bits: [6],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+          TIE: {
+            n: "Transmit Interrupt Enable",
+            bits: [7],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+        },
+      },
+      SSR: {
+        n: "Serial Status Register",
+        o: 0x04,
+        s: 1,
+        page: 793,
+        d: {
+          MPBT: {
+            n: "Multi-Processor Bit Transfer",
+            bits: [0],
+            rw: "rw",
+          },
+          MPB: {
+            n: "Multi-Processor",
+            bits: [1],
+            rw: "r",
+          },
+          TEND: {
+            n: "Transmit End Flag",
+            bits: [2],
+            boot: 1,
+            rw: "r",
+          },
+          PER: {
+            n: "Parity Error Flag",
+            bits: [3],
+            rw: "rw",
+          },
+          FER: {
+            n: "Framing Error Flag",
+            bits: [4],
+            rw: "rw",
+          },
+          ORER: {
+            n: "Overrun Error Flag",
+            bits: [5],
+            rw: "rw",
+          },
+          RDRF: {
+            n: "Receive Data Full Flag",
+            bits: [6],
+            rw: "rw",
+          },
+          TDRE: {
+            n: "Transmit Data Empty Flag",
+            bits: [7],
+            boot: 1,
+            rw: "rw",
+          },
+        },
+      },
+      BRR: {
+        n: "Bit Rate Register",
+        o: 0x01,
+        s: 1,
+        page: 805,
+        d: {
+          D: {
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            boot: 0xff,
+            rw: "rw",
+          },
+        },
+      },
+      MDDR: {
+        n: "Modulation Duty Register",
+        o: 0x12,
+        s: 1,
+        page: 532,
+        d: {
+          MDDR: {
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            boot: 0xff,
+            rw: "rw",
+          },
+        },
+      },
+      SEMR: {
+        n: "Serial Extended Mode Register",
+        o: 0x07,
+        s: 1,
+        page: 534,
+        d: {
+          BRME: {
+            n: "Bit Rate Modulation Enable",
+            bits: [2],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+          ABCSE: {
+            n: "Asynchronous Mode Extended Base Clock Select 1",
+            bits: [3],
+            rw: "rw",
+          },
+          ABCS: {
+            n: "Asynchronous Mode Base Clock Select",
+            bits: [4],
+            rw: "rw",
+            v: [
+              { v: 0, key: "16_BASE" },
+              { v: 1, key: "8_BASE" },
+            ],
+          },
+          NFEN: {
+            n: "Digital Noise Filter Function Enable",
+            bits: [5],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLE" },
+              { v: 1, key: "ENABLE" },
+            ],
+          },
+          BGDM: {
+            n: "Baud Rate Generator Double-Speed Mode Select",
+            bits: [6],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NORMAL" },
+              { v: 1, key: "DOUBLED" },
+            ],
+          },
+          RXDESEL: {
+            n: "Asynchronous Start Bit Edge Detection Select",
+            bits: [7],
+            rw: "rw",
+            v: [
+              { v: 0, key: "LOW_LEVEL" },
+              { v: 1, key: "FALLING_EDGE" },
+            ],
+          },
+        },
+      },
+    },
+  },
+}

@@ -1,0 +1,78 @@
+{
+  AONRTC: {
+    base: 0x40092000,
+    name: "AON Real-time clock",
+    n: [0],
+    nm: 0,
+    pages: [1378, 1863],
+    regs: {
+      CTL: {
+        n:"Control Register",
+        o: 0x00,
+        s: 4,
+        page: 1379,
+        d: {
+          RESET: {
+            bits: [7],
+            n: "RTC Counter reset",
+            rw: "rw",
+          },
+          RTC_UPD_EN: {
+            bits: [1],
+            n: "RTC_UPD is a 16 KHz signal used to sync up the radio timer",
+            rw: "rw",
+          },
+          EN: {
+            bits: [0],
+            n: "Enable RTC counter",
+            rw: "rw",
+          },
+
+        },
+      },
+      SEC: {
+        n:"SEC Register",
+        o: 0x08,
+        s: 4,
+        page: 1382,
+        d: {
+          SEC: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "rw",
+          },
+
+        },
+      },
+      SUBSEC: {
+        n:"SUBSEC Register",
+        o: 0x0C,
+        s: 4,
+        page: 1383,
+        d: {
+          SUBSEC: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "rw",
+          },
+
+        },
+      },
+      TIME: {
+        n:"SEC Register",
+        o: 0x30,
+        s: 4,
+        page: 1392,
+        d: {
+          SEC_L: {
+            bits: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "r",
+          },
+          SUBSEC_H: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+            rw: "r",
+          },
+
+        },
+      },
+    },
+  },
+}

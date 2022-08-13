@@ -1,0 +1,235 @@
+{
+  UART: {
+    base: 0x40001000,
+    name: "UART",
+    n: [0,1],
+    nm: 0xA000,
+    pages: [1832, 1863],
+    regs: {
+      DR: {
+        n:"Data Register",
+        o: 0x00,
+        s: 4,
+        page: 1842,
+        d: {
+          DATA: {
+            bits: [0,1,2,3,4,5,6,7],
+            rw: "rw",
+          },
+          RX_FE: {
+            bits: [8],
+            n: "Framing Error",
+            rw: "r",
+          },
+          RX_PE: {
+            bits: [9],
+            n: "Parity Error",
+            rw: "r",
+          },
+          RX_BE: {
+            bits: [10],
+            n: "Break Error",
+            rw: "r",
+          },
+          RX_OE: {
+            bits: [11],
+            n: "Overrun Error",
+            rw: "r",
+          },
+        },
+      },
+      RSR: {
+        n:"Receive Status Register",
+        o: 0x04,
+        s: 4,
+        page: 1842,
+        d: {
+          FE: {
+            bits: [0],
+            n: "Framing Error",
+            rw: "rw",
+          },
+          PE: {
+            bits: [1],
+            n: "Parity Error",
+            rw: "rw",
+          },
+          BE: {
+            bits: [2],
+            n: "Break Error",
+            rw: "rw",
+          },
+          OE: {
+            bits: [3],
+            n: "Overrun Error",
+            rw: "rw",
+          },
+        },
+      },
+      FR: {
+        n:"Flags Register",
+        o: 0x18,
+        s: 4,
+        page: 1846,
+        d: {
+          CTS: {
+            bits: [0],
+            rw: "r",
+          },
+          BUSY: {
+            bits: [3],
+            rw: "r",
+          },
+          RXFE: {
+            bits: [4],
+            n: "RX FIFO Empty",
+            rw: "r",
+          },
+          TXFF: {
+            bits: [5],
+            n: "TX FIFO Full",
+            rw: "r",
+          },
+          RXFF: {
+            bits: [6],
+            n: "RX FIFO Full",
+            rw: "r",
+          },
+          TXFE: {
+            bits: [7],
+            n: "TX FIFO Empty",
+            rw: "r",
+          },
+        },
+      },
+      IBRD: {
+        n:"Integer Baud Rate Divisor",
+        o: 0x24,
+        s: 4,
+        page: 1848,
+        d: {
+          DIVINT: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+            rw: "rw",
+          },
+        },
+      },
+      FBRD: {
+        n:"Fractional Baud Rate Divisor",
+        o: 0x28,
+        s: 4,
+        page: 1849,
+        d: {
+          DIVFRAC: {
+            bits: [0,1,2,3,4,5],
+            rw: "rw",
+          },
+        },
+      },
+      LCRH: {
+        n:"Line Control Register",
+        o: 0x2C,
+        s: 4,
+        page: 1850,
+        d: {
+          BRK: {
+            bits: [0],
+            n: "Send Break",
+            rw: "rw",
+          },
+          PEN: {
+            bits: [1],
+            n: "Parity Enable",
+            rw: "rw",
+          },
+          EPS: {
+            bits: [2],
+            n: "Even Parity Select",
+            rw: "rw",
+          },
+          STP2: {
+            bits: [3],
+            n: "Two Stop Bits Select",
+            rw: "rw",
+          },
+          FEN: {
+            bits: [4],
+            n: "FIFO Enable",
+            rw: "rw",
+          },
+          WLEN: {
+            bits: [5,6],
+            n: "Word Length",
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "5BITS",
+              },
+              {
+                v: 0x01,
+                key: "6BITS",
+              },
+              {
+                v: 0x02,
+                key: "7BITS",
+              },
+              {
+                v: 0x03,
+                key: "8BITS",
+              },
+            ],
+          },
+          SPS: {
+            bits: [7],
+            n: "Stick Parity Enable",
+            rw: "rw",
+          },
+        },
+      },
+      CTL: {
+        n:"Control Register",
+        o: 0x30,
+        s: 4,
+        page: 1852,
+        d: {
+          UARTEN: {
+            bits: [0],
+            n: "Enable UART",
+            rw: "rw",
+          },
+          LBE: {
+            bits: [7],
+            n: "Loop Back Enable",
+            rw: "rw",
+          },
+          TXE: {
+            bits: [8],
+            n: "TX Enable",
+            rw: "rw",
+          },
+          RXE: {
+            bits: [9],
+            n: "RX Enable",
+            rw: "rw",
+          },
+          RTS: {
+            bits: [11],
+            n: "RTS Value",
+            rw: "rw",
+          },
+          RTSEN: {
+            bits: [14],
+            n: "RTS Enable",
+            rw: "rw",
+          },
+          CTSEN: {
+            bits: [15],
+            n: "CTS Enable",
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

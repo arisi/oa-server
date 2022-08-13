@@ -1,0 +1,25 @@
+{
+  n: "Renesas RA4M2",
+  pdf: "REN_r01uh0852ej0110-ra2e1_MAH_20201228.pdf",
+  files :[
+    "ra4m2_GPIO",
+    "ra4m2_GPIOCONF",
+    "ra4m2_PFS",
+    "ra4m2_SCI",
+    "ra4m2_ICU",
+    "ra4m2_LPM",
+    "ra4m2_MSTP",
+    "ra4m2_CLOCK",
+    "ra4m2_CGC",
+  ],
+  config: {
+    'CPUTYPE':    'RA4M2',
+    'RAM_START'   :0x20004000,
+    'RAM_SIZE'    :0x00004000,
+    'CFLASH_START':0x00000000,
+    'CFLASH_START':0x00000000,
+    'CFLASH_SIZE' :0x00010000,
+    'DFLASH_START':0x40100000,
+    'DFLASH_SIZE' :0x00001000,
+  }
+}

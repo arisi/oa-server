@@ -1,0 +1,53 @@
+{
+  CCFG: {
+    base: 0x50003000,
+    name: "Customer Configuration",
+    n: [0],
+    nm: 0,
+    pages: [805, 1863],
+    regs: {
+      MODE_CONF_1: {
+        n:"Mode Configuration 1",
+        o: 0x1fac,
+        s: 4,
+        page: 807,
+        d: {
+          SEC: {
+            bits: [31],
+            n: "Selects the TCXO type",
+            rw: "r",
+          },
+
+        },
+      },
+      IEEE_BLE_0: {
+        n:"IEEE_BLE_0 Register",
+        o: 0x1fd0,
+        s: 4,
+        page: 819,
+        d: {
+          ADDR: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            n: "custom IEEE BLE address",
+            rw: "r",
+          },
+
+        },
+      },
+      IEEE_BLE_1: {
+        n:"IEEE_BLE_1 Register",
+        o: 0x1fd4,
+        s: 4,
+        page: 820,
+        d: {
+          ADDR: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            n: "custom IEEE BLE address",
+            rw: "r",
+          },
+
+        },
+      },
+    },
+  },
+}

@@ -1,0 +1,60 @@
+{
+  CGC: {
+    base: 0x4001e000,
+    name: "Clock Generation Circuit",
+    n: [0],
+    nm: 0,
+    pages: [152, 193],
+    regs: {
+      PLLCCR: {
+        n: "PLL Clock Control Register",
+        o: 0x028,
+        s: 2,
+        page: 146,
+        d: {
+          PLLDIV: {
+            n: "PLL Input Frequency Division Ratio Select",
+            bits: [0, 1],
+            rw: "rw",
+          },
+          PLSRCSEL: {
+            n: "PLL Clock Source Select",
+            bits: [4],
+            rw: "rw",
+          },
+          PLLMUL: {
+            n: "PLL Frequency Multiplication Factor Select",
+            bits: [8, 9, 10, 11, 12, 13],
+            rw: "rw",
+          },
+        },
+      },
+      PLLCR: {
+        n: "PLL Control Register",
+        o: 0x02a,
+        s: 1,
+        page: 147,
+        d: {
+          PLLTP: {
+            n: "PLL Stop",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },
+      HOCOCR: {
+        n: "High-Speed On-Chip Oscillator Control Register",
+        o: 0x036,
+        s: 1,
+        page: 192,
+        d: {
+          HCSTP: {
+            n: "HOCO Stop",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },      
+    },
+  },
+}

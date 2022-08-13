@@ -1,0 +1,280 @@
+{
+  PRCM: {
+    base: 0x40082000,
+    name: "Power, Clocks and Reset Management",
+    n: [0],
+    nm: 0,
+    pages: [1096, 1118],
+    regs: {
+      CLKLOADCTL: {
+        n: "Load PRCM Settings",
+        o: 0x28,
+        s: 4,
+        page: 545,
+        d: {
+          LOAD: {
+            n: "Load settings to CLKCTRL. Bit is HW cleared",
+            bits: [0],
+            rw: "rw",
+          },
+          LOAD_DONE: {
+            n: "Status of Load",
+            bits: [1],
+            rw: "r",
+          },
+        },
+      },
+      STAT0: {
+        n: "Status signals from OSC_DIG",
+        o: 0x3c,
+        s: 4,
+        page: 533,
+        d: {
+          SCLK_LF_SRC: {
+            n: "Indicates source for the sclk_lf",
+            bits: [29,30],
+            rw: "r",
+          },
+          SCLK_HF_SRC: {
+            n: "Indicates source for the sclk_hf",
+            bits: [28],
+            rw: "r",
+          },
+        },
+      },
+      STAT01: {
+        n: "Status signals from OSC_DIG",
+        o: 0x40,
+        s: 4,
+        page: 533,
+        d: {
+          SCLK_HF_EN: {
+            bits: [14],
+            rw: "r",
+          },
+        },
+      },
+      STAT02: {
+        n: "Status signals from AMPCOMP FSM",
+        o: 0x44,
+        s: 4,
+        page: 537,
+        d: {
+          XOSC_HF_FREQGOOD: {
+            bits: [1],
+            rw: "r",
+          },
+          XOSC_HF_RF_FREQGOOD: {
+            bits: [0],
+            rw: "r",
+          },
+        },
+      },
+      GPIOCLKGR: {
+        n: "UART Clock Gate",
+        o: 0x48,
+        s: 4,
+        page: 553,
+        d: {
+          GPIO_CLK_EN: {
+            n: "Enable Clock",
+            bits: [0],
+            rw: "rw",
+          },
+          GPIO_AM_CLK_EN: {
+            n: "Force Clock On",
+            bits: [8],
+            rw: "rw",
+          },
+        },
+      },
+      UARTCLKGR: {
+        n: "UART Clock Gate",
+        o: 0x6c,
+        s: 4,
+        page: 562,
+        d: {
+          UART_CLK_EN: {
+            n: "Enable Clock",
+            bits: [0,1],
+            rw: "rw",
+          },
+          UART_AM_CLK_EN: {
+            n: "Force Clock On",
+            bits: [8,9],
+            rw: "rw",
+          },
+        },
+      },
+      PDCTL0SERIAL: {
+        n: "SERIAL Power Control",
+        o: 0x134,
+        s: 4,
+        page: 591,
+        d: {
+          SET_SERIAL_ON: {
+            n: "Power on Serial",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },
+      PDCTL0PERIPH: {
+        n: "PERIPH Power Control",
+        o: 0x138,
+        s: 4,
+        page: 591,
+        d: {
+          SET_PERIPH_ON: {
+            n: "Power On Peripherial",
+            bits: [0],
+            rw: "rw",
+          },
+        },
+      },
+      PDSTAT0: {
+        n: "Power Domain Status",
+        o: 0x140,
+        s: 4,
+        page: 592,
+        d: {
+          RFC_ON: {
+            n: "RFC Power On",
+            bits: [0],
+            rw: "r",
+          },
+          SERIAL_ON: {
+            n: "SERIAL Power On",
+            bits: [1],
+            rw: "r",
+          },
+          PERIPH_ON: {
+            n: "PERIOH Power On",
+            bits: [2],
+            rw: "r",
+          },
+        },
+      },
+      PDCTL1: {
+        n: "Power Domain Control",
+        o: 0x17c,
+        s: 4,
+        page: 596,
+        d: {
+          VIMS_MODE: {
+            n: "VIMS power domain",
+            bits: [3,4],
+            rw: "rw",
+          },
+          RFC_ON: {
+            n: " RFC power domain",
+            bits: [2],
+            rw: "rw",
+          },
+          CPU_ON: {
+            n: "Power down of the CPU power domain when system CPU indicates it is idle",
+            bits: [1],
+            rw: "rw",
+          },
+        },
+      },
+      RFCBITS: {
+        n: "Control bits for RFC.",
+        o: 0x1cc,
+        s: 4,
+        page: 605,
+        d: {
+          BOOT_SEQ: {
+            n: "Special Boot Sequence",
+            bits: [0],
+            rw: "rw",
+          },
+          FORCE_CLOCKS_ON: {
+            n: "Force on all clocks that are enabled at boot time",
+            bits: [3],
+            rw: "rw",
+          },
+          START_RAT: {
+            n: "Dtart radio timer immediately",
+            bits: [5],
+            rw: "rw",
+          },
+        },
+      },
+      RFCMODESEL: {
+        n: "Selected RFC Mode",
+        o: 0x1d0,
+        s: 4,
+        page: 606,
+        d: {
+          CURR: {
+            n: "Current RDC Mode",
+            bits: [0,1,2],
+            rw: "rw",
+          },
+        },
+      },
+      RFCMODEHWOPT: {
+        n: "Allowed RFC Mode",
+        o: 0x1d4,
+        s: 4,
+        page: 607,
+        d: {
+          CURR: {
+            n: "Permitted RDC Mode",
+            bits: [0,1,2,3,4,5,6,7],
+            rw: "r",
+          },
+        },
+      },
+      OSCRIS: {
+        n: "Oscillator Raw Interrupt Status",
+        o: 0x294,
+        s: 4,
+        page: 612,
+        d: {
+          XOSCHFRIS: {
+            n: "XOSC_HF oscillator has been qualified",
+            bits: [0],
+            rw: "r",
+          },
+          RCOSCHFRIS: {
+            n: "RCOSC_HF oscillator has been qualified",
+            bits: [1],
+            rw: "r",
+          },
+          RCOSCLFRIS: {
+            n: "RCOSC_LF oscillator has been qualified",
+            bits: [2],
+            rw: "r",
+          },
+          RCOSCDLFRIS: {
+            n: "RCOSC_HF oscillator is ready to be used as a derived low-frequency lock source ",
+            bits: [3],
+            rw: "r",
+          },
+          XOSCLFRIS: {
+            n: "output of the XOSC_LF oscillator has been qualified",
+            bits: [4],
+            rw: "r",
+          },
+          XOSCDLFRIS: {
+            n: "XOSC_HF oscillator is ready to be used as a derived low-frequency clock source f",
+            bits: [5],
+            rw: "r",
+          },
+          LFSRCDONERIS: {
+            n: "SCLK_LF source switch done",
+            bits: [6],
+            rw: "r",
+          },
+          HFSRCPENDRIS: {
+            n: "SCLK_HF source switch pending interrupt.",
+            bits: [7],
+            rw: "r",
+          },
+        },
+      },
+    },
+  },
+}

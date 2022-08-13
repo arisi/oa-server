@@ -1,0 +1,248 @@
+{
+  RFCDBELL: {
+    base: 0x40041000,
+    name: "RF Core Radio Doorbell ",
+    n: [0],
+    nm: 0,
+    pages: [2143, 2149],
+    regs: {
+      CMDR: {
+        n:"Doorbell Command Register",
+        o: 0x00,
+        s: 4,
+        page: 2143,
+        d: {
+          CMDR: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "rw",
+          },
+
+        },
+      },
+      CMDSTA: {
+        n:"Doorbell Command Status Register",
+        o: 0x04,
+        s: 4,
+        page: 2144,
+        d: {
+          CMDSTA: {
+            bits: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "rw",
+          },
+
+        },
+      },
+      RFHWIFG: {
+        n:"Interrupt Flags From RF Hardware Modules",
+        o: 0x08,
+        s: 4,
+        page: 2145,
+        d: {
+          FSCA: {
+            bits: [1],
+            n: "Frequency synthesizer calibration accelerator interrupt flag.",
+            rw: "rw",
+          },
+          MDMDONE: {
+            bits: [2],
+            n: "Modem command done interrupt flag.",
+            rw: "rw",
+          },
+          MDMIN: {
+            bits: [3],
+            n: "Modem FIFO input interrupt flag.",
+            rw: "rw",
+          },
+          MDMOUT: {
+            bits: [4],
+            n: "Modem FIFO output interrupt flag.",
+            rw: "rw",
+          },
+          MDMSOFT: {
+            bits: [5],
+            n: "Modem software defined interrupt flag.",
+            rw: "rw",
+          },
+          TRCTK: {
+            bits: [6],
+            n: "Debug tracer system tick interrupt flag.",
+            rw: "rw",
+          },
+          RFEDONE: {
+            bits: [8],
+            n: "RF engine command done interrupt flag.",
+            rw: "rw",
+          },
+        },
+      },
+      RFCPEIFG: {
+        n:"Interrupt Flags For Command and Packet Engine Generated Interrupts",
+        o: 0x10,
+        s: 4,
+        page: 2148,
+        d: {
+          COMMAND_DONE: {
+            bits: [0],
+            n: "A radio operation has finished.",
+            rw: "rw",
+          },
+          LAST_COMMAND_DONE: {
+            bits: [1],
+            n: "The last radio operation command in a chain of commands has finished. ",
+            rw: "rw",
+          },
+          FG_COMMAND_DONE: {
+            bits: [2],
+            n: "A foreground radio operation command has finished",
+            rw: "rw",
+          },
+          LAST_FG_COMMAND_DONE: {
+            bits: [3],
+            n: "The last foreground radio operation command in a chain of commands has finished",
+            rw: "rw",
+          },
+          TX_DONE: {
+            bits: [4],
+            n: " Packet transmitted.",
+            rw: "rw",
+          },
+          TX_ACK: {
+            bits: [5],
+            n: "BLE Acknowledgement received on a transmitted packet",
+            rw: "rw",
+          },
+          TX_CTRL: {
+            bits: [6],
+            n: "BLE Transmitted LL control packet.",
+            rw: "rw",
+          },
+          TX_CTRL_ACK: {
+            bits: [7],
+            n: "BLE Acknowledgement received on a transmitted LL control packet",
+            rw: "rw",
+          },
+          TX_CTRL_ACK_ACK: {
+            bits: [8],
+            n: "BLE Acknowledgement received on a transmitted LL control packet,",
+            rw: "rw",
+          },
+          TX_RETRANS: {
+            bits: [9],
+            n: "BLE Packet retransmitted.",
+            rw: "rw",
+          },
+          TX_ENTRY_DONE: {
+            bits: [10],
+            n: "Tx queue data entry state changed to finished.",
+            rw: "rw",
+          },
+          TX_BUFFER_CHANGED: {
+            bits: [11],
+            n: "BLE A buffer change is complete after CMD_BLE_ADV_PAYLOAD. ",
+            rw: "rw",
+          },
+          COMMAND_STARTED: {
+            bits: [12],
+            n: "A radio operation command has gone into active state.",
+            rw: "rw",
+          },
+          FG_COMMAND_STARTED: {
+            bits: [13],
+            n: " IEEE 802.15.4  A foreground radio operation command has gone into active state.",
+            rw: "rw",
+          },
+          IRQ14: {
+            bits: [14],
+            n: "IRQ14",
+            rw: "rw",
+          },
+          IRQ15: {
+            bits: [15],
+            n: "IRQ15",
+            rw: "rw",
+          },
+          RX_OK: {
+            bits: [16],
+            n: "Packet received correctly",
+            rw: "rw",
+          },
+          RX_NOK: {
+            bits: [17],
+            n: "Packet received with CRC error",
+            rw: "rw",
+          },
+          RX_IGNORED: {
+            bits: [18],
+            n: "Packet received, but can be ignored.",
+            rw: "rw",
+          },
+          RX_EMPTY: {
+            bits: [19],
+            n: "BLE Packet received with CRC OK",
+            rw: "rw",
+          },
+          RX_CTRL: {
+            bits: [20],
+            n: "control packet received with CRC OK",
+            rw: "rw",
+          },
+          RX_CTRL_ACK: {
+            bits: [21],
+            n: "BLE LL control packet received with CRC OK",
+            rw: "rw",
+          },
+          RX_BUF_FULL: {
+            bits: [22],
+            n: " Packet received that did not fit in Rx queue",
+            rw: "rw",
+          },
+          RX_ENTRY_DONE: {
+            bits: [23],
+            n: "Rx queue data entry changing state to finished.",
+            rw: "rw",
+          },
+          RX_DATA_WRITTEN: {
+            bits: [24],
+            n: "Data written to partial read Rx buffer",
+            rw: "rw",
+          },
+          RX_N_DATA_WRITTEN: {
+            bits: [25],
+            n: "Specified number of bytes written to partial read Rx buffer",
+            rw: "rw",
+          },
+          RX_ABORTED: {
+            bits: [26],
+            n: "Packet reception stopped before packet was done.",
+            rw: "rw",
+          },
+          IRQ27: {
+            bits: [27],
+            n: "IRQ27",
+            rw: "rw",
+          },
+          SYNTH_NO_LOCK: {
+            bits: [28],
+            n: "The phase-locked loop in frequency synthesizer has reported loss of lock.",
+            rw: "rw",
+          },
+          MODULES_UNLOCKED: {
+            bits: [29],
+            n: "opened access to RF Core modules and memories",
+            rw: "rw",
+          },
+          BOOT_DONE: {
+            bits: [30],
+            n: "The command and packet engine (CPE) boot is finished.",
+            rw: "rw",
+          },
+          INTERNAL_ERROR: {
+            bits: [31],
+            n: "The command and packet engine (CPE) has observed an unexpected error.",
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

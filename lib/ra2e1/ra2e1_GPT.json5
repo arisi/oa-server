@@ -1,0 +1,840 @@
+{
+  GPT: {
+    base: 0x40078000,
+    name: "General PWM Timer",
+    n: [0, 4, 5, 6, 7, 8, 9],
+    nm: 0x0100,
+    pages: [309, 421],
+    regs: {
+      GTSTR: {
+        n: "General PWM Timer Software Start Register",
+        o: 0x04,
+        s: 4,
+        page: 313,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTSTP: {
+        n: "General PWM Timer Software Stop Register",
+        o: 0x08,
+        s: 4,
+        page: 313,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTCLR: {
+        n: "General PWM Timer Software Clear Register",
+        o: 0x0c,
+        s: 4,
+        page: 313,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTSSR: {
+        n: "General PWM Timer Start Source Select Register",
+        o: 0x10,
+        s: 4,
+        page: 314,
+        d: {
+          SSGTRGAR: {
+            n: "GTETRGA Pin Rising Input Source Counter Start Enable",
+            bits: [0],
+            rw: "rw",
+          },
+          SSGTRGAF: {
+            n: "GTETRGA Pin Falling Input Source Counter Start Enable",
+            bits: [1],
+            rw: "rw",
+          },
+          SSGTRGBR: {
+            n: "GTETRGB Pin Rising Input Source Counter Start Enable",
+            bits: [2],
+            rw: "rw",
+          },
+          SSGTRGBF: {
+            n: "GTETRGB Pin Falling Input Source Counter Start Enable",
+            bits: [3],
+            rw: "rw",
+          },
+          SSCARBL: {
+            n: "GTIOCnA Pin Rising Input during GTIOCnB Value Low Source Counter Start Enable",
+            bits: [8],
+            rw: "rw",
+          },
+          SSCARBH: {
+            n: "GTIOCnA Pin Rising Input during GTIOCnB Value High Source Counter Start Enable",
+            bits: [9],
+            rw: "rw",
+          },
+          SSCAFBL: {
+            n: "GTIOCnA Pin Falling Input during GTIOCnB Value Low Source Counter Start Enable",
+            bits: [10],
+            rw: "rw",
+          },
+          SSCAFBH: {
+            n: "GTIOCnA Pin Falling Input during GTIOCnB Value High Source Counter Start Enable",
+            bits: [11],
+            rw: "rw",
+          },
+          SSCBRAL: {
+            n: "GTIOCnB Pin Rising Input during GTIOCnA Value Low Source Counter Start Enable",
+            bits: [12],
+            rw: "rw",
+          },
+          SSCBRAH: {
+            n: "GTIOCnB Pin Rising Input during GTIOCnA Value High Source Counter Start Enable",
+            bits: [13],
+            rw: "rw",
+          },
+          SSCBFAL: {
+            n: "GTIOCnB Pin Falling Input during GTIOCnA Value Low Source Counter Start Enable",
+            bits: [14],
+            rw: "rw",
+          },
+          SSCBFAH: {
+            n: "GTIOCnB Pin Falling Input during GTIOCnA Value High Source Counter Start Enable",
+            bits: [15],
+            rw: "rw",
+          },
+          SSELCA: {
+            n: "ELC_GPTA Event Source Counter Start Enable",
+            bits: [16],
+            rw: "rw",
+          },
+          SSELCB: {
+            n: "ELC_GPTB Event Source Counter Start Enable",
+            bits: [17],
+            rw: "rw",
+          },
+          SSELCC: {
+            n: "ELC_GPTC Event Source Counter Start Enable",
+            bits: [18],
+            rw: "rw",
+          },
+          SSELCD: {
+            n: "ELC_GPTD Event Source Counter Start Enable",
+            bits: [19],
+            rw: "rw",
+          },
+          CSTRT: {
+            n: "Software Source Counter Start Enable",
+            bits: [31],
+            rw: "rw",
+          },
+        },
+      },
+      GTUPSR: {
+        n: "General PWM Timer Up Count Source Select Register",
+        o: 0x1c,
+        s: 4,
+        page: 322,
+        d: {
+          USGTRGAR: {
+            n: "GTETRGA Pin Rising Input Source Counter Count Up Enable",
+            bits: [0],
+            rw: "rw",
+          },
+          USGTRGAF: {
+            n: "GTETRGA Pin Falling Input Source Counter Count Up Enable",
+            bits: [1],
+            rw: "rw",
+          },
+          USGTRGBR: {
+            n: "GTETRGB Pin Rising Input Source Counter Count Up Enable",
+            bits: [2],
+            rw: "rw",
+          },
+          USGTRGBF: {
+            n: "GTETRGB Pin Falling Input Source Counter Count Up Enable",
+            bits: [3],
+            rw: "rw",
+          },
+          USCARBL: {
+            n: "GTIOCnA Pin Rising Input during GTIOCnB Value Low Source Counter Count Up Enable",
+            bits: [8],
+            rw: "rw",
+          },
+          USCARBH: {
+            n: "GTIOCnA Pin Rising Input during GTIOCnB Value High Source Counter Count Up Enable",
+            bits: [9],
+            rw: "rw",
+          },
+          USCAFBL: {
+            n: "GTIOCnA Pin Falling Input during GTIOCnB Value Low Source Counter Count Up Enable",
+            bits: [10],
+            rw: "rw",
+          },
+          USCAFBH: {
+            n: "GTIOCnA Pin Falling Input during GTIOCnB Value High Source Counter Count Up Enable",
+            bits: [11],
+            rw: "rw",
+          },
+          USCBRAL: {
+            n: "GTIOCnB Pin Rising Input during GTIOCnA Value Low Source Counter Count Up Enable",
+            bits: [12],
+            rw: "rw",
+          },
+          USCBRAH: {
+            n: "GTIOCnB Pin Rising Input during GTIOCnA Value High Source Counter Count Up Enable",
+            bits: [13],
+            rw: "rw",
+          },
+          USCBFAL: {
+            n: "GTIOCnB Pin Falling Input during GTIOCnA Value Low Source Counter Count Up Enable",
+            bits: [14],
+            rw: "rw",
+          },
+          USCBFAH: {
+            n: "GTIOCnB Pin Falling Input during GTIOCnA Value High Source Counter Count Up Enable",
+            bits: [15],
+            rw: "rw",
+          },
+          USELCA: {
+            n: "ELC_GPTA Event Source Counter Count Up Enable",
+            bits: [16],
+            rw: "rw",
+          },
+          USELCB: {
+            n: "ELC_GPTB Event Source Counter Count Up Enable",
+            bits: [17],
+            rw: "rw",
+          },
+          USELCC: {
+            n: "ELC_GPTC Event Source Counter Count Up Enable",
+            bits: [18],
+            rw: "rw",
+          },
+          USELCD: {
+            n: "ELC_GPTD Event Source Counter Count Up Enable",
+            bits: [19],
+            rw: "rw",
+          },
+        },
+      },
+      GTICASR: {
+        n: "General PWM Timer Input Capture Source Select Register A",
+        o: 0x24,
+        s: 4,
+        page: 327,
+        d: {
+          ASGTRGAR: {
+            n: "GTETRGA Pin Rising Input Source GTCCRA Input Capture Enable",
+            bits: [0],
+            rw: "rw",
+          },
+          ASGTRGAF: {
+            n: "GTETRGA Pin Falling Input Source GTCCRA Input Capture Enable",
+            bits: [1],
+            rw: "rw",
+          },
+          ASGTRGBR: {
+            n: "GTETRGB Pin Rising Input Source GTCCRA Input Capture Enable",
+            bits: [2],
+            rw: "rw",
+          },
+          ASGTRGBF: {
+            n: "GTETRGB Pin Falling Input Source GTCCRA Input Capture Enable",
+            bits: [3],
+            rw: "rw",
+          },
+          ASCARBL: {
+            n: "GTIOCnA Pin Rising Input during GTIOCnB Value Low Source GTCCRA Input Capture R/W Enable",
+            bits: [8],
+            rw: "rw",
+          },
+          ASCARBH: {
+            n: "GTIOCnA Pin Rising Input during GTIOCnB Value High Source GTCCRA Input Capture R/W Enable",
+            bits: [9],
+            rw: "rw",
+          },
+          ASCAFBL: {
+            n: "GTIOCnA Pin Falling Input during GTIOCnB Value Low Source GTCCRA Input Capture R/W Enable",
+            bits: [10],
+            rw: "rw",
+          },
+          ASCAFBH: {
+            n: "GTIOCnA Pin Falling Input during GTIOCnB Value High Source GTCCRA Input Capture R/W Enable",
+            bits: [11],
+            rw: "rw",
+          },
+          ASCBRAL: {
+            n: "GTIOCnB Pin Rising Input during GTIOCnA Value Low Source GTCCRA Input Capture R/W Enable",
+            bits: [12],
+            rw: "rw",
+          },
+          ASCBRAH: {
+            n: "",
+            bits: [13],
+            rw: "rw",
+          },
+          ASCBFAL: {
+            n: "GTIOCnB Pin Falling Input during GTIOCnA Value Low Source GTCCRA Input Capture R/W Enable",
+            bits: [14],
+            rw: "rw",
+          },
+          ASCBFAH: {
+            n: "GTIOCnB Pin Falling Input during GTIOCnA Value High Source GTCCRA Input Capture R/W Enable",
+            bits: [15],
+            rw: "rw",
+          },
+          ASELCA: {
+            n: "ELC_GPTA Event Source GTCCRA Input Capture Enable",
+            bits: [16],
+            rw: "rw",
+          },
+          ASELCB: {
+            n: "ELC_GPTB Event Source GTCCRA Input Capture Enable",
+            bits: [17],
+            rw: "rw",
+          },
+          ASELCC: {
+            n: "ELC_GPTC Event Source GTCCRA Input Capture Enable",
+            bits: [18],
+            rw: "rw",
+          },
+          ASELCD: {
+            n: "ELC_GPTD Event Source GTCCRA Input Capture Enable",
+            bits: [19],
+            rw: "rw",
+          },
+        },
+      },
+      GTICBSR: {
+        n: "General PWM Timer Input Capture Source Select Register B",
+        o: 0x28,
+        s: 4,
+        page: 329,
+        d: {
+          BSGTRGAR: {
+            n: "GTETRGA Pin Rising Input Source GTCCRB Input Capture Enable",
+            bits: [0],
+            rw: "rw",
+          },
+          BSGTRGAF: {
+            n: "GTETRGA Pin Falling Input Source GTCCRB Input Capture Enable",
+            bits: [1],
+            rw: "rw",
+          },
+          BSGTRGBR: {
+            n: "GTETRGB Pin Rising Input Source GTCCRB Input Capture Enable",
+            bits: [2],
+            rw: "rw",
+          },
+          BSGTRGBF: {
+            n: "GTETRGB Pin Falling Input Source GTCCRB Input Capture Enable",
+            bits: [3],
+            rw: "rw",
+          },
+          BSCARBL: {
+            n: "GTIOCnA Pin Rising Input during GTIOCnB Value Low Source GTCCRB Input Capture R/W Enable",
+            bits: [8],
+            rw: "rw",
+          },
+          BSCARBH: {
+            n: "GTIOCnA Pin Rising Input during GTIOCnB Value High Source GTCCRB Input Capture R/W Enable",
+            bits: [9],
+            rw: "rw",
+          },
+          BSCAFBL: {
+            n: "GTIOCnA Pin Falling Input during GTIOCnB Value Low Source GTCCRB Input Capture R/W Enable",
+            bits: [10],
+            rw: "rw",
+          },
+          BSCAFBH: {
+            n: "GTIOCnA Pin Falling Input during GTIOCnB Value High Source GTCCRB Input Capture R/W Enable",
+            bits: [11],
+            rw: "rw",
+          },
+          BSCBRAL: {
+            n: "GTIOCnB Pin Rising Input during GTIOCnA Value Low Source GTCCRB Input Capture R/W Enable",
+            bits: [12],
+            rw: "rw",
+          },
+          BSCBRAH: {
+            n: "",
+            bits: [13],
+            rw: "rw",
+          },
+          BSCBFAL: {
+            n: "GTIOCnB Pin Falling Input during GTIOCnA Value Low Source GTCCRB Input Capture R/W Enable",
+            bits: [14],
+            rw: "rw",
+          },
+          BSCBFAH: {
+            n: "GTIOCnB Pin Falling Input during GTIOCnA Value High Source GTCCRB Input Capture R/W Enable",
+            bits: [15],
+            rw: "rw",
+          },
+          BSELCA: {
+            n: "ELC_GPTA Event Source GTCCRB Input Capture Enable",
+            bits: [16],
+            rw: "rw",
+          },
+          BSELCB: {
+            n: "ELC_GPTB Event Source GTCCRB Input Capture Enable",
+            bits: [17],
+            rw: "rw",
+          },
+          BSELCC: {
+            n: "ELC_GPTC Event Source GTCCRB Input Capture Enable",
+            bits: [18],
+            rw: "rw",
+          },
+          BSELCD: {
+            n: "ELC_GPTD Event Source GTCCRB Input Capture Enable",
+            bits: [19],
+            rw: "rw",
+          },
+        },
+      },
+      GTCR: {
+        n: "General PWM Timer Control Register",
+        o: 0x2c,
+        s: 4,
+        page: 332,
+        d: {
+          CST: {
+            n: "Count Start",
+            bits: [0],
+            rw: "rw",
+            v: [
+              { v: 0, key: "STOPPED" },
+              { v: 1, key: "COUNTING" },
+            ],
+          },
+          MD: {
+            n: "Mode Select",
+            bits: [16, 17, 18],
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "SAW_WAVE_PWM",
+                n: "Saw-wave PWM mode (single buffer or double buffer possible)",
+              },
+              {
+                v: 0x01,
+                key: "SAW_WAVE_ONE_SHOT",
+                n: "Saw-wave one-shot pulse mode (fixed buffer operation)",
+              },
+              {
+                v: 0x04,
+                key: "TRIANGLE_WAVE_PWM1",
+                n: "Triangle-wave PWM mode 1 (32-bit transfer at trough) (single buffer or double buffer is possible)",
+              },
+              {
+                v: 0x05,
+                key: "TRIANGLE_WAVE_PWM2",
+                n: "Triangle-wave PWM mode 2 (32-bit transfer at crest and trough) (single buffer or double buffer is possible)",
+              },
+              {
+                v: 0x06,
+                key: "TRIANGLE_WAVE_PWM3",
+                n: "Triangle-wave PWM mode 3 (64-bit transfer at trough) (fixed buffer operation)",
+              },
+            ],
+          },
+          TPCS: {
+            n: "Timer Prescaler Select",
+            bits: [24, 25, 26],
+            rw: "rw",
+            v: [
+              { v: 0x00, key: "PCLKD_1" },
+              { v: 0x01, key: "PCLKD_4" },
+              { v: 0x02, key: "PCLKD_16" },
+              { v: 0x03, key: "PCLKD_64" },
+              { v: 0x04, key: "PCLKD_256" },
+              { v: 0x05, key: "PCLKD_1024" },
+            ],
+          },
+        },
+      },
+      GTUDDTYC: {
+        n: "General PWM Timer Count Direction and Duty Setting Register",
+        o: 0x30,
+        s: 4,
+        page: 334,
+        d: {
+          UD: {
+            n: "Count Direction Setting",
+            bits: [0],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DN" },
+              { v: 1, key: "UP" },
+            ],
+          },
+          UDF: {
+            n: "Forcible Count Direction Setting",
+            bits: [1],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NO_FORCE" },
+              { v: 1, key: "FORCE_SET" },
+            ],
+          },
+          OADTY: {
+            n: "GTIOCnA Output Duty Setting",
+            bits: [16, 17],
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "GTIOCnA_CM0",
+                n: "GTIOCnA pin duty depends on the compare match",
+              },
+              {
+                v: 0x01,
+                key: "GTIOCnA_CM1",
+                n: "GTIOCnA pin duty depends on the compare match",
+              },
+              { v: 0x02, key: "GTIOCnA_0P", n: "GTIOCnA pin duty 0%" },
+              { v: 0x03, key: "GTIOCnA_100P", n: "GTIOCnA pin duty 100%" },
+            ],
+          },
+          OADTYF: {
+            n: "Forcible GTIOCnA Output Duty Setting",
+            bits: [18],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NO_FORCE" },
+              { v: 1, key: "FORCE_SET" },
+            ],
+          },
+          OADTYR: {
+            n: "GTIOCnA Output Value Selecting after Releasing 0%/100% Duty Setting",
+            bits: [19],
+            rw: "rw",
+            v: [
+              {
+                v: 0,
+                key: "DUTY",
+                n: "Apply output value set in 0%/100% duty to GTIOA[3:2] function after releasing 0%/100% duty setting",
+              },
+              {
+                v: 1,
+                key: "COMPARE",
+                n: "Apply masked compare match output value to GTIOA[3:2] function after releasing 0%/100% duty setting",
+              },
+            ],
+          },
+          OBDTY: {
+            n: "GTIOCnB Output Duty Setting",
+            bits: [24, 25],
+            rw: "rw",
+            v: [
+              {
+                v: 0x00,
+                key: "GTIOCnB_CM0",
+                n: "GTIOCnB pin duty depends on the compare match",
+              },
+              {
+                v: 0x01,
+                key: "GTIOCnB_CM1",
+                n: "GTIOCnB pin duty depends on the compare match",
+              },
+              { v: 0x02, key: "GTIOCnB_0P", n: "GTIOCnB pin duty 0%" },
+              { v: 0x03, key: "GTIOCnB_100P", n: "GTIOCnB pin duty 100%" },
+            ],
+          },
+          OBDTYF: {
+            n: "Forcible GTIOCnB Output Duty Setting R/W",
+            bits: [26],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NO_FORCE" },
+              { v: 1, key: "FORCE_SET" },
+            ],
+          },
+          OBDTYR: {
+            n: "GTIOCnB Output Value Selecting after Releasing 0%/100% Duty Setting",
+            bits: [27],
+            rw: "rw",
+            v: [
+              {
+                v: 0,
+                key: "DUTY",
+                n: "Apply output value set in 0%/100% duty to GTIOB[3:2] function after releasing 0%/100% duty setting",
+              },
+              {
+                v: 1,
+                key: "COMPARE",
+                n: "Apply masked compare match output value to GTIOB[3:2] function after releasing 0%/100% duty setting",
+              },
+            ],
+          },
+        },
+      },
+      GTST: {
+        n: "General PWM Timer Status Register",
+        o: 0x3c,
+        s: 4,
+        page: 341,
+        d: {
+          TCFA: {
+            n: "Input Capture/Compare Match Flag A",
+            bits: [0],
+            rw: "rw",
+          },
+          TCFB: {
+            n: "Input Capture/Compare Match Flag B",
+            bits: [1],
+            rw: "rw",
+          },
+          TCFC: {
+            n: "Input Compare Match Flag C",
+            bits: [2],
+            rw: "rw",
+          },
+          TCFD: {
+            n: "Input Compare Match Flag D",
+            bits: [3],
+            rw: "rw",
+          },
+          TCFE: {
+            n: "Input Compare Match Flag E",
+            bits: [4],
+            rw: "rw",
+          },
+          TCFF: {
+            n: "Input Compare Match Flag F",
+            bits: [5],
+            rw: "rw",
+          },
+          TCFPO: {
+            n: "Overflow Flag",
+            bits: [6],
+            rw: "rw",
+          },
+          TCFPU: {
+            n: "Underflow Flag",
+            bits: [7],
+            rw: "rw",
+          },
+          TUCF: {
+            n: "Count Direction Flag",
+            bits: [15],
+            rw: "rw",
+          },
+          ODF: {
+            n: "Output Disable Flag",
+            bits: [24],
+            rw: "rw",
+          },
+          OABHF: {
+            n: "Same Time Output Level High Flag",
+            bits: [29],
+            rw: "rw",
+          },
+          OABLF: {
+            n: "Same Time Output Level Low Flag",
+            bits: [30],
+            rw: "rw",
+          },
+        },
+      },
+      GTBER: {
+        n: "General PWM Timer Buffer Enable Register",
+        o: 0x40,
+        s: 4,
+        page: 345,
+        d: {
+          BD0: {
+            n: "GTCCR Buffer Operation Disable",
+            bits: [0],
+            rw: "rw",
+            v: [
+              { v: 0, key: "ENABLED" },
+              { v: 1, key: "DISABLED" },
+            ],
+          },
+          BD1: {
+            n: "GTPR Buffer Operation Disable",
+            bits: [1],
+            rw: "rw",
+            v: [
+              { v: 0, key: "ENABLED" },
+              { v: 1, key: "DISABLED" },
+            ],
+          },
+          CCRA: {
+            n: "GTCCRA Buffer Operation",
+            bits: [16, 17],
+            rw: "rw",
+            v: [
+              { v: 0x00, key: "NO_BUFFER" },
+              { v: 0x01, key: "SINGLE_BUFFER" },
+              { v: 0x02, key: "DOUBLE_BUFFER" },
+            ],
+          },
+          CCRB: {
+            n: "GTCCRB Buffer Operation",
+            bits: [18, 19],
+            rw: "rw",
+            v: [
+              { v: 0x00, key: "NO_BUFFER" },
+              { v: 0x01, key: "SINGLE_BUFFER" },
+              { v: 0x02, key: "DOUBLE_BUFFER" },
+            ],
+          },
+          PR: {
+            n: "GTPR Buffer Operation",
+            bits: [20, 21],
+            rw: "rw",
+            v: [
+              { v: 0x00, key: "NO_BUFFER" },
+              { v: 0x01, key: "SINGLE_BUFFER" },
+            ],
+          },
+          CCRSWT: {
+            n: "GTCCRA and GTCCRB Forcible Buffer Operation",
+            bits: [22],
+            rw: "rw",
+          },
+        },
+      },
+      GTCNT: {
+        n: "General PWM Timer Counter",
+        o: 0x48,
+        s: 4,
+        page: 346,
+        d: {
+          D: {
+            n: "GTCCR Buffer Operation Disable",
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTPR: {
+        n: "Maximum count value of GTCNT.",
+        o: 0x64,
+        s: 4,
+        page: 347,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTCCRA: {
+        n: "General PWM Timer Compare Capture Register A",
+        o: 0x4c,
+        s: 4,
+        page: 346,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTCCRB: {
+        n: "General PWM Timer Compare Capture Register B",
+        o: 0x50,
+        s: 4,
+        page: 346,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTCCRC: {
+        n: "General PWM Timer Compare Capture Register C",
+        o: 0x54,
+        s: 4,
+        page: 346,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTCCRD: {
+        n: "General PWM Timer Compare Capture Register D",
+        o: 0x58,
+        s: 4,
+        page: 346,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTCCRE: {
+        n: "General PWM Timer Compare Capture Register E",
+        o: 0x5c,
+        s: 4,
+        page: 346,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+      GTCCRF: {
+        n: "General PWM Timer Compare Capture Register F",
+        o: 0x60,
+        s: 4,
+        page: 346,
+        d: {
+          D: {
+            bits: [
+              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+              19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

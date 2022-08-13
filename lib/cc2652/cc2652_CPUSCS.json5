@@ -1,0 +1,39 @@
+{
+  CPUSCS: {
+    base: 0xE000E000,
+    name: "Core System Control Space",
+    n: [0],
+    nm: 0,
+    pages: [190, 1118],
+    regs: {
+      AIRCR: {
+        n: "Application Interrupt/Reset Control",
+        o: 0xD0C,
+        s: 4,
+        page: 233,
+        d: {
+          VECTCLRACTIVE: {
+            n: "Clears all active state information for active NMI, fault, and interrupts",
+            bits: [0],
+            rw: "w",
+          },
+          SYSRESETREQ: {
+            n: "Requests a warm reset.",
+            bits: [1],
+            rw: "w",
+          },
+          ENDIANESS: {
+            n: "Data endianness bit: 0h = Little endian, 1h = Big endian",
+            bits: [15],
+            rw: "r",
+          },
+          VECTKEY: {
+            n: "Register key. Writing to this register (AIRCR) requires 0x05FA",
+            bits: [16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            rw: "w",
+          },
+        },
+      },
+    },
+  },
+}

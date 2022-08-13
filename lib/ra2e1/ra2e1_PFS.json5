@@ -1,0 +1,108 @@
+{
+  PFS: {
+    base: 0x40040800,
+    name: "General Purpose I/O Pin Config",
+    n: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    nm: 0x40,
+    pages: [285, 288],
+    regs: {
+      PFS: {
+        n: "Pin Function Select Register",
+        o: 0x0,
+        s: 4,
+        nn: 16,
+        page: 286,
+        d: {
+          PODR: {
+            n: "Port Output Data",
+            bits: [0],
+            rw: "rw",
+            v: [
+              { v: 0, key: "LOW" },
+              { v: 1, key: "HIGH" },
+            ],
+          },
+          PIDR: {
+            n: "Port State",
+            bits: [1],
+            rw: "r",
+            v: [
+              { v: 0, key: "LOW" },
+              { v: 1, key: "HIGH" },
+            ],
+          },
+          PDR: {
+            n: "Port Direction",
+            bits: [2],
+            rw: "rw",
+            v: [
+              { v: 0, key: "INPUT" },
+              { v: 1, key: "OUTPUT" },
+            ],
+          },
+          PCR: {
+            n: "Pull-up Control",
+            bits: [4],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NONE" },
+              { v: 1, key: "PULLUP" },
+            ],
+          },
+          NCODR: {
+            n: "N-Channel Open-Drain Control",
+            bits: [6],
+            rw: "rw",
+            v: [
+              { v: 0, key: "PUSH_PULL" },
+              { v: 1, key: "OPEN_DRAIN" },
+            ],
+          },
+          EOFR: {
+            n: "Event on Edge",
+            bits: [12, 13],
+            rw: "rw",
+            v: [
+              { v: 0, key: "NONE" },
+              { v: 1, key: "RISING" },
+              { v: 2, key: "FALLING" },
+              { v: 3, key: "BOTH" },
+            ],
+          },
+          ISEL: {
+            n: "IRQ Input Enable",
+            bits: [14],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DISABLED" },
+              { v: 1, key: "ENABLED" },
+            ],
+          },
+          ASEL: {
+            n: "Analog Input Enable",
+            bits: [15],
+            rw: "rw",
+            v: [
+              { v: 0, key: "DIGITAL" },
+              { v: 1, key: "ANALOG" },
+            ],
+          },
+          PMR: {
+            n: "Port Mode Control",
+            bits: [16],
+            rw: "rw",
+            v: [
+              { v: 0, key: "GPIO" },
+              { v: 1, key: "PERIPHERAL" },
+            ],
+          },
+          PSEL: {
+            n: "Peripheral Select",
+            bits: [24, 25, 26, 27, 28],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

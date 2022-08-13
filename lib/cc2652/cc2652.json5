@@ -1,0 +1,28 @@
+{
+  n: "TI CC2652",
+  pdf: "swcu185e.pdf",
+  files :[
+    "cc2652_GPIO",
+    "cc2652_IOC",
+    "cc2652_UART",
+    "cc2652_PRCM",
+    "cc2652_AONRTC",
+    "cc2652_AONPMCTL",
+    "cc2652_RFCDBELL",
+    "cc2652_RFCPWR",
+    "cc2652_CCFG",
+    "cc2652_FCFG",
+    "cc2652_AONBATMON",
+    "cc2652_CPUSCS",
+  ],
+  config: {
+    'CPUTYPE':    'CC2652',
+    'RAM_START'   :0x20004000,
+    'RAM_SIZE'    :0x00004000,
+    'CFLASH_START':0x00000000,
+    'CFLASH_START':0x00000000,
+    'CFLASH_SIZE' :0x00010000,
+    'DFLASH_START':0x40100000,
+    'DFLASH_SIZE' :0x00001000,
+  }
+}

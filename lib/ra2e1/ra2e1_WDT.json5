@@ -1,0 +1,109 @@
+{
+  WDT: {
+    base: 0x40044200,
+    name: "Watchdog",
+    n: [0],
+    nm: 0,
+    pages: [480, 493],
+    regs: {
+      WDTRR: {
+        n: "WDT Refresh Register",
+        o: 0x00,
+        s: 1,
+        page: 481,
+        d: {
+          D: {
+            n: "The down-counter",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7],
+            rw: "rw",
+          },
+        },
+      },
+      WDTCR: {
+        n: "WDT Control Register",
+        o: 0x02,
+        s: 2,
+        page: 482,
+        d: {
+          TOPS: {
+            n: "Timeout Period Select",
+            bits: [0, 1],
+            rw: "rw",
+          },
+          CKS: {
+            n: "Clock Division Ratio Select",
+            bits: [4, 5, 6, 7],
+            rw: "rw",
+            v: [
+              { v: 0x01, key: "PCLKB_4" },
+              { v: 0x04, key: "PCLKB_64" },
+              { v: 0x0f, key: "PCLKB_128" },
+              { v: 0x06, key: "PCLKB_512" },
+              { v: 0x07, key: "PCLKB_2048" },
+              { v: 0x08, key: "PCLKB_8192" },
+            ],
+          },
+          RPES: {
+            n: "Window End Position Select",
+            bits: [8, 9],
+            rw: "rw",
+          },
+          RPSS: {
+            n: "Window Start Position Select",
+            bits: [12, 13],
+            rw: "rw",
+          },
+        },
+      },
+      WDTSR: {
+        n: "WDT Status Register",
+        o: 0x04,
+        s: 2,
+        page: 484,
+        d: {
+          CNTVAL: {
+            n: "Down-counter Value",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+            rw: "r",
+          },
+          UNDFF: {
+            n: "Underflow Flag",
+            bits: [14],
+            rw: "rw",
+          },
+          REFEF: {
+            n: "Refresh Error  Flag",
+            bits: [15],
+            rw: "rw",
+          },
+        },
+      },
+      WDTRCR: {
+        n: "WDT Reset Control Register",
+        o: 0x06,
+        s: 1,
+        page: 485,
+        d: {
+          RSTIRQS: {
+            n: "Reset Interrupt Request Select",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+      WDTCSTPR: {
+        n: "WDT Count Stop Control Register",
+        o: 0x08,
+        s: 1,
+        page: 486,
+        d: {
+          SLCSTP: {
+            n: "WDT Count Stop Control Register",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}

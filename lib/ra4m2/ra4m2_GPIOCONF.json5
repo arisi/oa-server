@@ -1,0 +1,29 @@
+{
+  GPIOCONF: {
+    base: 0x40080800,
+    name: 'General Purpose I/O Config',
+    n: [0],
+    nm: 0,    
+    pages: [441,442],
+    regs: {
+      PWPR: {
+        n: 'Write-Protect Register',
+        o: 0x503,
+        s: 1,
+        page: 441,
+        d: {
+          PFSWE: {
+            n: 'Register Write Enable',
+            bits:[6],
+            rw: 'rw',
+          },
+          B0WI: {
+            n: 'Bit Write Disable',
+            bits:[7],
+            rw: 'rw',
+          },
+        },
+      },
+    }
+  }
+}

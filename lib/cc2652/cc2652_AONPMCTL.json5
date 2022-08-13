@@ -1,0 +1,31 @@
+{
+  AONPMCTL: {
+    base: 0x40090000,
+    name: "AON Power Management Controller",
+    n: [0],
+    nm: 0,
+    pages: [616, 1863],
+    regs: {
+      RESETCTL: {
+        n:"Control Register",
+        o: 0x28,
+        s: 4,
+        page: 625,
+        d: {
+          SYSRESET: {
+            bits: [31],
+            n: "Cold reset register",
+            rw: "w",
+          },
+          RESET_SRC: {
+            bits: [1,2,3],
+            n: "Shows the root cause of the last system reset.",
+            rw: "r",
+          },
+
+        },
+      },
+
+    },
+  },
+}

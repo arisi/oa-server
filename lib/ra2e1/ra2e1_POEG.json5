@@ -1,0 +1,137 @@
+{
+  POEG: {
+    base: 0x40042000,
+    name: 'POEG Group Setting Register',
+    n: [0],
+    nm: 0,
+    pages: [303, 308],    
+    regs: {
+      POEGGA: {
+        n: 'POEG Group Setting Register',
+        o: 0x000,
+        s: 4,
+        page: 304,
+        d: {
+          PIDF_A: {
+            n: 'Port Input Detection Flag',
+            bits:[0],
+            rw: 'rw',
+          },
+          IOCF_A: {
+            n: 'Detection Flag for GPT Output-Disable Request',
+            bits:[1],
+            rw: 'rw',
+          },
+          OSTPF_A: {
+            n: 'Oscillation Stop Detection Flag',
+            bits:[2],
+            rw: 'rw',
+          },
+          SSF_A: {
+            n: 'Software Stop Flag',
+            bits:[3],
+            rw: 'rw',
+          },
+          PIDE_A: {
+            n: 'Port Input Detection Enable',
+            bits:[4],
+            rw: 'rw',
+          },
+          IOCE_A: {
+            n: 'Enable for GPT Output-Disable Request',
+            bits:[5],
+            rw: 'rw',
+          },
+          OSTPE_A: {
+            n: 'Oscillation Stop Detection Enable',
+            bits:[6],
+            rw: 'rw',
+          },
+          ST_A: {
+            n: 'GTETRGA Input Status Flag',
+            bits:[16],
+            rw: 'rw',
+          },
+          INV_A: {
+            n: 'GTETRGA Input Reverse',
+            bits:[28],
+            rw: 'rw',
+          },
+          NFEN_A: {
+            n: 'Noise Filter Enable',
+            bits:[29],
+            rw: 'rw',
+          },
+          NFCS_A: {
+            n: 'Noise Filter Clock Select',
+            bits:[30,31],
+            rw: 'rw',
+          },
+        },
+      },
+      POEGGB: {
+        n: 'POEG Group Setting Register',
+        o: 0x100,
+        s: 4,
+        page: 304,
+        d: {
+          PIDF_B: {
+            n: 'Port Input Detection Flag',
+            bits:[0],
+            rw: 'rw',
+          },
+          IOCF_B: {
+            n: 'Detection Flag for GPT Output-Disable Request',
+            bits:[1],
+            rw: 'rw',
+          },
+          OSTPF_B: {
+            n: 'Oscillation Stop Detection Flag',
+            bits:[2],
+            rw: 'rw',
+          },
+          SSF_B: {
+            n: 'Software Stop Flag',
+            bits:[3],
+            rw: 'rw',
+          },
+          PIDE_B: {
+            n: 'Port Input Detection Enable',
+            bits:[4],
+            rw: 'rw',
+          },
+          IOCE_B: {
+            n: 'Enable for GPT Output-Disable Request',
+            bits:[5],
+            rw: 'rw',
+          },
+          OSTPE_B: {
+            n: 'Oscillation Stop Detection Enable',
+            bits:[6],
+            rw: 'rw',
+          },
+          ST_B: {
+            n: 'GTETRGB Input Status Flag',
+            bits:[16],
+            rw: 'rw',
+          },
+          INV_B: {
+            n: 'GTETRGB Input Reverse',
+            bits:[28],
+            rw: 'rw',
+          },
+          NFEN_B: {
+            n: 'Noise Filter Enable',
+            bits:[29],
+            rw: 'rw',
+          },
+          NFCS_B: {
+            n: 'Noise Filter Clock Select',
+            bits:[30,31],
+            rw: 'rw',
+          },
+        },
+      },
+    },
+  },
+}

@@ -1,6 +1,6 @@
 {
   "name": "oa-server",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Open Arm Server",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "bin": {
     "oas": "src/oa-server.js",
-    "oa": "src/oa-cli.js"
+    "oa": "src/oa-cli.ts"
   },
   "repository": {
     "type": "git",
@@ -41,5 +41,8 @@
   "bugs": {
     "url": "https://github.com/arisi/oa-server/issues"
   },
-  "homepage": "https://github.com/arisi/oa-server#readme"
+  "homepage": "https://github.com/arisi/oa-server#readme",
+  "devDependencies": {
+    "@types/node": "^18.6.3"
+  }
 }

@@ -1,0 +1,179 @@
+{
+  LPM: {
+    base: 0x4001e000,
+    name: "Low Power Modes",
+    n: [0],
+    nm: 0,
+    pages: [149, 181],
+    regs: {
+      SBYCR: {
+        n: "Standby Control Register",
+        o: 0x00c,
+        s: 2,
+        page: 152,
+        d: {
+          SSBY: {
+            n: "Software Standby Mode Select",
+            bits: [15],
+            rw: "rw",
+          },
+        },
+      },
+      MSTPCRA: {
+        n: "Module Stop Control Register A",
+        o: 0x01c,
+        s: 4,
+        page: 152,
+        d: {
+          MSTPA22: {
+            n: "DTC Module Stop",
+            bits: [22],
+            rw: "rw",
+          },
+        },
+      },
+      MSTPCRB: {
+        n: "Module Stop Control Register B",
+        o: 0x29000,
+        s: 4,
+        page: 153,
+        d: {
+          MSTPB9: {
+            n: "I2C Bus Interface 0 Module Stop",
+            bits: [9],
+            rw: "rw",
+          },
+          MSTPB19: {
+            n: "SPI0 Module Stop",
+            bits: [19],
+            rw: "rw",
+          },
+          MSTPB22: {
+            n: "SCI9 Module Stop",
+            bits: [22],
+            rw: "rw",
+          },
+          MSTPB29: {
+            n: "SCI2 Module Stop",
+            bits: [29],
+            rw: "rw",
+          },
+          MSTPB30: {
+            n: "SCI1 Module Stop",
+            bits: [30],
+            rw: "rw",
+          },
+          MSTPB31: {
+            n: "SCI0 Module Stop",
+            bits: [31],
+            rw: "rw",
+          },
+        },
+      },
+      MSTPCRC: {
+        n: "Module Stop Control Register C",
+        o: 0x29004,
+        s: 4,
+        page: 154,
+        d: {
+          MSTPC0: {
+            n: "Clock Frequency Accuracy Measurement Circuit Module Stop",
+            bits: [0],
+            rw: "rw",
+          },
+          MSTPC1: {
+            n: "Cyclic Redundancy Check Calculator Module Stop",
+            bits: [1],
+            rw: "rw",
+          },
+          MSTPC3: {
+            n: "Capacitive Sensing Unit 2 Module Stop",
+            bits: [3],
+            rw: "rw",
+          },
+          MSTPC13: {
+            n: "Data Operation Circuit Module Stop",
+            bits: [13],
+            rw: "rw",
+          },
+          MSTPC14: {
+            n: "Event Link Controller Module Stop",
+            bits: [14],
+            rw: "rw",
+          },
+          MSTPC28: {
+            n: "Random Number Generator Module Stop",
+            bits: [28],
+            rw: "rw",
+          },
+          MSTPC31: {
+            n: "AES Module Stop",
+            bits: [31],
+            rw: "rw",
+          },
+        },
+      },
+      MSTPCRD: {
+        n: "Module Stop Control Register D",
+        o: 0x29008,
+        s: 4,
+        page: 154,
+        d: {
+          MSTPD2: {
+            n: "Low Power Asynchronous General Purpose Timer 1 Module Stop",
+            bits: [2],
+            rw: "rw",
+          },
+          MSTPD3: {
+            n: "Low Power Asynchronous General Purpose Timer 0 Module Stop",
+            bits: [3],
+            rw: "rw",
+          },
+          MSTPD5: {
+            n: "General PWM Timer 32n Module Stop",
+            bits: [5],
+            rw: "rw",
+          },
+          MSTPD6: {
+            n: "General PWM Timer 164 to 169 and PWM Delay Generation Circuit Module Stop",
+            bits: [6],
+            rw: "rw",
+          },
+          MSTPD14: {
+            n: "Port Output Enable for GPT Module Stop",
+            bits: [14],
+            rw: "rw",
+          },
+          MSTPD16: {
+            n: "12-bit A/D Converter Module Stop",
+            bits: [16],
+            rw: "rw",
+          },
+          MSTPD29: {
+            n: "Low-Power Analog Comparator Module Stop",
+            bits: [29],
+            rw: "rw",
+          },
+        },
+      },
+      OPCCR: {
+        n: "Operating Power Control Register",
+        o: 0xa0,
+        s: 1,
+        page: 156,
+        d: {
+          OPCM: {
+            n: "Operating Power Control Mode Select",
+            bits: [0, 1],
+            rw: "rw",
+          },
+          OPCMTSF: {
+            n: "Operating Power Control Mode Transition Status Flag",
+            bits: [4],
+            rw: "r",
+          },
+        },
+      },
+    },
+  },
+}

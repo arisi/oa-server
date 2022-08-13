@@ -1,0 +1,76 @@
+{
+  RFCPWR: {
+    base: 0x40040000,
+    name: "RF Core Radio Power Controller",
+    n: [0],
+    nm: 0,
+    pages: [2159, 2161],
+    regs: {
+      PWMCLKEN: {
+        n:"RF Core Power Management and Clock Enable",
+        o: 0x00,
+        s: 4,
+        page: 2160,
+        d: {
+          RFC: {
+            bits: [0],
+            n: "Enable essential clocks for the RF Core interface.",
+            rw: "r",
+          },
+          CPE: {
+            bits: [1],
+            n: "Enable processor clock (hclk) to the Command and Packet Engine (CPE).",
+            rw: "rw",
+          },
+          CPERAM: {
+            bits: [2],
+            n: "Enable clock to the Command and Packet Engine (CPE) RAM module",
+            rw: "rw",
+          },
+          MDM: {
+            bits: [3],
+            n: "Enable clock to the Modem (MDM) module",
+            rw: "rw",
+          },
+          MDMRAM: {
+            bits: [4],
+            n: "Enable clock to the Modem RAM module.",
+            rw: "rw",
+          },
+          RFE: {
+            bits: [5],
+            n: "Enable clock to the RF Engine (RFE) module.",
+            rw: "rw",
+          },
+          RFERAM: {
+            bits: [6],
+            n: "Enable clock to the RF Engine RAM module",
+            rw: "rw",
+          },
+          RAT: {
+            bits: [7],
+            n: "Enable clock to the Radio Timer (RAT) module.",
+            rw: "rw",
+          },
+          PHA: {
+            bits: [8],
+            n: "Enable clock to the Packet Handling Accelerator (PHA) module.",
+            rw: "rw",
+          },
+          FSCA: {
+            bits: [9],
+            n: "Enable clock to the Frequency Synthesizer Calibration Accelerator (FSCA) module.",
+            rw: "rw",
+          },
+          RFCTRC: {
+            bits: [10],
+            n: "Enable clock to the RF Core Tracer (RFCTRC) module.",
+            rw: "rw",
+          },
+
+        },
+      },
+
+    },
+  },
+}

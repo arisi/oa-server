@@ -1,0 +1,146 @@
+{
+  AGT: {
+    base: 0x40084000,
+    name: "Low Power Asynchronous General Purpose Timer",
+    n: [0, 1],
+    nm: 0x100,
+    pages: [422, 445],
+    regs: {
+      AGT: {
+        n: "AGT Counter Register",
+        o: 0x000,
+        s: 2,
+        page: 424,
+        d: {
+          D: {
+            n: "16-bit counter and reload register",
+            bits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            rw: "rw",
+          },
+        },
+      },
+      AGTCR: {
+        n: "AGT Control Register",
+        o: 0x08,
+        s: 1,
+        page: 425,
+        d: {
+          TSTART: {
+            n: "AGT Count Start",
+            bits: [0],
+            rw: "rw",
+          },
+          TCSTF: {
+            n: "AGT Count Status Flag",
+            bits: [1],
+            rw: "rw",
+          },
+          TSTOP: {
+            n: "AGT Count Forced Stop",
+            bits: [2],
+            rw: "rw",
+          },
+          TEDGF: {
+            n: "Active Edge Judgment Flag",
+            bits: [4],
+            rw: "rw",
+          },
+          TUNDF: {
+            n: "Underflow Flag",
+            bits: [5],
+            rw: "rw",
+          },
+          TCMAF: {
+            n: "Compare Match A Flag",
+            bits: [6],
+            rw: "rw",
+          },
+          TCMBF: {
+            n: "Compare Match B Flag",
+            bits: [7],
+            rw: "rw",
+          },
+        },
+      },
+      AGTMR1: {
+        n: "AGT Mode Register 1",
+        o: 0x09,
+        s: 1,
+        page: 427,
+        d: {
+          TMOD: {
+            n: "Operating Mode",
+            bits: [0, 1, 2],
+            rw: "rw",
+          },
+          TEDGPL: {
+            n: "Edge Polarity",
+            bits: [3],
+            rw: "rw",
+          },
+          TCK: {
+            n: "Count Source",
+            bits: [4, 5, 6],
+            rw: "rw",
+          },
+        },
+      },
+      AGTCMSR: {
+        n: "AGT Compare Match Function Select Register",
+        o: 0x0e,
+        s: 1,
+        page: 431,
+        d: {
+          TCMEA: {
+            n: "AGT Compare Match A Register Enable",
+            bits: [0],
+            rw: "rw",
+          },
+          TOEA: {
+            n: "AGTOAn Pin Output Enable",
+            bits: [1],
+            rw: "rw",
+          },
+          TOPOLA: {
+            n: "AGTOAn Pin Polarity Select",
+            bits: [2],
+            rw: "rw",
+          },
+          TCMEB: {
+            n: "AGT Compare Match B Register Enable",
+            bits: [4],
+            rw: "rw",
+          },
+          TOEB: {
+            n: "AGTOBn Pin Output Enable",
+            bits: [5],
+            rw: "rw",
+          },
+          TOPOLB: {
+            n: "AGTOBn Pin Polarity Select*",
+            bits: [6],
+            rw: "rw",
+          },
+        },
+      },
+      AGTIOSEL: {
+        n: "AGT Pin Select Register",
+        o: 0x0f,
+        s: 1,
+        page: 431,
+        d: {
+          SEL: {
+            n: "AGTIOn Pin Select*",
+            bits: [0, 1],
+            rw: "rw",
+          },
+          TIES: {
+            n: "AGTIOn Pin Input Enable",
+            bits: [4],
+            rw: "rw",
+          },
+        },
+      },
+    },
+  },
+}
