@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm version patch && tsc src/oa-cli.ts"
+    "prepublishOnly": "sh/prepublish.sh"
   },
   "bin": {
     "oas": "src/oa-server.js",
