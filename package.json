@@ -1,6 +1,6 @@
 {
   "name": "oa-server",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Open Arm Server",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "bin": {
     "oas": "src/oa-server.js",
-    "oa": "src/oa-cli.ts"
+    "oa": "src/oa-cli.js"
   },
   "repository": {
     "type": "git",

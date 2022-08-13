@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "target": "es2016",
+    "types": [
+      "node"
+    ],
     "lib": [
       "es2017",
       "dom"

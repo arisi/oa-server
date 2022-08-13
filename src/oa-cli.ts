@@ -5,7 +5,4 @@ import { join } from 'path';
 
 var builder: Builder = new Builder();
 
-var fn = join(__dirname, '../ts/mban.json5')
-console.log("reading conf", fn);
-
-builder.bheader(fn, 'ts/mban')
+builder.bheader("mban.json5", './mban')
