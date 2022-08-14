@@ -9,7 +9,7 @@
   },
   "bin": {
     "oas": "src/oa-server.js",
-    "oa": "src/oa-cli.js"
+    "oa": "src/oa.js"
   },
   "repository": {
     "type": "git",
