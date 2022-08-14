@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
 import { Builder } from '../ts/gen_cpu';
 import { join } from 'path';
