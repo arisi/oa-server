@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 "use strict";
 exports.__esModule = true;
 var gen_cpu_1 = require("../ts/gen_cpu");
