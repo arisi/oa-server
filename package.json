@@ -8,8 +8,8 @@
     "prepublishOnly": "sh/prepublish.sh"
   },
   "bin": {
-    "oas": "src/oas.js",
-    "oa": "src/oa.js"
+    "oas": "node src/oas.js",
+    "oa": "node src/oa.js"
   },
   "repository": {
     "type": "git",
