@@ -63,7 +63,7 @@ export class Builder {
     }
     tester += `int main()\n{\n`
     lib += "\n"
-    var json = {}
+    var json:any = {}
 
     for (var mod of Object.keys(conf.modules)) {
       if (!prod.modules[mod]) {
@@ -83,7 +83,8 @@ export class Builder {
       }
       rlist = rlist.sort((a, b) => a.o - b.o)
 
-      for (var r of rlist) {
+      var r: any;
+      for (r of rlist) {
         reg = r.reg
         var m:any = conf.modules[mod]
         if (bc != r.o) {
@@ -160,8 +161,10 @@ export class Builder {
               jname = `${mod}:${reg}`
             }
             var a = conf.modules[mod].base + port * conf.modules[mod].nm + r.o
-            var d2 = {}
-            for (var [key, dd2] of Object.entries(r.d).sort((a: any, b: any) => {
+            var d2: any = {}
+            var key: string;
+            var dd2: any;
+            for ([key, dd2] of Object.entries(r.d).sort((a: any, b: any) => {
               return b[1].bits[0] - a[1].bits[0]
             }
             )) {
