@@ -4,13 +4,12 @@ const sprintf = require('sprintf');
 const fs = require("fs")
 const JSON5 = require('json5');
 
-var schema = {}
 
 var stamp = () => {
   return Date.now()
 }
 
-var build_c_lib = (path) => {
+var build_c_lib = (schema, path) => {
   console.log("buildin clib to", path);
 
   s = ""
@@ -169,7 +168,7 @@ var build_c_lib = (path) => {
 
 var seq_cnt = 0
 
-var encode = (payload) => {
+var encode = (schema, payload) => {
   var bits = []
   var my_seq = seq_cnt
   var sch = schema.messages[payload.topic]
@@ -194,7 +193,7 @@ var encode = (payload) => {
         val = data
       }
       if (typeof val != "object") {
-        console.error("no array???", val);
+        console.error("no array???", p,val);
         continue;
       }
       if (typeof p.n == "string")
@@ -231,7 +230,7 @@ var encode = (payload) => {
   return [my_seq, ret]
 }
 
-var decode = (s) => {
+var decode = (schema, s) => {
   bits = [], bc = 0
   for (byte of s) {
     for (bit = 0; bit < 8; bit++) {
@@ -281,7 +280,7 @@ var decode = (s) => {
 
 init = (schema_fn) => {
   try {
-    schema = JSON5.parse(fs.readFileSync(schema_fn).toString())
+    var schema = JSON5.parse(fs.readFileSync(schema_fn).toString())
     schema.ids = []
     for (const [key, msg] of Object.entries(schema.messages)) {
       schema.ids[msg.id] = key
