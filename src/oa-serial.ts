@@ -11,7 +11,7 @@ export class OaSerial extends EventEmitter {
   first_online: boolean = true
   mq: any
   devices: any = {}
-  tick: number = 0
+  tick: number = 0;
 
   onChange = async (s: boolean) => {
     if (s) {

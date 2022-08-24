@@ -183,8 +183,8 @@ class Rt0s {
   }
 
   end() {
-    client.end(true);
-    change_state(false);
+    this.client.end(true);
+    this.change_state(false);
   };
 
   reconnect() {

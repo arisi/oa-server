@@ -16,13 +16,12 @@ export declare interface OaCpu {
   on(event: 'mqtt', listener: (payload: any) => void): this;
   on(event: 'raw', listener: (payload: any) => void): this;
 }
-var ccnt = 0;
 export class OaCpu extends EventEmitter {
   name: string = "?";
   dev: any = null;
   port: any = null;
   baud: number = 115200;
-  mode: string = 'CLOSE'
+  mode: string = '?'
   logf: any = false
   log = true
   debug = true
@@ -30,10 +29,18 @@ export class OaCpu extends EventEmitter {
   log_prev: number = 0
   schema: any;
   hdlc: any;
-  cnt = 0;
+  mq: any;
+
 
   static stamp() {
     return (new Date).getTime()
+  }
+
+  set_mode(newmode: string) {
+    if (this.mode != newmode) {
+      console.log("set_mode", this.dev['path'], this.mode,"=>", newmode);
+      this.mode = newmode;
+    }
   }
 
   logger(verb: string, data: any, info?: string) {
@@ -60,7 +67,7 @@ export class OaCpu extends EventEmitter {
       s += sprintf("%02X ", ch)
     if (info)
       s += info
-    console.log(s);
+    //console.log(s);
     if (this.log) {
       fs.write(this.logf, s + "\n", () => {
         fs.fdatasync(this.logf, () => { })
@@ -82,13 +89,11 @@ export class OaCpu extends EventEmitter {
     this.logf = fs.openSync("loki.txt", "w")
     this.schema = mqttsn.init("mban_mqtt.json5")
     this.hdlc = new HDLC()
-    this.cnt = ccnt++;
-    console.log("cpu created" ,this.cnt);
   }
 
   async probeMQTT(): Promise<boolean> {
     return new Promise(async (res, err) => {
-      console.log("probe ti mqtt", this.dev['path']);
+      this.set_mode('PROBE-MQTT');
       this.hdlc.init()
       var a: any, buf: any;
       var obj
@@ -99,8 +104,6 @@ export class OaCpu extends EventEmitter {
       }, 1500);
       this.on('mqtt', (msg) => {
         clearTimeout(timer)
-        console.log("mqtt gotten", msg, this.cnt);
-
         if (msg.topic == 'pong')
           res(true)
         else
@@ -126,22 +129,23 @@ export class OaCpu extends EventEmitter {
         res(false)
       });
       this.port.on('open', (err: any) => {
-        console.error("Opened port", this.dev['path']);
-        this.mode = 'OPEN'
+        //console.error("Opened port", this.dev['path']);
         res(true)
       });
-      //this.port.on('readable', this.on_readable)
       this.hdlc.on('frame', (frame:any) => {
-        console.log("FRAME", frame, this.hdlc.cnt, this.cnt);
         var msg = mqttsn.decode(this.schema, frame)
         this.emit('mqtt', msg);
+      })
+      this.on('raw', (msg) => {
+        console.log("RAW", msg, this.mode);
+
       })
       this.port.on('readable', () => {
         var d: any;
         try {
           d = this.port.read();
         } catch (error) {
-          console.error("port lost");
+          //console.error("port lost");
           return;
         }
 
@@ -158,7 +162,8 @@ export class OaCpu extends EventEmitter {
   }
 
   close() {
-    this.port.close();
+    if (this.port)
+      this.port.close();
     this.port = null;
   }
 

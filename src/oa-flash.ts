@@ -11,16 +11,20 @@ xx.on('found', async d =>  {
   var cpu = new OaCpuTexas(d);
   var ok = await cpu.probe()
   if (ok) {
-    console.log("hit", cpu.name, d['path']);
+    //console.log("hit", cpu.name, d['path']);
     d.cpu = cpu
   } else {
-    console.log("not hit", cpu.name, d['path']);
+    //console.log("not hit", cpu.name, d['path']);
   }
   //console.log(xx.devices);
 
 })
 
 xx.on('lost', d => {
-  console.log('lost', d['path'])
+  if (d.cpu && d.cpu.mq) {
+    console.log("closin mqtt");
+    d.cpu.mq.end();
+  }
+  //console.log('lostz', d['path'],d)
 })
 

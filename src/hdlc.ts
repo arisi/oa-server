@@ -4,8 +4,6 @@ const sprintf = require('sprintf');
 var crc = require("crc");
 import { EventEmitter } from "events";
 
-var ccnt = 0
-
 export declare interface HDLC {
   on(event: 'frame', listener: (payload: any) => void): this;
   //on(event: 'ping', listener: () => void): this;
@@ -19,13 +17,9 @@ export class HDLC extends EventEmitter {
   in_esc = false
   had_escape = false
   hbuf: any = []
-  cnt = 0;
-
 
   constructor() {
     super()
-    this.cnt = ccnt++;
-    console.log("HDLC created",this.cnt);
   }
 
   static dump(head: string, bytes: any) {
@@ -99,7 +93,6 @@ export class HDLC extends EventEmitter {
               crcc = crc.crc16ccitt([b], crcc);
             var cc = ((this.hbuf[this.hbuf.length - 1] << 8) | (this.hbuf[this.hbuf.length - 2] & 0xff))
             if (crcc == cc || this.had_escape) {
-              console.log("emittin");
               this.emit('frame', this.hbuf.slice(1, this.hbuf.length - 2));
             } else
               console.log("CRC", this.hbuf.slice(1, this.hbuf.length - 2), sprintf("%04X %04X len:%d", crcc || 0, cc, this.hbuf.length));
