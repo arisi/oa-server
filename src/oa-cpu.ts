@@ -25,20 +25,40 @@ export class OaCpu extends EventEmitter {
   logf: any = false
   log = true
   debug = true
-  log_start:number = 0
+  log_start: number = 0
   log_prev: number = 0
   schema: any;
   hdlc: any;
   mq: any;
+  reqs: any = {}
 
+  cpu = ""
+  fw = ""
+  hw = ""
+  serno = ""
+
+  client_id() {
+    if (this.serno)
+      return `${this.mode}_${this.cpu}_${this.fw}_${this.hw}_${this.serno}`
+    else if (this.hw)
+      return `${this.mode}_${this.cpu}_${this.fw}_${this.hw}`
+    else if (this.fw)
+      return `${this.mode}_${this.cpu}_${this.fw}`
+    else
+      return `${this.mode}_${this.cpu}`
+  }
 
   static stamp() {
     return (new Date).getTime()
   }
-
+  isprint(char:any) {
+    if (char < 32)
+      return false
+    return !(/[\x00-\x08\x0E-\x1F\x80-\xFF]/.test(String.fromCharCode(char)));
+  }
   set_mode(newmode: string) {
     if (this.mode != newmode) {
-      console.log("set_mode", this.dev['path'], this.mode,"=>", newmode);
+      console.log("set_mode", this.dev['path'], this.mode, "=>", newmode);
       this.mode = newmode;
     }
   }
@@ -87,7 +107,7 @@ export class OaCpu extends EventEmitter {
     super()
     this.dev = dev
     this.logf = fs.openSync("loki.txt", "w")
-    this.schema = mqttsn.init("mban_mqtt.json5")
+    this.schema = mqttsn.init("mban_mqtt.json5") // base commands
     this.hdlc = new HDLC()
   }
 
@@ -95,20 +115,25 @@ export class OaCpu extends EventEmitter {
     return new Promise(async (res, err) => {
       this.set_mode('PROBE-MQTT');
       this.hdlc.init()
-      var a: any, buf: any;
-      var obj
-      obj = {topic: 'ping', data:[1,2,3], data_len:3};
-      [a, buf] = mqttsn.encode(this.schema, obj)
       var timer = setTimeout(() => {
         res(false)
       }, 1500);
-      this.on('mqtt', (msg) => {
+      var handler = (msg: any) => {
         clearTimeout(timer)
-        if (msg.topic == 'pong')
+        this.removeListener('mqtt', handler)
+        console.log("ident", msg);
+
+        this.fw = String.fromCharCode(...msg.fw);
+        this.cpu = String.fromCharCode(...msg.cpu);
+        console.log("Indent:", this.fw, this.cpu);
+
+        if (msg.topic == 'identack')
           res(true)
         else
           res(false)
-      });
+      }
+      this.on('mqtt', handler);
+      var [a, buf] = mqttsn.encode(this.schema, { topic: 'ident', level: 1 })
       var frame = this.hdlc.send(Buffer.from(buf))
       this.write(Buffer.from(frame))
     })
@@ -132,13 +157,12 @@ export class OaCpu extends EventEmitter {
         //console.error("Opened port", this.dev['path']);
         res(true)
       });
-      this.hdlc.on('frame', (frame:any) => {
+      this.hdlc.on('frame', (frame: any) => {
         var msg = mqttsn.decode(this.schema, frame)
         this.emit('mqtt', msg);
       })
       this.on('raw', (msg) => {
         console.log("RAW", msg, this.mode);
-
       })
       this.port.on('readable', () => {
         var d: any;
