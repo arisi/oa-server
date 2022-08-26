@@ -39,13 +39,13 @@ export class OaCpu extends EventEmitter {
 
   client_id() {
     if (this.serno)
-      return `${this.mode}_${this.cpu}_${this.fw}_${this.hw}_${this.serno}`
+      return `${this.mode}/${this.cpu}/${this.fw}/${this.hw}/${this.serno}`
     else if (this.hw)
-      return `${this.mode}_${this.cpu}_${this.fw}_${this.hw}`
+      return `${this.mode}/${this.cpu}/${this.fw}/${this.hw}`
     else if (this.fw)
-      return `${this.mode}_${this.cpu}_${this.fw}`
+      return `${this.mode}/${this.cpu}/${this.fw}`
     else
-      return `${this.mode}_${this.cpu}`
+      return `${this.mode}/${this.cpu}`
   }
 
   static stamp() {
@@ -125,6 +125,8 @@ export class OaCpu extends EventEmitter {
 
         this.fw = String.fromCharCode(...msg.fw);
         this.cpu = String.fromCharCode(...msg.cpu);
+        this.hw = String.fromCharCode(...msg.hw);
+        this.serno = String.fromCharCode(...msg.serno);
         console.log("Indent:", this.fw, this.cpu);
 
         if (msg.topic == 'identack')

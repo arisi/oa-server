@@ -20,6 +20,7 @@ const dns = require('dns')
 var apis = {}
 var reqs = {}
 var _id = "broker"
+var certs:any = {}
 
 var uuidv4 = (): string => {
   var result: string, i: string, j: number
@@ -354,7 +355,6 @@ aedes.authenticate = function (client, username, password, callback) {
 //   return true
 // })
 
-const certs = {}
 const { exec } = require('child_process')
 
 console.log(`Open Arm Server Starting.. `)
@@ -662,11 +662,12 @@ start_services()
 var check_certs = () => {
   for (var k in conf.urls) {
     var url = conf.urls[k]
+
     var key_fn = `${conf.acme_home}/${url}/${url}.key`.replace('~', home_dir)
     var cer_fn = `${conf.acme_home}/${url}/fullchain.cer`.replace('~', home_dir)
     if (!fs.existsSync(key_fn) || !fs.existsSync(cer_fn)) {
       //cmd = `/home/arisi/.acme.sh/acme.sh --standalone --issue -d ${url} --server letsencrypt`
-      console.error(`no tls files for ${url} ${key_fn} ${cer_fn}`)
+      console.error(`no tls files for ${url} ${home_dir} ${key_fn} ${cer_fn}`)
     } else {
       try {
         certs[url] = tls.createSecureContext({
