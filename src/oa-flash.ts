@@ -2,13 +2,13 @@ import { OaSerial } from "./oa-serial";
 import { OaCpuTexas } from "./oa-cpu-texas";
 import { OaCpuRenesas } from "./oa-cpu-renesas";
 
-var xx = new OaSerial("dut")
+var xx = new OaSerial("dut2")
 //var cpus = [new OaCpuTexas(), new OaCpuRenesas()]
 
 xx.on('found', async d =>  {
-  console.log('\nfound', d['path'])
+  //console.log('\nfound', d['path'])
   //for (var cpu of cpus) {
-  var cpu = new OaCpuTexas(d);
+  var cpu = new OaCpuTexas(d, xx.conf);
   var ok = await cpu.probe()
   if (ok) {
     //console.log("hit", cpu.name, d['path']);

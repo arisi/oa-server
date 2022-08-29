@@ -16,11 +16,13 @@ export declare interface OaCpu {
   on(event: 'mqtt', listener: (payload: any) => void): this;
   on(event: 'raw', listener: (payload: any) => void): this;
 }
+var cpuc = 1;
 export class OaCpu extends EventEmitter {
   name: string = "?";
   dev: any = null;
   port: any = null;
-  baud: number = 115200;
+  //baud: number = 115200;
+  baud: number = 19200;
   mode: string = '?'
   logf: any = false
   log = true
@@ -37,21 +39,25 @@ export class OaCpu extends EventEmitter {
   hw = ""
   serno = ""
 
+  conf: any;
+  done = false
+
   client_id() {
+    //return `${this.mode}/${this.dev['path']}`
     if (this.serno)
-      return `${this.mode}_${this.cpu}_${this.fw}_${this.hw}_${this.serno}`
+      return `${this.mode}:${this.cpu}:${this.fw}:${this.hw}.${this.serno}`
     else if (this.hw)
-      return `${this.mode}_${this.cpu}_${this.fw}_${this.hw}`
+      return `${this.mode}:${this.cpu}:${this.fw}:${this.hw}`
     else if (this.fw)
-      return `${this.mode}_${this.cpu}_${this.fw}`
+      return `${this.mode}:${this.cpu}:${this.fw}`
     else
-      return `${this.mode}_${this.cpu}`
+      return `${this.mode}:${this.cpu}`
   }
 
   static stamp() {
     return (new Date).getTime()
   }
-  isprint(char:any) {
+  isprint(char: any) {
     if (char < 32)
       return false
     return !(/[\x00-\x08\x0E-\x1F\x80-\xFF]/.test(String.fromCharCode(char)));
@@ -87,7 +93,7 @@ export class OaCpu extends EventEmitter {
       s += sprintf("%02X ", ch)
     if (info)
       s += info
-    //console.log(s);
+    console.log(s);
     if (this.log) {
       fs.write(this.logf, s + "\n", () => {
         fs.fdatasync(this.logf, () => { })
@@ -103,43 +109,62 @@ export class OaCpu extends EventEmitter {
     this.port.write(data)
   }
 
-  constructor(dev: any) {
+  constructor(dev: any, conf: any) {
     super()
     this.dev = dev
+    this.conf = conf
     this.logf = fs.openSync("loki.txt", "w")
     this.schema = mqttsn.init("mban_mqtt.json5") // base commands
     this.hdlc = new HDLC()
+  }
+  static async sleep(time: number) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  };
+
+  sendMQTT(msg: any) {
+    var [a, buf] = mqttsn.encode(this.schema, msg)
+    //var [a, buf] = mqttsn.encode(this.schema, { topic: 'ping', data_len: 2, data:[1,2] })
+    var frame = this.hdlc.send(Buffer.from(buf))
+    this.write(Buffer.from(frame))
   }
 
   async probeMQTT(): Promise<boolean> {
     return new Promise(async (res, err) => {
       this.set_mode('PROBE-MQTT');
       this.hdlc.init()
-      var timer = setTimeout(() => {
-        res(false)
-      }, 1500);
+      //var tick = 0;
+      var done = false;
+      //this.write(Buffer.from([this.hdlc.FRAME_OCTET, this.hdlc.FRAME_OCTET]))
       var handler = (msg: any) => {
-        clearTimeout(timer)
-        this.removeListener('mqtt', handler)
-        console.log("ident", msg);
-
-        this.fw = String.fromCharCode(...msg.fw);
-        this.cpu = String.fromCharCode(...msg.cpu);
-        console.log("Indent:", this.fw, this.cpu);
-
-        if (msg.topic == 'identack')
+        if (msg.topic == 'identack') {
+          done = true;
+          console.log("msg", msg, "done=", done);
+          this.removeListener('mqtt', handler)
+          this.fw = String.fromCharCode(...msg.fw);
+          this.cpu = String.fromCharCode(...msg.cpu);
+          this.serno = String.fromCharCode(...msg.serno);
+          this.hw = String.fromCharCode(...msg.hw);
+          console.log("Indented:", this.fw, this.cpu, this.serno, this.hw);
           res(true)
-        else
-          res(false)
+        }
       }
       this.on('mqtt', handler);
-      var [a, buf] = mqttsn.encode(this.schema, { topic: 'ident', level: 1 })
-      var frame = this.hdlc.send(Buffer.from(buf))
-      this.write(Buffer.from(frame))
+      for (var tick = 0; tick < 10 && !done; tick += 1) {
+        console.log("tikki", tick, done, this.dev['path']);
+        this.sendMQTT({ topic: 'ident', level: 1 })
+        await OaCpu.sleep(100);
+      }
+      this.removeListener('mqtt', handler)
+      if (!done) {
+        console.log("** TIMEOUT", done);
+        res(false)
+      }
     })
   }
 
-  async open(baud: number = 115200): Promise<boolean> {
+  async open(baud: number = 19200): Promise<boolean> {
+    console.log("openin", this.dev['path'], baud);
+
     return new Promise((res) => {
       this.port = new SerialPortStream({
         binding,
