@@ -8,3 +8,6 @@ xxx/**
 src/*.js
 src/oa-serial.ts
 py/**/*.pyc
+loki.txt
+src/loki.txt
+src/log/loki

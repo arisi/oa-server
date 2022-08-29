@@ -1,0 +1,17 @@
+{
+  n: "Silabs EFR32BG22",
+  pdf: "efr32xg22-rm.pdf",
+  files :[
+    "efr32bg22_DEVINFO",
+  ],
+  config: {
+    'CPUTYPE':    'efr32bg22',
+    'RAM_START'   :0x20004000,
+    'RAM_SIZE'    :0x00004000,
+    'CFLASH_START':0x00000000,
+    'CFLASH_START':0x00000000,
+    'CFLASH_SIZE' :0x00010000,
+    'DFLASH_START':0x40100000,
+    'DFLASH_SIZE' :0x00001000,
+  }
+}

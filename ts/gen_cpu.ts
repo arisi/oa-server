@@ -6,7 +6,7 @@ import * as sprintf from 'sprintf';
 import { join } from 'path';
 
 export class Builder {
-  cpu_path: string = "../lib"
+  cpu_path: string = "../clib"
   hex = (v: number, len = 0) => {
     if (len)
       return sprintf(`%0${len}X`, v)

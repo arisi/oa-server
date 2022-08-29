@@ -2,7 +2,7 @@
   "client": {
     "username": "demo",
     "password": "demo",
-    "mqttx": "mqtt://localhost:1000"
+    "mqtt": "mqtt://localhost:1884"
   },
   "web": {
     "username": "demo",

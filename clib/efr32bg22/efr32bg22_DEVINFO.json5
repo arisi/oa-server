@@ -1,0 +1,29 @@
+{
+  DEVINFO: {
+    base: 0x0FE08000,
+    name: "DEVINFO",
+    n: [0],
+    nm: 0,
+    pages: [56, 83],
+    regs: {
+      INFO: {
+        n:"DI Information",
+        o: 0x00,
+        s: 4,
+        page: 56,
+        d: {
+          PRODREV: {
+            bits: [16,17,18,19,20,21,22,23],
+            n: "Production Revision",
+            rw: "r",
+          },
+          DEVINFOREV: {
+            bits: [24,25,26,27,28,29,30,31],
+            n: "DI Page Version",
+            rw: "r",
+          },
+        },
+      },
+    },
+  },
+}
