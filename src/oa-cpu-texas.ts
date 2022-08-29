@@ -277,9 +277,9 @@ export class OaCpuTexas extends OaCpu {
 
   onChange = async (s: boolean) => {
     if (s) {
-      console.log("ONLINE ti");
+      console.log("ONLINE texas", this.mode, this.dev['path'], this.client_id());
     } else
-      console.log("OFFLINE ti");
+      console.log("OFFLINE texas", this.mode, this.dev['path'], this.client_id());
   }
 
   async probe(): Promise<boolean> {
@@ -320,12 +320,12 @@ export class OaCpuTexas extends OaCpu {
                     console.log(` FLASH_BLOCK: ${sprintf("0x%08X", MCU.flash_block)}, ${MCU.flash_size / MCU.flash_block} BLOCKS`);
                     console.log(` RAM_START : ${sprintf("0x%08X", MCU.ram_start)}`);
                     console.log(` RAM_SIZE : ${sprintf("0x%08X", MCU.ram_size)}`);
-                  } else
+                  } else {
                     console.log(`NOT SUPPORTED TYPE\n`);
+                    this.cpu = `0x${id.id_hex}`;
+                  }
 
-                  this.mq = new Rt0s("mqtt://localhost:1884", this.client_id(), "arska", "zilakka", this.onChange)
-
-
+                  this.mq = new Rt0s(this.conf.client.mqtt, this.client_id(), this.conf.client.username, this.conf.client.password, this.onChange);
 
                   this.mq.registerAPI('flash', "Flash ", ['srec'], async (msg: any) => {
                     var srec_fn = msg['req']['args'][1]['srec']
@@ -427,6 +427,12 @@ export class OaCpuTexas extends OaCpu {
                 this.reqs[id] = msg
                 return null;
               });
+              setInterval(() => {
+                console.log("mqtt ping");
+                var [a, buf] = mqttsn.encode(this.schema, { topic: 'ping', data_len: 2, data:[1,2] })
+                var frame = this.hdlc.send(Buffer.from(buf))
+                this.write(Buffer.from(frame))
+              },1000)
 
               if (this.schema && 'messages' in this.schema)
                 var value: any
@@ -444,10 +450,8 @@ export class OaCpuTexas extends OaCpu {
                     }
                     //console.log("got api call:", msg, obj);
                     var [id, s] = mqttsn.encode(this.schema, obj)
-                    //var check = mqttsn.decode(s)
-                    //console.log("check:", msg, id, s);
                     var buf = this.hdlc.send(Buffer.from(s))
-                    this.write(Buffer.from(buf)) //, JSON.stringify(check))
+                    this.write(Buffer.from(buf));
                     this.reqs[id] = msg
                     return null
                   })

@@ -8,6 +8,7 @@ const { ReadlineParser } = require('@serialport/parser-readline')
 const sprintf = require('sprintf');
 const fs = require('fs');
 const mqttsn = require("./mqttsn_lib.js")
+import {Mutex, MutexInterface, Semaphore, SemaphoreInterface, withTimeout} from 'async-mutex';
 
 import { HDLC } from "./hdlc";
 import { EventEmitter } from "events";
@@ -16,7 +17,6 @@ export declare interface OaCpu {
   on(event: 'mqtt', listener: (payload: any) => void): this;
   on(event: 'raw', listener: (payload: any) => void): this;
 }
-var cpuc = 1;
 export class OaCpu extends EventEmitter {
   name: string = "?";
   dev: any = null;
@@ -33,6 +33,7 @@ export class OaCpu extends EventEmitter {
   hdlc: any;
   mq: any;
   reqs: any = {}
+  static mutex = new Mutex();
 
   cpu = ""
   fw = ""
@@ -130,39 +131,37 @@ export class OaCpu extends EventEmitter {
 
   async probeMQTT(): Promise<boolean> {
     return new Promise(async (res, err) => {
-      this.set_mode('PROBE-MQTT');
-      this.hdlc.init()
-      //var tick = 0;
       var done = false;
-      //this.write(Buffer.from([this.hdlc.FRAME_OCTET, this.hdlc.FRAME_OCTET]))
-      var handler = (msg: any) => {
-        clearTimeout(timer)
-        this.removeListener('mqtt', handler)
-        console.log("ident", msg);
-
-        this.fw = String.fromCharCode(...msg.fw);
-        this.cpu = String.fromCharCode(...msg.cpu);
-        console.log("Indent:", this.fw, this.cpu);
-
-        if (msg.topic == 'identack')
-          res(true)
+      await OaCpu.mutex.runExclusive(async () => {
+        this.set_mode('PROBE-MQTT');
+        this.hdlc.init()
+        //this.write(Buffer.from([this.hdlc.FRAME_OCTET, this.hdlc.FRAME_OCTET]))
+        var handler = (msg: any) => {
+          if (msg.topic == 'identack' && !done) {
+            done = true;
+            this.fw = String.fromCharCode(...msg.fw);
+            this.cpu = String.fromCharCode(...msg.cpu);
+            this.serno = String.fromCharCode(...msg.serno);
+            this.hw = String.fromCharCode(...msg.hw);
+            console.log("Idented:", this.fw, this.cpu, this.serno, this.hw);
+          }
         }
-      }
-      this.on('mqtt', handler);
-      for (var tick = 0; tick < 10 && !done; tick += 1) {
-        console.log("tikki", tick, done, this.dev['path']);
-        this.sendMQTT({ topic: 'ident', level: 1 })
-        await OaCpu.sleep(100);
-      }
-      this.removeListener('mqtt', handler)
+        this.on('mqtt', handler);
+
+        for (var tick = 0; tick < 4 && !done; tick += 1) {
+          this.sendMQTT({ topic: 'ident', level: 1 })
+          await OaCpu.sleep(100);
+        }
+        this.removeListener('mqtt', handler)
+      })
       if (!done) {
-        console.log("** TIMEOUT", done);
         res(false)
-      }
+      } else
+        res(true)
     })
   }
 
-  async open(baud: number = 19200): Promise<boolean> {
+  async open(baud: number = 115200): Promise<boolean> {
     console.log("openin", this.dev['path'], baud);
 
     return new Promise((res) => {
