@@ -172,6 +172,10 @@ var encode = (schema, payload) => {
   var bits = []
   var my_seq = seq_cnt
   var sch = schema.messages[payload.topic]
+  if (!sch) {
+    console.log("schema", payload.topic, "missing");
+    return false;
+  }
   for (b = 0; b < schema.config.seqlen; b++) {
     bits.push(seq_cnt & (1 << b) ? 1 : 0)
   }
@@ -287,6 +291,7 @@ init = (schema_fn) => {
     }
     return schema;
   } catch (error) {
+    console.log("ERROR Reading schema", schema_fn, error);
     return null;
   }
 }

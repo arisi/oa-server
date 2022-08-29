@@ -4,3 +4,7 @@ web/localhost/syms.json
 mban/*
 mban*
 xxx/**
+**/*.d.ts
+src/*.js
+src/oa-serial.ts
+py/**/*.pyc

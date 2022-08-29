@@ -2,6 +2,9 @@
 const Rt0s = require("./rt0s_node.js").Rt0s
 import { EventEmitter } from "events";
 import { SerialPort } from "serialport";
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
 
 export declare interface OaSerial {
   on(event: 'found', listener: (name: any) => void): this;
@@ -12,6 +15,9 @@ export class OaSerial extends EventEmitter {
   mq: any
   devices: any = {}
   tick: number = 0;
+  conf: any;
+  home_dir = os.homedir();
+  pwd = process.cwd()
 
   onChange = async (s: boolean) => {
     if (s) {
@@ -22,9 +28,13 @@ export class OaSerial extends EventEmitter {
     } else
       console.log("OFFLINE");
   }
-  constructor(client_id:string) {
+  constructor(client_id: string) {
     super()
-    this.mq = new Rt0s("mqtt://localhost:1884", client_id, "arska", "zilakka", this.onChange)
+    var fn = path.join(this.home_dir, ".oa", "config.json");
+    this.conf = JSON.parse(fs.readFileSync(fn))
+    console.log("usin conf", fn, this.conf.client);
+
+    this.mq = new Rt0s(this.conf.client.mqtt, client_id, this.conf.client.username, this.conf.client.password, this.onChange)
   }
 
   poller = async () => {

@@ -4,6 +4,8 @@ const hdlc = require("./hdlc.js")
 const sprintf = require('sprintf');
 const Rt0s = require("./rt0s_node.js").Rt0s
 const srec = require('./srec');
+const fs = require('fs');
+const path = require('path');
 
 export class OaCpuTexas extends OaCpu {
   name: string = "TI"
@@ -282,113 +284,116 @@ export class OaCpuTexas extends OaCpu {
 
   async probe(): Promise<boolean> {
     return new Promise(async (res, err) => {
+      // accept Future Technology Devices International, Ltd FT232 Serial (UART) IC or TI
       if (this.dev.vendorId == '0451' || this.dev.vendorId == '0403') {
         for (var baud of this.bauds) {
           if (await this.open()) {
             var ret = await this.probeMQTT()
             if (!ret) {
-              ret = await this.probeFlash()
-              if (!ret) {
-                this.set_mode('?');
-                this.close()
-              } else {
-                this.set_mode('FLASH');
-                this.on('raw', (msg) => {
-                  console.log("FRAW", msg, this.mode);
-                  var b: any
-                  for (b of msg) {
-                    if (this.cmd_in_progress) {
-                      if (this.cmd_in_buf.length || b) {
-                        this.cmd_in_buf.push(b)
-                        this.check_buf()
+              if (this.dev.vendorId == '0451') {
+                ret = await this.probeFlash()
+                if (!ret) {
+                  this.set_mode('?');
+                  this.close()
+                } else {
+                  this.set_mode('FLASH');
+                  this.on('raw', (msg) => {
+                    console.log("FRAW", msg, this.mode);
+                    var b: any
+                    for (b of msg) {
+                      if (this.cmd_in_progress) {
+                        if (this.cmd_in_buf.length || b) {
+                          this.cmd_in_buf.push(b)
+                          this.check_buf()
+                        }
                       }
                     }
-                  }
-                })
-                var id: any = await this.do_cmd("ID", {});
-                console.log("f id", id);
-                var MCU = this.MCUS.find(mcu => mcu.id == id.id)
-                console.log(`\nFound MCU:\n JEDEC_ID : ${id.id_hex}`);
-                if (MCU) {
-                  this.cpu = MCU.name;
-                  console.log(` NAME : "${MCU.name}"`);
-                  console.log(` FLASH_SIZE : ${sprintf("0x%08X", MCU.flash_size)}`);
-                  console.log(` FLASH_BLOCK: ${sprintf("0x%08X", MCU.flash_block)}, ${MCU.flash_size / MCU.flash_block} BLOCKS`);
-                  console.log(` RAM_START : ${sprintf("0x%08X", MCU.ram_start)}`);
-                  console.log(` RAM_SIZE : ${sprintf("0x%08X", MCU.ram_size)}`);
-                } else
-                  console.log(`NOT SUPPORTED TYPE\n`);
+                  })
+                  var id: any = await this.do_cmd("ID", {});
+                  console.log("f id", id);
+                  var MCU = this.MCUS.find(mcu => mcu.id == id.id)
+                  console.log(`\nFound MCU:\n JEDEC_ID : ${id.id_hex}`);
+                  if (MCU) {
+                    this.cpu = MCU.name;
+                    console.log(` NAME : "${MCU.name}"`);
+                    console.log(` FLASH_SIZE : ${sprintf("0x%08X", MCU.flash_size)}`);
+                    console.log(` FLASH_BLOCK: ${sprintf("0x%08X", MCU.flash_block)}, ${MCU.flash_size / MCU.flash_block} BLOCKS`);
+                    console.log(` RAM_START : ${sprintf("0x%08X", MCU.ram_start)}`);
+                    console.log(` RAM_SIZE : ${sprintf("0x%08X", MCU.ram_size)}`);
+                  } else
+                    console.log(`NOT SUPPORTED TYPE\n`);
 
-                this.mq = new Rt0s("mqtt://localhost:1884", this.client_id(), "arska", "zilakka", this.onChange)
-
+                  this.mq = new Rt0s("mqtt://localhost:1884", this.client_id(), "arska", "zilakka", this.onChange)
 
 
-                this.mq.registerAPI('flash', "Flash ", ['srec'], async (msg: any) => {
-                  var srec_fn = msg['req']['args'][1]['srec']
-                  var srec_data: any, ret
-                  try {
-                    srec_data = srec.read(srec_fn);
-                  } catch (error) {
-                    return ({ 'error': "Cannot Open Srec File: " });
-                  }
-                  await this.do_cmd("erase", {});
-                  console.log("Erased..");
-                  var b, tot = 0
-                  for (b of srec_data.blocks) {
-                    process.stdout.write(sprintf("%08X:%02X %3d%% \r", b[0], b[1].length, (100 * tot) / srec_data.tot));
-                    ret = await this.do_cmd("DOWNLOAD", { a: b[0], n: b[1].length });
-                    ret = await this.do_cmd("SEND_DATA", { d: b[1] });
-                    tot += b[1].length
-                  }
-                  console.log(`Flashed ${tot} bytes from ${sprintf("0x%08X", srec_data.min_a)} to ${sprintf("0x%08X", srec_data.max_a)}`);
 
-                  ret = await this.do_cmd("cfg", { id: 0x0b, value: 0xc5 });
-                  ret = await this.do_cmd("cfg", { id: 0x0c, value: 15 }); // sets pin for bootloader activation
-                  ret = await this.do_cmd("cfg", { id: 0x0d, value: 1 });  // and state
-                  ret = await this.do_cmd("cfg", { id: 0x01, value: 0 });  // vec base
-                  await this.do_cmd_dmpw({ a: 0, n: 12 })
-                  console.log("\nConfigured for boot..");
-                  await this.do_cmd_dmpw({ a: 0x00057FD0, n: 8 })
-                })
-
-
-                this.mq.registerAPI('mod_flash', "Flash a Module", ['srec'], async (msg: any) => {
-                  console.log("flashin module", msg['req']['args']);
-                  var srec_fn = msg['req']['args'][1]['srec']
-                  var srec_data: any = srec.read(srec_fn);
-                  if (srec_data.error) {
-                    return (srec_data);
-                  }
-                  if (srec_data.tot == 0) {
-                    return ({ 'error': `Empty SREC contents: '${srec_fn}'` });
-                  }
-                  console.log("flashin:", srec_fn);
-                  console.log(sprintf("from:  0x%08X", srec_data.min_a));
-                  console.log(sprintf("from:  0x%08X", srec_data.min_a));
-                  console.log(sprintf("bytes: %d", srec_data.tot));
-                  var ok = true
-                  for (var blk of srec_data.blocks) {
-                    console.log(sprintf("f:0x%08X", blk[0]));
-                    // fix name
-                    var ret = await this.mq.req("tif", ['write8', { address: blk[0], data_len: blk[1].length, data: blk[1] }], {})
-                    if (!ret.success) {
-                      console.log("failed", ret);
-                      ok = false
-                      break
+                  this.mq.registerAPI('flash', "Flash ", ['srec'], async (msg: any) => {
+                    var srec_fn = msg['req']['args'][1]['srec']
+                    var srec_data: any, ret
+                    try {
+                      srec_data = srec.read(srec_fn);
+                    } catch (error) {
+                      return ({ 'error': "Cannot Open Srec File: " });
                     }
-                  }
-                  console.log("Written");
-                  return { 'done': ok, "written": srec_data.tot };
-                });
+                    await this.do_cmd("erase", {});
+                    console.log("Erased..");
+                    var b, tot = 0
+                    for (b of srec_data.blocks) {
+                      process.stdout.write(sprintf("%08X:%02X %3d%% \r", b[0], b[1].length, (100 * tot) / srec_data.tot));
+                      ret = await this.do_cmd("DOWNLOAD", { a: b[0], n: b[1].length });
+                      ret = await this.do_cmd("SEND_DATA", { d: b[1] });
+                      tot += b[1].length
+                    }
+                    console.log(`Flashed ${tot} bytes from ${sprintf("0x%08X", srec_data.min_a)} to ${sprintf("0x%08X", srec_data.max_a)}`);
 
+                    ret = await this.do_cmd("cfg", { id: 0x0b, value: 0xc5 });
+                    ret = await this.do_cmd("cfg", { id: 0x0c, value: 15 }); // sets pin for bootloader activation
+                    ret = await this.do_cmd("cfg", { id: 0x0d, value: 1 });  // and state
+                    ret = await this.do_cmd("cfg", { id: 0x01, value: 0 });  // vec base
+                    await this.do_cmd_dmpw({ a: 0, n: 12 })
+                    console.log("\nConfigured for boot..");
+                    await this.do_cmd_dmpw({ a: 0x00057FD0, n: 8 })
+                  })
+
+
+                  this.mq.registerAPI('mod_flash', "Flash a Module", ['srec'], async (msg: any) => {
+                    console.log("flashin module", msg['req']['args']);
+                    var srec_fn = msg['req']['args'][1]['srec']
+                    var srec_data: any = srec.read(srec_fn);
+                    if (srec_data.error) {
+                      return (srec_data);
+                    }
+                    if (srec_data.tot == 0) {
+                      return ({ 'error': `Empty SREC contents: '${srec_fn}'` });
+                    }
+                    console.log("flashin:", srec_fn);
+                    console.log(sprintf("from:  0x%08X", srec_data.min_a));
+                    console.log(sprintf("from:  0x%08X", srec_data.min_a));
+                    console.log(sprintf("bytes: %d", srec_data.tot));
+                    var ok = true
+                    for (var blk of srec_data.blocks) {
+                      console.log(sprintf("f:0x%08X", blk[0]));
+                      // fix name
+                      var ret = await this.mq.req("tif", ['write8', { address: blk[0], data_len: blk[1].length, data: blk[1] }], {})
+                      if (!ret.success) {
+                        console.log("failed", ret);
+                        ok = false
+                        break
+                      }
+                    }
+                    console.log("Written");
+                    return { 'done': ok, "written": srec_data.tot };
+                  });
+                }
               }
             } else {
               this.set_mode('MQTT');
-              this.mq = new Rt0s("mqtt://localhost:1884", this.client_id(), "arska", "zilakka", this.onChange)
+              this.mq = new Rt0s(this.conf.client.mqtt, this.client_id(), this.conf.client.username, this.conf.client.password, this.onChange);
+              //this.mq = new Rt0s("mqtt://localhost:1884", this.client_id(), "arska", "zilakka", this.onChange)
               this.on('mqtt', (msg) => {
                 console.log("MQTT:::", msg);
                 if ((msg.rseq >= 0) && (this.reqs[msg.rseq]) && (!msg.watch_index)) {
-                  console.log("hit", this.reqs[msg.rseq]);
+                  console.log("hit", this.reqs[msg.rseq], msg);
                   this.mq.reply(this.reqs[msg.rseq], msg)
                   delete (this.reqs[msg.rseq])
                 } else {
@@ -398,6 +403,7 @@ export class OaCpuTexas extends OaCpu {
                       for (var c of msg.data)
                         s += String.fromCharCode(c)
                       console.log(`>${msg.level}>${s}`);
+                      fs.appendFileSync(path.join("log","loki"),s)
                     }
                     this.mq.send_ind(msg.topic, msg)
                   }
@@ -408,13 +414,26 @@ export class OaCpuTexas extends OaCpu {
               // var frame = this.hdlc.send(Buffer.from(buf))
               // this.write(Buffer.from(frame))
               // this.reqs[id] = frame
+              this.mq.registerAPI('send', "Sends a message to DUT", [], (msg:any) => {
+                console.log("send...", msg.req.args[1]);
+                //line = JSON5.parse('{topic:"read8", address:0, data_len:4}')
+                var id, buf
+                [id, buf] = mqttsn.encode(this.schema,msg.req.args[1])
+                //check = mqttsn.decode(buf)
+                var frame = this.hdlc.send(Buffer.from(buf))
+                this.write(Buffer.from(frame))
+
+                //return { sent: true };
+                this.reqs[id] = msg
+                return null;
+              });
 
               if (this.schema && 'messages' in this.schema)
                 var value: any
               var key: string
               for ([key, value] of Object.entries(this.schema.messages)) {
                 if (value.direction == 'down' || value.direction == 'both') {
-                  console.log(`msg '${key}':`, value);
+                  //console.log(`msg '${key}':`, value);
                   var args = []
                   for (var p of value.payload)
                     args.push(p.name)
@@ -424,11 +443,11 @@ export class OaCpuTexas extends OaCpu {
                       ...msg.req.args[1],
                     }
                     //console.log("got api call:", msg, obj);
-                    var [id, s] = mqttsn.encode(obj)
-                    var check = mqttsn.decode(s)
+                    var [id, s] = mqttsn.encode(this.schema, obj)
+                    //var check = mqttsn.decode(s)
                     //console.log("check:", msg, id, s);
-                    var buf = hdlc.send(Buffer.from(s))
-                    this.write(Buffer.from(buf), JSON.stringify(check))
+                    var buf = this.hdlc.send(Buffer.from(s))
+                    this.write(Buffer.from(buf)) //, JSON.stringify(check))
                     this.reqs[id] = msg
                     return null
                   })
