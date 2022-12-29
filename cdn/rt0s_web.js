@@ -405,7 +405,9 @@ window.Rt0s = class Rt0s {
         Object.keys(this.req_inds).forEach(ind => {
           if (Rt0s.match(this.req_inds[ind]['path'], topic)) {
             var obj = JSON.parse(msg.toString());
-            obj.path = topic;
+            var p = topic.split("/");
+            obj.device =  p[2]
+            obj.indication =  p[3]
             this.req_inds[ind]['cb'](this.req_inds[ind], obj);
           }
         });
