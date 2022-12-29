@@ -16,6 +16,10 @@ const os = require('os')
 const sprintf = require('sprintf')
 const path = require('path')
 const dns = require('dns')
+const Handlebars = require("handlebars");
+const chokidar = require('chokidar');
+
+const log = console.log.bind(console);
 
 var apis = {}
 var reqs = {}
@@ -90,7 +94,7 @@ if (argv.init_conf) {
 
   var c = JSON.parse(fs.readFileSync(src).toString())
   c.server.web_home = pwd
-  fs.writeFileSync(target,JSON.stringify(c,null,2))
+  fs.writeFileSync(target, JSON.stringify(c, null, 2))
   for (var dom of fs.readdirSync(key_src)) {
     var ps = path.join(key_src, dom)
     var pp = path.join(key_p, dom)
@@ -193,15 +197,23 @@ aedes.on('ping', function(pac, client) {
   } else console.error('ping from nowhere?', id)
 })
 
-// aedes.on('publish', (packet, client) => {
-//   if (!packet.topic.match("/bc/.+")) {
-//     id = client ? client.id : client
-//     var s=packet.payload.toString()
-//     packet.payload= ""
+aedes.on('publish', (packet, client) => {
+  if (packet.topic.match("/ind/.+")) {
+    id = client ? client.id : client
+    if (id) {
+      try {
+        var s = packet.payload.toString();
+        var obj = JSON.parse(s);
 
-//     console.log("PUB",id, packet.topic,s);
-//   }
-// })
+        console.log("DUH", id, obj, cons[id]);
+        cons[id].indications[JSON.parse(obj).topic]= JSON.parse(obj)
+
+      } catch (error) {
+        console.log("err",error);
+      }
+    }
+  }
+})
 
 aedes.on('clientDisconnect', function(client) {
   id = client ? client.id : client
@@ -247,6 +259,18 @@ onMessageReply = (packet, cb) => {
 //   }
 // }
 
+onMessageInd = (packet, cb) => {
+    var m = packet.payload.toString();
+    try {
+      var msg = JSON.parse(m)
+      console.log("INDDD", m, Object.keys(msg), msg);
+    } catch (error) {
+      console.log("Bad payload", m);
+      return;
+    }
+
+}
+
 onMessage = (packet, cb) => {
   if (packet.cmd == 'publish') {
     var m = packet.payload.toString();
@@ -283,6 +307,11 @@ onMessage = (packet, cb) => {
 aedes.subscribe(`/dn/${_id}/+`, onMessage, () => {
   console.log('mq11 subscribed api calls')
 })
+
+// aedes.subscribe(`/ind/#`, onMessageInd, () => {
+//   console.log('mq11 subscribed ind')
+// })
+
 aedes.subscribe(`/up/${_id}/+`, onMessageReply, () => {
   console.log('mq11 subscribed req reply')
 })
@@ -336,7 +365,8 @@ aedes.authenticate = function(client, username, password, callback) {
     last_sub: 0,
     connected: stamp(),
     remoteAddress: client.conn.remoteAddress,
-    servername: client.conn.servername
+    servername: client.conn.servername,
+    indications: {},
   }
   if (client.req) {
     cons[id].remoteAddress = client.req.ari.remoteAddress
@@ -437,6 +467,57 @@ var hostcheck = (h) => {
   return (hits.length > 0)
 }
 
+var build_index = (site) => {
+  var s = ""
+
+  var tags = []
+  var tag = (t, obj, body) => {
+    var o = ""
+    if (obj)
+      for (k of Object.keys(obj)) {
+        o += ` ${k}="${obj[k]}"`;
+      }
+    if (['html', 'head', 'body'].indexOf(t) != -1) {
+      s += `<${t}>\n`
+      tags.push(t)
+    } else if (['script', 'input'].indexOf(t) != -1) {
+      s += `<${t}${o}>`
+      if (body)
+        s += body;
+      s += `</${t}>\n`
+    } else
+      s += `<${t}${o}>\n`
+  }
+  var ctag = () => {
+    s += `</${tags.pop()}>\n`
+  }
+  tag("html")
+  tag("head")
+  var scripts = [
+    "https://cdnjs.cloudflare.com/ajax/libs/sprintf/1.1.2/sprintf.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/json5/2.2.1/index.min.js",
+    "https://cdn.jsdelivr.net/npm/oa-server/cdn/rt0s_web.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js",
+    "oaf.js"
+  ]
+  for (var script of scripts)
+    tag("script", { src: script })
+  tag("link", { rel: 'preload', href: 'conf.json', as: 'fetch', type: "application/json", crossorigin: "anonymous" })
+  var p = path.join(conf.web_home, site.static, "dynamic")
+  var preloads = fs.readdirSync(p)
+  for (var preload of preloads)
+    tag("link", { rel: 'preload', href: preload, as: 'fetch', type: "text/html", crossorigin: "anonymous" })
+  tag("script", {}, `\nwindow.preloads=${JSON.stringify(preloads, null, 2)};\n`)
+  ctag()
+  tag("body")
+  ctag()
+  ctag()
+  return s;
+}
+
 var start_services = () => {
   conf.sockets.forEach(s => {
     s.connected = 0
@@ -472,7 +553,8 @@ var start_services = () => {
             dns.reverse(ip, function(err, result) {
               logger(`rd;;${s.protocol};${req.hostname};${req.path};${ip};0;${result || ''}`)
             })
-            res.redirect('https://' + req.hostname + req.path + req.url + ":" + s.https_port)
+            //res.redirect(('https://' + req.hostname + req.path + req.url + ":" + s.https_port).replace("://",""))
+            res.redirect(('https://' + req.hostname + req.path + req.url))
           })
           app.listen(s.port, () => {
             if (s.urls)
@@ -546,7 +628,10 @@ var start_services = () => {
             if (hit) {
               var p = req.path == '/' ? '/index.html' : req.path
               var fn = `${hit.static}/${p}`
-              var full_fn = path.join(conf.web_home,fn)
+              var full_fn = path.join(conf.web_home, fn)
+              var ext = fn.split(".").pop();
+              var base = fn.substr(0, fn.length - ext.length - 1);
+              //console.log("ext", ext, base);
               res.header('sid', req.sessionID)
               if (p == '/conf.json') {
                 obj = {
@@ -561,6 +646,9 @@ var start_services = () => {
                   }
                 }
                 res.send(JSON.stringify(obj, null, 2))
+              } else if (p == '/index.html' && !fs.existsSync(full_fn)) {
+                res.send(build_index(hit))
+                return;
               } else if (fs.existsSync(full_fn)) {
                 var size = fs.statSync(full_fn).size
                 dns.reverse(ip, function(err, result) {
@@ -571,6 +659,24 @@ var start_services = () => {
                 })
                 res.sendFile(fn, { root: conf.web_home })
               } else {
+                var pext = p.split(".").pop();
+                var pbase = p.substr(0, p.length - pext.length - 1);
+                var html_fn = path.join(conf.web_home, hit.static, "dynamic", p)
+                //console.log("dyn html?", html_fn);
+                if (fs.existsSync(html_fn)) {
+                  res.sendFile(html_fn)
+                  return
+                }
+                if (ext == 'html') {
+                  var hb_fn = path.join(conf.web_home, hit.static, "dynamic", pbase + ".hbs")
+                  //console.log("dyn", hb_fn);
+                  if (fs.existsSync(hb_fn)) {
+                    var ss = fs.readFileSync(hb_fn);
+                    const template = Handlebars.compile(ss.toString());
+                    res.send(template({ name: "Nils" }));
+                    return;
+                  }
+                }
                 res.sendStatus(404)
                 dns.reverse(ip, function(err, result) {
                   logger(
@@ -591,6 +697,56 @@ var start_services = () => {
               u.urls.forEach(uu => {
                 console.log(`.. listening ${s.protocol}://${uu}:${s.port}`)
               })
+              var p = path.join(conf.web_home, u.static, "dynamic")
+
+              var update = (p, event, u, path) => {
+                var fn = path.substr(p.length + 1)
+                var payload = ""
+                if (event != 'deleted')
+                  payload = fs.readFileSync(path).toString()
+                var obj = {
+                  event,
+                  fn,
+                  payload
+                }
+                var topic = `/ind/site_${u.name}/updates`
+                aedes.publish({
+                  topic,
+                  payload: JSON.stringify(obj),
+                  retain: false,
+                })
+              }
+
+              chokidar.watch(p, {
+                ignored: /(^|[\/\\])\../, // ignore dotfiles
+                persistent: true
+              })
+                .on('error', (error) => log(`Watcher error: ${error}`))
+                .on('ready', () => log(`.. watching ${p}`))
+                .on('raw', (event, path, details) => { // internal
+                  if (details.type == 'file')
+                    switch (event) {
+                      case 'created':
+                      case 'modified':
+                        update(p, event, u, path);
+                        break;
+                      case 'deleted':
+                        update(p, event, u, path);
+                        break;
+                      case 'moved':
+                        if (fs.existsSync(path)) {
+                          update(p, 'created', u, path);
+                        } else {
+                          update(p, 'deleted', u, path);
+                        }
+                        break;
+                      default:
+                        log('Raw event info:', event, path, details);
+                    }
+                  else
+                    log('non-file Raw event info:', event, path, details);
+                });
+
             })
           })
         }
@@ -731,6 +887,7 @@ var send_ind_state = () => {
   var musage = process.memoryUsage()
   old_cpu_usage = usage
   var obj = {
+    topic: "state",
     users: users,
     cons: cons,
     pid: process.pid,
@@ -741,7 +898,7 @@ var send_ind_state = () => {
   }
   aedes.publish({
     topic: '/ind/broker/state',
-    payload: JSON.stringify(obj, null, 2),
+    payload: JSON.stringify(obj),
     retain: true,
   })
 }

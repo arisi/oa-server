@@ -255,6 +255,7 @@ window.Rt0s = class Rt0s {
       'path': "/ind/"+src+"/"+topic,
       'cb': cb,
     }
+    console.log("req_ind subs:", key, this.req_inds[key]);
     this.client.subscribe(this.req_inds[key]['path'])
   }
 
@@ -402,7 +403,8 @@ window.Rt0s = class Rt0s {
       'message',
       function(topic, msg) {
         Object.keys(this.req_inds).forEach(ind => {
-          if (this.req_inds[ind]['path'] == topic) {
+          if (Rt0s.match(this.req_inds[ind]['path'], topic)) {
+          //if (this.req_inds[ind]['path'] == topic) {
             var obj = JSON.parse(msg.toString());
             this.req_inds[ind]['cb'](this.req_inds[ind], obj);
           }
