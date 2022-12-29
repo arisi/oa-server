@@ -404,8 +404,8 @@ window.Rt0s = class Rt0s {
       function(topic, msg) {
         Object.keys(this.req_inds).forEach(ind => {
           if (Rt0s.match(this.req_inds[ind]['path'], topic)) {
-          //if (this.req_inds[ind]['path'] == topic) {
             var obj = JSON.parse(msg.toString());
+            obj.path = topic;
             this.req_inds[ind]['cb'](this.req_inds[ind], obj);
           }
         });
