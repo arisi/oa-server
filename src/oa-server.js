@@ -206,7 +206,7 @@ aedes.on('publish', (packet, client) => {
         var obj = JSON.parse(s);
 
         console.log("DUH", id, obj, cons[id]);
-        cons[id].indications[JSON.parse(obj).topic]= JSON.parse(obj)
+        cons[id].indications[obj.topic] = obj;
 
       } catch (error) {
         console.log("err",error);
@@ -499,7 +499,7 @@ var build_index = (site) => {
     "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/mqtt/4.3.7/mqtt.min.js",
     "https://cdnjs.cloudflare.com/ajax/libs/json5/2.2.1/index.min.js",
-    "https://cdn.jsdelivr.net/npm/oa-server/cdn/rt0s_web.js",
+    "https://cdn.jsdelivr.net/npm/oa-server@1.1.8/cdn/rt0s_web.js",
     "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js",
     "oaf.js"
   ]
